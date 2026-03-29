@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Qi Gong">
+<title>Morning Qi Gong</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#e0e0e0;padding:20px;user-select:none;-webkit-user-select:none}
+.container{width:100%;max-width:400px;text-align:center}
+h1{font-size:1.4rem;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:#a0b4c8;margin-bottom:30px}
+.ring-container{position:relative;width:260px;height:260px;margin:0 auto 30px}
+.ring-bg{fill:none;stroke:#1e3050;stroke-width:6}
+.ring-progress{fill:none;stroke:#5dade2;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.3s linear;filter:drop-shadow(0 0 6px rgba(93,173,226,0.4))}
+.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.time-display{font-size:3.2rem;font-weight:200;letter-spacing:2px;color:#fff;font-variant-numeric:tabular-nums}
+.movement-number{font-size:0.8rem;letter-spacing:3px;color:#5dade2;margin-bottom:4px}
+.movement-name{font-size:1.15rem;font-weight:400;color:#c8dce8;margin-bottom:6px;min-height:50px;display:flex;align-items:center;justify-content:center;line-height:1.4;padding:0 10px}
+.progress-dots{display:flex;justify-content:center;gap:8px;margin-bottom:30px;flex-wrap:wrap;padding:0 10px}
+.dot{width:10px;height:10px;border-radius:50%;background:#1e3050;transition:all 0.4s}
+.dot.active{background:#5dade2;box-shadow:0 0 8px rgba(93,173,226,0.5)}
+.dot.done{background:#2e7d6a}
+.controls{display:flex;gap:16px;justify-content:center;margin-bottom:24px}
+button{border:none;border-radius:50px;cursor:pointer;font-family:inherit;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.btn-primary{background:#5dade2;color:#0f3460;font-size:1rem;font-weight:600;padding:14px 40px;letter-spacing:1px}
+.btn-primary:active{transform:scale(0.96);background:#4a9bd4}
+.btn-secondary{background:rgba(255,255,255,0.08);color:#a0b4c8;font-size:0.85rem;padding:10px 24px;border:1px solid rgba(255,255,255,0.1)}
+.btn-secondary:active{background:rgba(255,255,255,0.15)}
+.btn-secondary.active-toggle{background:rgba(93,173,226,0.2);border-color:#5dade2;color:#5dade2}
+.settings{margin-top:16px;font-size:0.75rem;color:#607080;letter-spacing:1px}
+.music-tip{margin-top:20px;padding:14px 18px;background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.06);font-size:0.8rem;color:#7a8fa0;line-height:1.5;text-align:left}
+.music-tip strong{color:#a0b4c8}
+.state-complete .movement-name{color:#2ecc71;font-size:1.3rem}
+.duration-selector{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.dur-btn{background:rgba(255,255,255,0.06);color:#7a8fa0;font-size:0.8rem;padding:6px 16px;border:1px solid rgba(255,255,255,0.08);border-radius:20px}
+.dur-btn.selected{background:rgba(93,173,226,0.15);color:#5dade2;border-color:rgba(93,173,226,0.3)}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <h1>Morning Qi Gong</h1>
+
+  <div class="duration-selector" id="durSel">
+    <button class="btn dur-btn" onclick="setDuration(45)">45s</button>
+    <button class="btn dur-btn selected" onclick="setDuration(60)">60s</button>
+    <button class="btn dur-btn" onclick="setDuration(90)">90s</button>
+  </div>
+
+  <div class="ring-container">
+    <svg width="260" height="260" viewBox="0 0 260 260">
+      <circle class="ring-bg" cx="130" cy="130" r="115"/>
+      <circle class="ring-progress" id="ring" cx="130" cy="130" r="115"
+        stroke-dasharray="722.57" stroke-dashoffset="0"
+        transform="rotate(-90 130 130)"/>
+    </svg>
+    <div class="timer-text">
+      <div class="movement-number" id="movNum">READY</div>
+      <div class="time-display" id="timeDisp">1:00</div>
+    </div>
+  </div>
+
+  <div class="movement-name" id="movName">Tap Start to begin</div>
+
+  <div class="progress-dots" id="dots"></div>
+
+  <div class="controls">
+    <button class="btn-primary" id="mainBtn" onclick="toggleTimer()">Start</button>
+    <button class="btn-secondary" id="voiceBtn" onclick="toggleVoice()">Voice On</button>
+  </div>
+
+  <div class="controls">
+    <button class="btn-secondary" id="resetBtn" onclick="resetTimer()" style="display:none">Reset</button>
+  </div>
+
+  <div class="music-tip">
+    <strong>Playing music:</strong> Start your music app (Spotify, Apple Music, etc.) before tapping Start. 
+    The timer chimes and voice prompts will play over your music automatically through iOS audio mixing.
+  </div>
+</div>
+
+<script>
+const movements = [
+  { num: 1, name: "Short repetitive jumping" },
+  { num: 2, name: "Double arm swing side to side" },
+  { num: 3, name: "Double arm sweeps front to back with knee dip" },
+  { num: 4, name: "Opposite arm sweeps" },
+  { num: 5, name: "Extended arm twists — opposite directions each side" },
+  { num: 6, name: "Knee raise with hand slaps on knees" },
+  { num: 7, name: "Upper body rotations with loose arms and shoulder slaps" },
+  { num: 8, name: "Upper body rotations with bent arms, slightly bent at hips" },
+  { num: 9, name: "Same rotation with more bend at hips" },
+  { num: 10, name: "Jump twists" }
+];
+
+let duration = 60;
+let timeLeft = 60;
+let currentMove = 0;
+let running = false;
+let interval = null;
+let voiceOn = true;
+let audioCtx = null;
+
+const ring = document.getElementById('ring');
+const timeDisp = document.getElementById('timeDisp');
+const movNum = document.getElementById('movNum');
+const movName = document.getElementById('movName');
+const mainBtn = document.getElementById('mainBtn');
+const voiceBtn = document.getElementById('voiceBtn');
+const resetBtn = document.getElementById('resetBtn');
+const dotsEl = document.getElementById('dots');
+const circumference = 2 * Math.PI * 115;
+
+// Build dots
+movements.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot';
+  d.id = 'dot' + i;
+  dotsEl.appendChild(d);
+});
+
+function setDuration(d) {
+  if (running) return;
+  duration = d;
+  timeLeft = d;
+  updateDisplay();
+  document.querySelectorAll('.dur-btn').forEach(b => {
+    b.classList.toggle('selected', parseInt(b.textContent) === d);
+  });
+}
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playChime(freq, vol, dur) {
+  try {
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + dur);
+  } catch(e) {}
+}
+
+function transitionChime() {
+  playChime(523.25, 0.15, 1.2);
+  setTimeout(() => playChime(659.25, 0.12, 1.0), 150);
+  setTimeout(() => playChime(783.99, 0.1, 0.8), 300);
+}
+
+function completionChime() {
+  playChime(523.25, 0.15, 1.5);
+  setTimeout(() => playChime(659.25, 0.12, 1.2), 200);
+  setTimeout(() => playChime(783.99, 0.12, 1.2), 400);
+  setTimeout(() => playChime(1046.5, 0.1, 2.0), 600);
+}
+
+function speak(text) {
+  if (!voiceOn) return;
+  try {
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.85;
+    u.pitch = 0.9;
+    u.volume = 0.8;
+    speechSynthesis.speak(u);
+  } catch(e) {}
+}
+
+function updateDisplay() {
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  timeDisp.textContent = mins + ':' + String(secs).padStart(2, '0');
+
+  const progress = 1 - (timeLeft / duration);
+  ring.style.strokeDashoffset = circumference * (1 - progress);
+}
+
+function startMovement(index) {
+  currentMove = index;
+  timeLeft = duration;
+
+  const m = movements[index];
+  movNum.textContent = 'MOVEMENT ' + m.num + ' OF 10';
+  movName.textContent = m.name;
+
+  // Update dots
+  movements.forEach((_, i) => {
+    const dot = document.getElementById('dot' + i);
+    dot.className = 'dot' + (i < index ? ' done' : i === index ? ' active' : '');
+  });
+
+  transitionChime();
+  setTimeout(() => speak(m.name), 500);
+  updateDisplay();
+}
+
+function tick() {
+  timeLeft--;
+  updateDisplay();
+
+  // 3-second warning
+  if (timeLeft === 3) {
+    playChime(440, 0.06, 0.3);
+  }
+
+  if (timeLeft <= 0) {
+    if (currentMove < movements.length - 1) {
+      startMovement(currentMove + 1);
+    } else {
+      completeSession();
+    }
+  }
+}
+
+function completeSession() {
+  clearInterval(interval);
+  interval = null;
+  running = false;
+
+  movements.forEach((_, i) => {
+    document.getElementById('dot' + i).className = 'dot done';
+  });
+
+  movNum.textContent = 'COMPLETE';
+  movName.textContent = 'Practice complete';
+  timeDisp.textContent = '✓';
+  ring.style.strokeDashoffset = 0;
+  document.querySelector('.container').classList.add('state-complete');
+  mainBtn.textContent = 'Start';
+  mainBtn.style.display = 'none';
+  resetBtn.style.display = '';
+
+  completionChime();
+  setTimeout(() => speak('Practice complete. Well done.'), 800);
+}
+
+function toggleTimer() {
+  if (!running) {
+    running = true;
+    mainBtn.textContent = 'Pause';
+    resetBtn.style.display = '';
+
+    // Initialize audio context on first user gesture (iOS requirement)
+    getAudioCtx();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    if (currentMove === 0 && timeLeft === duration) {
+      speak('Beginning Qi Gong practice');
+      setTimeout(() => startMovement(0), 1800);
+    }
+
+    interval = setInterval(tick, 1000);
+  } else {
+    running = false;
+    clearInterval(interval);
+    interval = null;
+    mainBtn.textContent = 'Resume';
+  }
+}
+
+function toggleVoice() {
+  voiceOn = !voiceOn;
+  voiceBtn.textContent = voiceOn ? 'Voice On' : 'Voice Off';
+  voiceBtn.classList.toggle('active-toggle', voiceOn);
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  interval = null;
+  running = false;
+  currentMove = 0;
+  timeLeft = duration;
+
+  document.querySelector('.container').classList.remove('state-complete');
+  movNum.textContent = 'READY';
+  movName.textContent = 'Tap Start to begin';
+  mainBtn.textContent = 'Start';
+  mainBtn.style.display = '';
+  resetBtn.style.display = 'none';
+  ring.style.strokeDashoffset = 0;
+
+  movements.forEach((_, i) => {
+    document.getElementById('dot' + i).className = 'dot';
+  });
+
+  updateDisplay();
+}
+
+// Initialize voice button state
+voiceBtn.classList.add('active-toggle');
+updateDisplay();
+</script>
+</body>
+</html>
