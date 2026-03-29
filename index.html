@@ -102,6 +102,20 @@ let running = false;
 let interval = null;
 let voiceOn = true;
 let audioCtx = null;
+let wakeLock = null;
+
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    }
+  } catch(e) {}
+}
+
+function releaseWakeLock() {
+  if (wakeLock) { wakeLock.release(); wakeLock = null; }
+}
 
 const ring = document.getElementById('ring');
 const timeDisp = document.getElementById('timeDisp');
@@ -243,6 +257,7 @@ function completeSession() {
   resetBtn.style.display = '';
 
   completionChime();
+  releaseWakeLock();
   setTimeout(() => speak('Practice complete. Well done.'), 800);
 }
 
@@ -251,6 +266,7 @@ function toggleTimer() {
     running = true;
     mainBtn.textContent = 'Pause';
     resetBtn.style.display = '';
+    requestWakeLock();
 
     // Initialize audio context on first user gesture (iOS requirement)
     getAudioCtx();
@@ -266,6 +282,7 @@ function toggleTimer() {
     running = false;
     clearInterval(interval);
     interval = null;
+    releaseWakeLock();
     mainBtn.textContent = 'Resume';
   }
 }
@@ -280,6 +297,7 @@ function resetTimer() {
   clearInterval(interval);
   interval = null;
   running = false;
+  releaseWakeLock();
   currentMove = 0;
   timeLeft = duration;
 
