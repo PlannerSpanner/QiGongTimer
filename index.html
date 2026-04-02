@@ -117,6 +117,12 @@ function releaseWakeLock() {
   if (wakeLock) { wakeLock.release(); wakeLock = null; }
 }
 
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && running) {
+    requestWakeLock();
+  }
+});
+
 const ring = document.getElementById('ring');
 const timeDisp = document.getElementById('timeDisp');
 const movNum = document.getElementById('movNum');
@@ -127,7 +133,6 @@ const resetBtn = document.getElementById('resetBtn');
 const dotsEl = document.getElementById('dots');
 const circumference = 2 * Math.PI * 115;
 
-// Build dots
 movements.forEach((_, i) => {
   const d = document.createElement('div');
   d.className = 'dot';
@@ -196,7 +201,6 @@ function updateDisplay() {
   const mins = Math.floor(timeLeft / 60);
   const secs = timeLeft % 60;
   timeDisp.textContent = mins + ':' + String(secs).padStart(2, '0');
-
   const progress = 1 - (timeLeft / duration);
   ring.style.strokeDashoffset = circumference * (1 - progress);
 }
@@ -204,17 +208,13 @@ function updateDisplay() {
 function startMovement(index) {
   currentMove = index;
   timeLeft = duration;
-
   const m = movements[index];
   movNum.textContent = 'MOVEMENT ' + m.num + ' OF 10';
   movName.textContent = m.name;
-
-  // Update dots
   movements.forEach((_, i) => {
     const dot = document.getElementById('dot' + i);
     dot.className = 'dot' + (i < index ? ' done' : i === index ? ' active' : '');
   });
-
   transitionChime();
   setTimeout(() => speak(m.name), 500);
   updateDisplay();
@@ -223,12 +223,9 @@ function startMovement(index) {
 function tick() {
   timeLeft--;
   updateDisplay();
-
-  // 3-second warning
   if (timeLeft === 3) {
     playChime(440, 0.06, 0.3);
   }
-
   if (timeLeft <= 0) {
     if (currentMove < movements.length - 1) {
       startMovement(currentMove + 1);
@@ -242,11 +239,10 @@ function completeSession() {
   clearInterval(interval);
   interval = null;
   running = false;
-
+  releaseWakeLock();
   movements.forEach((_, i) => {
     document.getElementById('dot' + i).className = 'dot done';
   });
-
   movNum.textContent = 'COMPLETE';
   movName.textContent = 'Practice complete';
   timeDisp.textContent = '✓';
@@ -255,9 +251,7 @@ function completeSession() {
   mainBtn.textContent = 'Start';
   mainBtn.style.display = 'none';
   resetBtn.style.display = '';
-
   completionChime();
-  releaseWakeLock();
   setTimeout(() => speak('Practice complete. Well done.'), 800);
 }
 
@@ -267,16 +261,12 @@ function toggleTimer() {
     mainBtn.textContent = 'Pause';
     resetBtn.style.display = '';
     requestWakeLock();
-
-    // Initialize audio context on first user gesture (iOS requirement)
     getAudioCtx();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-
     if (currentMove === 0 && timeLeft === duration) {
       speak('Beginning Qi Gong practice');
       setTimeout(() => startMovement(0), 1800);
     }
-
     interval = setInterval(tick, 1000);
   } else {
     running = false;
@@ -300,7 +290,6 @@ function resetTimer() {
   releaseWakeLock();
   currentMove = 0;
   timeLeft = duration;
-
   document.querySelector('.container').classList.remove('state-complete');
   movNum.textContent = 'READY';
   movName.textContent = 'Tap Start to begin';
@@ -308,15 +297,12 @@ function resetTimer() {
   mainBtn.style.display = '';
   resetBtn.style.display = 'none';
   ring.style.strokeDashoffset = 0;
-
   movements.forEach((_, i) => {
     document.getElementById('dot' + i).className = 'dot';
   });
-
   updateDisplay();
 }
 
-// Initialize voice button state
 voiceBtn.classList.add('active-toggle');
 updateDisplay();
 </script>
