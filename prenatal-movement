@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Birth Prep">
+<meta name="theme-color" content="#fdf7e9">
+<title>Prenatal Movement — Birth Prep</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  background:linear-gradient(160deg,#fdf7e9 0%,#fdf0dc 45%,#f4f3e3 100%);
+  color:#4a4237;padding:16px;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.container{width:100%;max-width:400px;text-align:center}
+h1{font-size:1.2rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#a5762a;margin-bottom:4px}
+.subtitle{font-size:0.63rem;letter-spacing:2px;color:#a4947a;margin-bottom:10px;text-transform:uppercase}
+.safety-banner{font-size:0.67rem;line-height:1.55;color:#8d5326;background:rgba(214,140,70,0.12);border:1px solid rgba(214,140,70,0.32);border-radius:11px;padding:10px 13px;margin-bottom:16px;text-align:left}
+.safety-banner strong{color:#7a441c}
+.ring-container{position:relative;width:210px;height:210px;margin:0 auto 12px}
+.ring-bg{fill:none;stroke:#f2e6cd;stroke-width:6}
+.ring-progress{fill:none;stroke:#dd9a3c;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.3s linear}
+.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.time-display{font-size:2.7rem;font-weight:200;letter-spacing:2px;color:#4a4237;font-variant-numeric:tabular-nums}
+.movement-number{font-size:0.68rem;letter-spacing:3px;color:#bd8629;margin-bottom:2px}
+.movement-name{font-size:1.02rem;font-weight:600;color:#7d5a1e;margin-bottom:3px;min-height:24px;display:flex;align-items:center;justify-content:center;line-height:1.3;padding:0 8px}
+.movement-target{font-size:0.71rem;color:#9c8b6d;margin-bottom:6px;font-style:italic}
+.side-badge{display:none;font-size:0.61rem;letter-spacing:2px;color:#a5762a;background:rgba(255,255,255,0.78);border:1px solid rgba(180,140,60,0.32);border-radius:20px;padding:3px 12px;margin-bottom:8px}
+.side-badge.visible{display:inline-block}
+.video-buttons{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
+.video-link{display:none;text-decoration:none}
+.video-link-inner{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.82);color:#c0392b;font-size:0.71rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(192,57,43,0.22)}
+.video-link-inner svg{width:14px;height:14px;fill:currentColor}
+.search-link{display:none;text-decoration:none}
+.search-link-inner{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.65);color:#907f61;font-size:0.67rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(144,127,97,0.2)}
+.progress-dots{display:flex;justify-content:center;gap:7px;margin-bottom:13px;flex-wrap:wrap}
+.dot{width:10px;height:10px;border-radius:50%;background:#f0e5cd;transition:all 0.4s}
+.dot.active{background:#dd9a3c;box-shadow:0 0 8px rgba(221,154,60,0.45)}
+.dot.done{background:#ecca8e}
+.nav-controls{display:none;gap:12px;justify-content:center;align-items:center;margin-bottom:12px}
+.nav-controls.visible{display:flex}
+.btn-nav{background:rgba(255,255,255,0.78);color:#a5762a;font-size:0.85rem;padding:10px 18px;border:1px solid rgba(165,118,42,0.22);display:flex;align-items:center;gap:4px}
+.btn-nav:active{background:rgba(255,255,255,1)}
+.btn-nav:disabled{opacity:0.3;pointer-events:none}
+.btn-nav svg{width:14px;height:14px;fill:currentColor}
+.nav-label{font-size:0.65rem;color:#a4947a;letter-spacing:1px}
+.controls{display:flex;gap:12px;justify-content:center;margin-bottom:10px}
+button{border:none;border-radius:50px;cursor:pointer;font-family:inherit;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.btn-primary{background:#dd9a3c;color:#fff;font-size:1rem;font-weight:600;padding:12px 36px;letter-spacing:1px;box-shadow:0 2px 6px rgba(221,154,60,0.3)}
+.btn-primary:active{transform:scale(0.96);background:#c8862e}
+.btn-secondary{background:rgba(255,255,255,0.78);color:#a5762a;font-size:0.8rem;padding:8px 20px;border:1px solid rgba(165,118,42,0.22)}
+.btn-secondary:active{background:rgba(255,255,255,1)}
+.btn-secondary.active-toggle{background:rgba(221,154,60,0.15);border-color:rgba(221,154,60,0.45);color:#a5762a}
+.form-cue{padding:11px 14px;background:rgba(255,255,255,0.65);border-radius:11px;border:1px solid rgba(144,127,97,0.16);font-size:0.73rem;color:#665c48;line-height:1.55;text-align:left;min-height:50px}
+.form-cue strong{color:#a5762a}
+.state-complete .movement-name{color:#bd8629;font-size:1.2rem}
+.total-time{font-size:0.66rem;color:#a4947a;letter-spacing:1px;margin-top:8px}
+.note{margin-top:12px;padding:11px 14px;background:rgba(255,255,255,0.52);border-radius:11px;border:1px solid rgba(144,127,97,0.14);font-size:0.68rem;color:#786c56;line-height:1.55;text-align:left}
+.note strong{color:#a5762a}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <h1>Birth Prep</h1>
+  <div class="subtitle">Pelvic mobility · Floor release · 11 min</div>
+  <div class="safety-banner">
+    <strong>Stop immediately</strong> and call your provider for any vaginal bleeding, cramping, contractions, fluid leaking, dizziness, or sharp pain. Get clearance from your OB or midwife first — especially with a low-lying placenta. Never hold your breath or bear down.
+  </div>
+  <div class="ring-container">
+    <svg width="210" height="210" viewBox="0 0 210 210">
+      <circle class="ring-bg" cx="105" cy="105" r="92"/>
+      <circle class="ring-progress" id="ring" cx="105" cy="105" r="92"
+        stroke-dasharray="578.05" stroke-dashoffset="0"
+        transform="rotate(-90 105 105)"/>
+    </svg>
+    <div class="timer-text">
+      <div class="movement-number" id="movNum">READY</div>
+      <div class="time-display" id="timeDisp">0:00</div>
+    </div>
+  </div>
+  <div class="movement-name" id="movName">Tap Start to begin</div>
+  <div class="movement-target" id="movTarget"></div>
+  <div class="side-badge" id="sideBadge">BOTH SIDES · SWITCH AT HALFWAY</div>
+  <div class="video-buttons">
+    <a class="video-link" id="videoLink" href="#" target="_blank" rel="noopener">
+      <span class="video-link-inner">
+        <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+        Watch form
+      </span>
+    </a>
+    <a class="search-link" id="searchLink" href="#" target="_blank" rel="noopener">
+      <span class="search-link-inner">Find more demos</span>
+    </a>
+  </div>
+  <div class="progress-dots" id="dots"></div>
+  <div class="nav-controls" id="navControls">
+    <button class="btn btn-nav" id="prevBtn" onclick="prevMovement()" disabled>
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      Prev
+    </button>
+    <span class="nav-label" id="navLabel"></span>
+    <button class="btn btn-nav" id="nextBtn" onclick="nextMovement()">
+      Next
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </button>
+  </div>
+  <div class="controls">
+    <button class="btn-primary" id="mainBtn" onclick="toggleTimer()">Start</button>
+    <button class="btn-secondary active-toggle" id="voiceBtn" onclick="toggleVoice()">Voice On</button>
+  </div>
+  <div class="controls">
+    <button class="btn-secondary" id="resetBtn" onclick="resetTimer()" style="display:none">Reset</button>
+  </div>
+  <div class="form-cue" id="formCue">
+    <strong>The idea behind this routine:</strong> For perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. A chronically tight pelvic floor is associated with a harder second stage. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.
+  </div>
+  <div class="total-time" id="totalTime"></div>
+  <div class="note">
+    <strong>Not included here — worth asking about:</strong> Perineal massage has the strongest evidence for reducing tearing, but it starts around 34–35 weeks and needs explicit provider clearance with a low-lying placenta. Warm compresses during the second stage and upright or side-lying birth positions also reduce tearing. Bring these up at your next appointment.
+  </div>
+</div>
+
+<script>
+const movements = [
+  {
+    num: 1, name: "Breath and pelvic floor release", duration: 90, bilateral: false,
+    target: "The foundation · learning to let go",
+    cue: "<strong>Form:</strong> Seated or side-lying. Inhale slowly and imagine the pelvic floor softening and widening downward, like a flower opening. Exhale and let it gently lift back to neutral — do not squeeze. <strong>Why:</strong> Most people can contract the pelvic floor but cannot fully release it. Release is what the second stage of labor requires. This is the single most important item in this routine.",
+    searchQuery: "pelvic+floor+relaxation+breathing+birth+preparation"
+  },
+  {
+    num: 2, name: "Hands-and-knees pelvic rocking", duration: 60, bilateral: false,
+    target: "Pelvic mobility · fetal positioning",
+    cue: "<strong>Form:</strong> Hands and knees, wrists under shoulders. Rock the pelvis slowly forward and back, keeping the spine close to neutral. No deep arching. <strong>Why:</strong> Encourages an optimal anterior fetal position and mobilizes the sacroiliac joints. This is also one of the most-used labor positions, so the pattern is worth being familiar with.",
+    searchQuery: "hands+and+knees+pelvic+tilt+rocking+pregnancy"
+  },
+  {
+    num: 3, name: "Birth ball hip circles", duration: 60, bilateral: true,
+    target: "Pelvic outlet · sacral mobility",
+    cue: "<strong>Form:</strong> Sit on a birth ball, feet wide and flat. Circle the hips slowly in one direction, reverse at the halfway chime. Let the movement come from the pelvis. <strong>Why:</strong> Opens the pelvic outlet through all planes and keeps the sacrum mobile. A staple of active labor — building the habit now makes it instinctive later.",
+    searchQuery: "birth+ball+hip+circles+pregnancy"
+  },
+  {
+    num: 4, name: "Supported deep squat", duration: 60, bilateral: false,
+    target: "Pelvic outlet opening · adductors",
+    cue: "<strong>Form:</strong> Hold a counter, doorframe, or the back of a chair. Lower into a squat only as deep as is comfortable, heels down if possible. Knees track outward. Come up slowly, exhaling. Do not bounce or hold at the bottom for long. <strong>Why:</strong> Squatting can increase pelvic outlet diameter by up to about 30 percent. <strong>Caution:</strong> With a low-lying placenta, keep it shallow and supported until your provider clears deeper work.",
+    searchQuery: "supported+deep+squat+pregnancy+birth+preparation"
+  },
+  {
+    num: 5, name: "Side-lying clamshells", duration: 60, bilateral: true,
+    target: "Glute medius · pelvic stability",
+    cue: "<strong>Form:</strong> Side-lying, knees bent, hips stacked. Lift the top knee without rolling the pelvis backward. Slow and controlled. Switch at the halfway chime. <strong>Why:</strong> Relaxin loosens the pelvic ligaments, so the muscles have to do more stabilizing work. Strong glutes reduce pelvic girdle and SI joint pain, which is one of the most common complaints from here on.",
+    searchQuery: "side+lying+clamshell+pregnancy+glute+medius"
+  },
+  {
+    num: 6, name: "Supported butterfly with rock", duration: 60, bilateral: false,
+    target: "Inner thighs · pelvic outlet",
+    cue: "<strong>Form:</strong> Sit elevated on a cushion, soles together, knees open. Rock gently side to side. Never push the knees down with your hands. <strong>Why:</strong> Adductor flexibility determines how wide the pelvis can open. Gentle and consistent beats aggressive — the ligaments are already softened, and forcing range can destabilize the pelvis.",
+    searchQuery: "bound+angle+pose+pregnancy+hip+opening"
+  },
+  {
+    num: 7, name: "Kneeling lunge with support", duration: 60, bilateral: true,
+    target: "Hip flexors · asymmetric pelvic opening",
+    cue: "<strong>Form:</strong> Half-kneeling, cushion under the back knee, hand on a chair. Gently shift weight forward. Switch at the halfway chime. <strong>Why:</strong> Asymmetric hip positions help the baby navigate the pelvis and are commonly used to resolve stalled labor. Releasing the hip flexors also reduces the forward pelvic tilt driving low back pain.",
+    searchQuery: "half+kneeling+lunge+pregnancy+hip+flexor"
+  },
+  {
+    num: 8, name: "Standing wall pelvic tilts", duration: 60, bilateral: false,
+    target: "Lumbopelvic control · back relief",
+    cue: "<strong>Form:</strong> Stand with your back against a wall, feet a step forward. Flatten the low back into the wall on the exhale, release on the inhale. Small and controlled. <strong>Why:</strong> Teaches conscious control of pelvic position, which reduces back pain now and gives you an active tool for back labor.",
+    searchQuery: "standing+wall+pelvic+tilt+pregnancy"
+  },
+  {
+    num: 9, name: "Pelvic floor coordination", duration: 90, bilateral: false,
+    target: "Contract, hold, and fully release",
+    cue: "<strong>Form:</strong> Gently draw the pelvic floor up, hold for three seconds, then take a full six seconds to release completely. The release is the point. Repeat slowly. <strong>Why:</strong> Coordination beats raw strength. Being able to fully let go on demand is what protects the perineum during crowning. If you only feel the squeeze and not the release, spend more time on movement one.",
+    searchQuery: "pelvic+floor+contract+and+release+pregnancy"
+  },
+  {
+    num: 10, name: "Wide-knee child's pose", duration: 60, bilateral: false,
+    target: "Pelvic floor lengthening · rest",
+    cue: "<strong>Form:</strong> Knees wide, big toes together, sitting back toward the heels. Forearms or a cushion supporting the chest. Belly rests in the space between the knees. <strong>Why:</strong> One of the best positions for passive pelvic floor lengthening, and a genuine rest position for the low back.",
+    searchQuery: "wide+knee+childs+pose+pregnancy"
+  },
+  {
+    num: 11, name: "Left side-lying rest", duration: 60, bilateral: false,
+    target: "Recovery · placental circulation",
+    cue: "<strong>Form:</strong> Left side, pillow between the knees, one supporting the belly. Return to the soft, downward-widening breath from movement one. <strong>Why:</strong> Left side-lying maximizes blood flow to the placenta. Ending here links the release breathing to a position you will use in labor and in sleep.",
+    searchQuery: "left+side+lying+pregnancy+pillow+support"
+  }
+];
+
+let timeLeft=0,currentMove=0,running=false,interval=null,voiceOn=true,audioCtx=null,wakeLock=null,switchCalled=false;
+const ring=document.getElementById('ring'),timeDisp=document.getElementById('timeDisp'),movNum=document.getElementById('movNum'),movName=document.getElementById('movName'),movTarget=document.getElementById('movTarget'),sideBadge=document.getElementById('sideBadge'),mainBtn=document.getElementById('mainBtn'),voiceBtn=document.getElementById('voiceBtn'),resetBtn=document.getElementById('resetBtn'),dotsEl=document.getElementById('dots'),formCue=document.getElementById('formCue'),videoLink=document.getElementById('videoLink'),searchLink=document.getElementById('searchLink'),navControls=document.getElementById('navControls'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),navLabel=document.getElementById('navLabel'),circumference=2*Math.PI*92;
+
+movements.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='dot'+i;dotsEl.appendChild(d);});
+
+async function requestWakeLock(){try{if('wakeLock'in navigator){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null;});}}catch(e){}}
+function releaseWakeLock(){if(wakeLock){wakeLock.release();wakeLock=null;}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&running){requestWakeLock();}});
+
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playChime(freq,vol,dur){try{const ctx=getAudioCtx();if(ctx.state==='suspended')ctx.resume();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,ctx.currentTime);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(vol,ctx.currentTime+0.05);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);osc.connect(gain);gain.connect(ctx.destination);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+dur);}catch(e){}}
+function transitionChime(){playChime(392,0.1,1.2);setTimeout(()=>playChime(494,0.08,1.0),200);setTimeout(()=>playChime(587.33,0.06,0.8),400);}
+function switchChime(){playChime(587.33,0.09,0.5);setTimeout(()=>playChime(587.33,0.09,0.5),300);}
+function completionChime(){playChime(392,0.1,1.5);setTimeout(()=>playChime(494,0.09,1.2),250);setTimeout(()=>playChime(587.33,0.08,1.2),500);setTimeout(()=>playChime(784,0.07,2.0),750);}
+function speak(text){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(text);u.rate=0.8;u.pitch=0.95;u.volume=0.8;speechSynthesis.speak(u);}catch(e){}}
+
+function updateDisplay(){const m=movements[currentMove];const dur=m?m.duration:0;const mins=Math.floor(timeLeft/60);const secs=timeLeft%60;timeDisp.textContent=mins+':'+String(secs).padStart(2,'0');if(dur>0){const progress=1-(timeLeft/dur);ring.style.strokeDashoffset=circumference*(1-progress);}}
+function updateVideoLinks(m){videoLink.href='https://www.youtube.com/results?search_query='+m.searchQuery;videoLink.style.display='inline-block';searchLink.href='https://www.youtube.com/results?search_query='+m.searchQuery+'+physical+therapist';searchLink.style.display='inline-block';}
+function updateNavButtons(){prevBtn.disabled=currentMove<=0;nextBtn.disabled=currentMove>=movements.length-1;navLabel.textContent=(currentMove+1)+' / '+movements.length;navControls.classList.add('visible');}
+function prevMovement(){if(currentMove<=0)return;startMovement(currentMove-1);}
+function nextMovement(){if(currentMove>=movements.length-1)return;startMovement(currentMove+1);}
+
+function startMovement(index){
+  currentMove=index;const m=movements[index];timeLeft=m.duration;switchCalled=false;
+  movNum.textContent='MOVEMENT '+m.num+' OF '+movements.length;
+  movName.textContent=m.name;movTarget.textContent=m.target;
+  sideBadge.classList.toggle('visible',!!m.bilateral);
+  formCue.innerHTML=m.cue;updateVideoLinks(m);updateNavButtons();
+  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot'+(i<index?' done':i===index?' active':'');});
+  transitionChime();setTimeout(()=>speak(m.name+(m.bilateral?'. Start with your right side.':'')),500);updateDisplay();
+}
+
+function tick(){
+  timeLeft--;updateDisplay();
+  const m=movements[currentMove];
+  if(m&&m.bilateral&&!switchCalled&&timeLeft===Math.floor(m.duration/2)){switchCalled=true;switchChime();setTimeout(()=>speak('Switch sides'),300);}
+  if(timeLeft===5)playChime(340,0.04,0.3);
+  if(timeLeft<=0){if(currentMove<movements.length-1)startMovement(currentMove+1);else completeSession();}
+}
+
+function completeSession(){
+  clearInterval(interval);interval=null;running=false;releaseWakeLock();
+  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot done';});
+  movNum.textContent='COMPLETE';movName.textContent='Session complete';
+  movTarget.textContent='';sideBadge.classList.remove('visible');
+  timeDisp.textContent='\u2713';ring.style.strokeDashoffset=0;
+  document.querySelector('.container').classList.add('state-complete');
+  mainBtn.style.display='none';resetBtn.style.display='';
+  videoLink.style.display='none';searchLink.style.display='none';
+  navControls.classList.remove('visible');
+  formCue.innerHTML='<strong>Done.</strong> Drink water. If anything caused cramping, bleeding, or sharp pain, stop this routine and call your provider before doing it again.';
+  completionChime();setTimeout(()=>speak('Session complete.'),600);
+}
+
+function toggleTimer(){
+  if(!running){running=true;mainBtn.textContent='Pause';resetBtn.style.display='';requestWakeLock();getAudioCtx();if(audioCtx.state==='suspended')audioCtx.resume();if(currentMove===0&&timeLeft===0)startMovement(0);interval=setInterval(tick,1000);}
+  else{running=false;clearInterval(interval);interval=null;releaseWakeLock();mainBtn.textContent='Resume';}
+}
+function toggleVoice(){voiceOn=!voiceOn;voiceBtn.textContent=voiceOn?'Voice On':'Voice Off';voiceBtn.classList.toggle('active-toggle',voiceOn);}
+function resetTimer(){
+  clearInterval(interval);interval=null;running=false;releaseWakeLock();currentMove=0;timeLeft=0;switchCalled=false;
+  document.querySelector('.container').classList.remove('state-complete');
+  movNum.textContent='READY';movName.textContent='Tap Start to begin';movTarget.textContent='';
+  sideBadge.classList.remove('visible');
+  mainBtn.textContent='Start';mainBtn.style.display='';resetBtn.style.display='none';
+  videoLink.style.display='none';searchLink.style.display='none';navControls.classList.remove('visible');
+  ring.style.strokeDashoffset=0;timeDisp.textContent='0:00';
+  formCue.innerHTML='<strong>The idea behind this routine:</strong> For perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. A chronically tight pelvic floor is associated with a harder second stage. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.';
+  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot';});
+}
+const totalSec=movements.reduce((s,m)=>s+m.duration,0);
+document.getElementById('totalTime').textContent='Total: '+Math.floor(totalSec/60)+':'+String(totalSec%60).padStart(2,'0');
+</script>
+</body>
+</html>
