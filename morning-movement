@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Morning Movement">
+<title>Morning Movement</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;background:linear-gradient(145deg,#2e1a1a 0%,#3d2416 50%,#4a2f0f 100%);color:#e0e0e0;padding:16px;user-select:none;-webkit-user-select:none}
+.container{width:100%;max-width:400px;text-align:center}
+h1{font-size:1.3rem;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#e0a860;margin-bottom:4px}
+.subtitle{font-size:0.65rem;letter-spacing:2px;color:#9a7040;margin-bottom:18px;text-transform:uppercase}
+.ring-container{position:relative;width:220px;height:220px;margin:0 auto 14px}
+.ring-bg{fill:none;stroke:#3d2a18;stroke-width:6}
+.ring-progress{fill:none;stroke:#e67e22;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.3s linear;filter:drop-shadow(0 0 6px rgba(230,126,34,0.3))}
+.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.time-display{font-size:2.8rem;font-weight:200;letter-spacing:2px;color:#fff;font-variant-numeric:tabular-nums}
+.movement-number{font-size:0.7rem;letter-spacing:3px;color:#e67e22;margin-bottom:2px}
+.movement-name{font-size:1.05rem;font-weight:500;color:#f0d0a0;margin-bottom:4px;min-height:24px;display:flex;align-items:center;justify-content:center;line-height:1.3;padding:0 8px}
+.movement-target{font-size:0.7rem;color:#b08850;margin-bottom:6px;font-style:italic}
+.side-badge{display:none;font-size:0.62rem;letter-spacing:2px;color:#e67e22;background:rgba(230,126,34,0.12);border:1px solid rgba(230,126,34,0.25);border-radius:20px;padding:3px 12px;margin-bottom:8px}
+.side-badge.visible{display:inline-block}
+.video-buttons{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
+.video-link{display:none;text-decoration:none}
+.video-link-inner{display:inline-flex;align-items:center;gap:5px;background:rgba(255,68,68,0.12);color:#ff6b6b;font-size:0.72rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(255,68,68,0.2)}
+.video-link-inner svg{width:14px;height:14px;fill:currentColor}
+.search-link{display:none;text-decoration:none}
+.search-link-inner{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.06);color:#b08850;font-size:0.68rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(255,255,255,0.08)}
+.progress-dots{display:flex;justify-content:center;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.dot{width:9px;height:9px;border-radius:50%;background:#3d2a18;transition:all 0.4s}
+.dot.active{background:#e67e22;box-shadow:0 0 8px rgba(230,126,34,0.5)}
+.dot.done{background:#8a5520}
+.nav-controls{display:none;gap:12px;justify-content:center;align-items:center;margin-bottom:12px}
+.nav-controls.visible{display:flex}
+.btn-nav{background:rgba(255,255,255,0.06);color:#e0a860;font-size:0.85rem;padding:10px 18px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:4px}
+.btn-nav:active{background:rgba(230,126,34,0.2)}
+.btn-nav:disabled{opacity:0.25;pointer-events:none}
+.btn-nav svg{width:14px;height:14px;fill:currentColor}
+.nav-label{font-size:0.65rem;color:#9a7040;letter-spacing:1px}
+.controls{display:flex;gap:12px;justify-content:center;margin-bottom:10px}
+button{border:none;border-radius:50px;cursor:pointer;font-family:inherit;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.btn-primary{background:#e67e22;color:#2e1a1a;font-size:1rem;font-weight:600;padding:12px 36px;letter-spacing:1px}
+.btn-primary:active{transform:scale(0.96);background:#d35400}
+.btn-secondary{background:rgba(255,255,255,0.08);color:#e0a860;font-size:0.8rem;padding:8px 20px;border:1px solid rgba(255,255,255,0.1)}
+.btn-secondary:active{background:rgba(255,255,255,0.15)}
+.btn-secondary.active-toggle{background:rgba(230,126,34,0.2);border-color:#e67e22;color:#e67e22}
+.form-cue{padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);font-size:0.72rem;color:#b08850;line-height:1.5;text-align:left;min-height:50px}
+.form-cue strong{color:#e0a860}
+.state-complete .movement-name{color:#e67e22;font-size:1.2rem}
+.total-time{font-size:0.65rem;color:#9a7040;letter-spacing:1px;margin-top:8px}
+.music-tip{margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.04);font-size:0.68rem;color:#9a7040;line-height:1.4;text-align:left}
+.music-tip strong{color:#b08850}
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <h1>Morning Movement</h1>
+  <div class="subtitle">Mobility · Control · Stability · 9 min</div>
+  <div class="ring-container">
+    <svg width="220" height="220" viewBox="0 0 220 220">
+      <circle class="ring-bg" cx="110" cy="110" r="96"/>
+      <circle class="ring-progress" id="ring" cx="110" cy="110" r="96"
+        stroke-dasharray="603.19" stroke-dashoffset="0"
+        transform="rotate(-90 110 110)"/>
+    </svg>
+    <div class="timer-text">
+      <div class="movement-number" id="movNum">READY</div>
+      <div class="time-display" id="timeDisp">0:30</div>
+    </div>
+  </div>
+  <div class="movement-name" id="movName">Tap Start to begin</div>
+  <div class="movement-target" id="movTarget"></div>
+  <div class="side-badge" id="sideBadge">BOTH SIDES · SWITCH AT HALFWAY</div>
+  <div class="video-buttons">
+    <a class="video-link" id="videoLink" href="#" target="_blank" rel="noopener">
+      <span class="video-link-inner">
+        <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+        Watch form
+      </span>
+    </a>
+    <a class="search-link" id="searchLink" href="#" target="_blank" rel="noopener">
+      <span class="search-link-inner">Find more demos</span>
+    </a>
+  </div>
+  <div class="progress-dots" id="dots"></div>
+  <div class="nav-controls" id="navControls">
+    <button class="btn btn-nav" id="prevBtn" onclick="prevMovement()" disabled>
+      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      Prev
+    </button>
+    <span class="nav-label" id="navLabel"></span>
+    <button class="btn btn-nav" id="nextBtn" onclick="nextMovement()">
+      Next
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </button>
+  </div>
+  <div class="controls">
+    <button class="btn-primary" id="mainBtn" onclick="toggleTimer()">Start</button>
+    <button class="btn-secondary active-toggle" id="voiceBtn" onclick="toggleVoice()">Voice On</button>
+  </div>
+  <div class="controls">
+    <button class="btn-secondary" id="resetBtn" onclick="resetTimer()" style="display:none">Reset</button>
+  </div>
+  <div class="form-cue" id="formCue">
+    <strong>Morning Movement</strong> progresses from standing mobility to floor work to core stability. Two-sided movements chime at the halfway point so you know when to switch. No impact — safe for the R peroneal tendon.
+  </div>
+  <div class="total-time" id="totalTime"></div>
+  <div class="music-tip">
+    <strong>Music:</strong> Start your playlist before tapping Start. Chimes and voice prompts play over your music.
+  </div>
+</div>
+
+<script>
+const movements = [
+  {
+    num: 1, name: "Deep squats", duration: 30, bilateral: false,
+    target: "Hip, ankle, and lower body mobility",
+    cue: "<strong>Form:</strong> Feet shoulder-width, toes slightly out. Sink as low as you can — hips below knees. Heels stay down. Hold the bottom briefly, then rise. Continuous, controlled. <strong>Note:</strong> Your deep squat hold tested at 2:00 with hips below knees, so you have the mobility. If heels lift, widen your stance slightly.",
+    searchQuery: "deep+bodyweight+squat+mobility+drill"
+  },
+  {
+    num: 2, name: "Parallel squats", duration: 30, bilateral: false,
+    target: "Strength through a functional range",
+    cue: "<strong>Form:</strong> Same stance, but stop when your thighs are parallel to the floor. Chest up, knees tracking over toes. Drive through mid-foot, not toes. <strong>Why both squats:</strong> Deep squats train end-range mobility, parallel squats train the range you actually use in running and lifting.",
+    searchQuery: "parallel+squat+form+bodyweight"
+  },
+  {
+    num: 3, name: "Knee circles", duration: 30, bilateral: true,
+    target: "Knee stability and joint control",
+    cue: "<strong>Form:</strong> Feet together, slight knee bend, hands on knees. Circle the knees slowly in one direction, then the other at the halfway chime. Small, controlled circles. <strong>Ankle note:</strong> Keep both feet flat and weight even. If you feel any lateral ankle strain, reduce the circle size.",
+    searchQuery: "standing+knee+circles+joint+mobility"
+  },
+  {
+    num: 4, name: "Reverse lunges", duration: 30, bilateral: true,
+    target: "Hips, glutes, knees, and balance",
+    cue: "<strong>Form:</strong> Step back, lower the back knee toward the floor, return to standing. Front knee stays over the ankle. Switch legs at the halfway chime. <strong>Ankle note:</strong> Reverse lunges load the front foot far less than forward lunges — safest lunge variant for your peroneal tendon.",
+    searchQuery: "reverse+lunge+proper+form"
+  },
+  {
+    num: 5, name: "Hip hinges", duration: 30, bilateral: false,
+    target: "Bending mechanics and posterior chain",
+    cue: "<strong>Form:</strong> Soft knees, push hips straight BACK (not down). Chest travels forward, spine stays long. Feel the hamstrings load. Stand tall by squeezing the glutes. <strong>Training link:</strong> This is the exact pattern of your narrow sumo deadlift. Grooving it daily builds the motor pattern without load.",
+    searchQuery: "hip+hinge+drill+deadlift+pattern"
+  },
+  {
+    num: 6, name: "Folded cat-cows", duration: 30, bilateral: false,
+    target: "Spinal mobility and posture",
+    cue: "<strong>Form:</strong> Hands on knees or thighs, hinged forward. Round the spine (cat), then arch and open the chest (cow). Move slowly with the breath. <strong>Training link:</strong> Targets T4\u2013T8 thoracic extension \u2014 the segment where your chronic mid-back pain lives.",
+    searchQuery: "standing+folded+cat+cow+spinal+mobility"
+  },
+  {
+    num: 7, name: "Cobra press-ups", duration: 60, bilateral: false,
+    target: "Open the front body, mobilize the spine",
+    cue: "<strong>Form:</strong> Lie face down, hands under shoulders. Press the chest up, hips stay on the floor. Lower with control. Repeat slowly. <strong>Shoulder note:</strong> Keep elbows tucked close to the ribs \u2014 flared elbows load the R AC joint. Only press as high as is pain-free.",
+    searchQuery: "cobra+press+up+mckenzie+extension"
+  },
+  {
+    num: 8, name: "Pedaling down dog", duration: 60, bilateral: false,
+    target: "Calves, hamstrings, ankles, shoulders",
+    cue: "<strong>Form:</strong> Downward dog position. Alternate pressing one heel toward the floor while the other knee bends \u2014 like pedaling. Slow and rhythmic. <strong>Ankle note:</strong> This is a gentle calf and Achilles stretch with zero peroneal load. Keep your foot tracking straight, not rolling outward.",
+    searchQuery: "pedaling+downward+dog+calf+stretch"
+  },
+  {
+    num: 9, name: "Tuck + untuck", duration: 60, bilateral: false,
+    target: "Spinal control and deep core activation",
+    cue: "<strong>Form:</strong> On your back or in quadruped. Tuck the pelvis (posterior tilt, flatten the low back), then untuck (anterior tilt, small arch). Slow, isolated \u2014 movement comes from the pelvis, not the legs. <strong>Training link:</strong> Builds the deep core control that supports your lumbar spine during deadlifts and running.",
+    searchQuery: "pelvic+tilt+tuck+untuck+core+control"
+  },
+  {
+    num: 10, name: "90/90 with a fold", duration: 60, bilateral: true,
+    target: "Hip rotation and lower body mobility",
+    cue: "<strong>Form:</strong> Seated, front leg at 90\u00b0 in front, back leg at 90\u00b0 to the side. Fold forward over the front shin. Switch sides at the halfway chime. <strong>Training link:</strong> Internal and external hip rotation \u2014 restricted hip rotation is a major driver of IT band and knee issues in runners.",
+    searchQuery: "90+90+hip+stretch+with+forward+fold"
+  },
+  {
+    num: 11, name: "Thread the needle", duration: 60, bilateral: true,
+    target: "Upper back and shoulder opening",
+    cue: "<strong>Form:</strong> Quadruped. Slide one arm under the opposite armpit, letting the shoulder and head rest toward the floor. Switch sides at the halfway chime. <strong>Training link:</strong> Thoracic rotation plus scapular mobility \u2014 directly addresses your mid-back pain and R shoulder internal rotation limitation.",
+    searchQuery: "thread+the+needle+thoracic+rotation+stretch"
+  },
+  {
+    num: 12, name: "Plank hold", duration: 60, bilateral: false,
+    target: "Full-body stability and core strength",
+    cue: "<strong>Form:</strong> Forearms or hands, body in one straight line. Squeeze glutes, brace the core, don't let hips sag or pike. Breathe steadily. <strong>Shoulder note:</strong> Forearm plank is safer for your R AC joint than a high plank. Push the floor away to engage the serratus \u2014 same protraction cue as your landmine press.",
+    searchQuery: "forearm+plank+proper+form+serratus"
+  }
+];
+
+let timeLeft=0,currentMove=0,running=false,interval=null,voiceOn=true,audioCtx=null,wakeLock=null,switchCalled=false;
+const ring=document.getElementById('ring'),timeDisp=document.getElementById('timeDisp'),movNum=document.getElementById('movNum'),movName=document.getElementById('movName'),movTarget=document.getElementById('movTarget'),sideBadge=document.getElementById('sideBadge'),mainBtn=document.getElementById('mainBtn'),voiceBtn=document.getElementById('voiceBtn'),resetBtn=document.getElementById('resetBtn'),dotsEl=document.getElementById('dots'),formCue=document.getElementById('formCue'),videoLink=document.getElementById('videoLink'),searchLink=document.getElementById('searchLink'),navControls=document.getElementById('navControls'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),navLabel=document.getElementById('navLabel'),circumference=2*Math.PI*96;
+
+movements.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='dot'+i;dotsEl.appendChild(d);});
+
+async function requestWakeLock(){try{if('wakeLock'in navigator){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null;});}}catch(e){}}
+function releaseWakeLock(){if(wakeLock){wakeLock.release();wakeLock=null;}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&running){requestWakeLock();}});
+
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playChime(freq,vol,dur){try{const ctx=getAudioCtx();if(ctx.state==='suspended')ctx.resume();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,ctx.currentTime);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(vol,ctx.currentTime+0.05);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);osc.connect(gain);gain.connect(ctx.destination);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+dur);}catch(e){}}
+function transitionChime(){playChime(440,0.12,1.0);setTimeout(()=>playChime(554.37,0.1,0.8),150);setTimeout(()=>playChime(659.25,0.08,0.6),300);}
+function switchChime(){playChime(659.25,0.1,0.5);setTimeout(()=>playChime(659.25,0.1,0.5),280);}
+function completionChime(){playChime(440,0.12,1.2);setTimeout(()=>playChime(554.37,0.1,1.0),200);setTimeout(()=>playChime(659.25,0.1,1.0),400);setTimeout(()=>playChime(880,0.08,1.5),600);}
+function speak(text){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(text);u.rate=0.85;u.pitch=0.9;u.volume=0.8;speechSynthesis.speak(u);}catch(e){}}
+
+function updateDisplay(){const m=movements[currentMove];const dur=m?m.duration:30;const mins=Math.floor(timeLeft/60);const secs=timeLeft%60;timeDisp.textContent=mins+':'+String(secs).padStart(2,'0');if(dur>0){const progress=1-(timeLeft/dur);ring.style.strokeDashoffset=circumference*(1-progress);}}
+
+function updateVideoLinks(m){
+  videoLink.href='https://www.youtube.com/results?search_query='+m.searchQuery;
+  videoLink.style.display='inline-block';
+  searchLink.href='https://www.youtube.com/results?search_query='+m.searchQuery+'+physical+therapy';
+  searchLink.style.display='inline-block';
+}
+function updateNavButtons(){
+  prevBtn.disabled=currentMove<=0;
+  nextBtn.disabled=currentMove>=movements.length-1;
+  navLabel.textContent=(currentMove+1)+' / '+movements.length;
+  navControls.classList.add('visible');
+}
+function prevMovement(){if(currentMove<=0)return;startMovement(currentMove-1);}
+function nextMovement(){if(currentMove>=movements.length-1)return;startMovement(currentMove+1);}
+
+function startMovement(index){
+  currentMove=index;const m=movements[index];timeLeft=m.duration;switchCalled=false;
+  movNum.textContent='MOVEMENT '+m.num+' OF 12';
+  movName.textContent=m.name;
+  movTarget.textContent=m.target;
+  sideBadge.classList.toggle('visible',!!m.bilateral);
+  formCue.innerHTML=m.cue;
+  updateVideoLinks(m);
+  updateNavButtons();
+  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot'+(i<index?' done':i===index?' active':'');});
+  transitionChime();
+  setTimeout(()=>speak(m.name+(m.bilateral?'. Start with your right side.':'')),500);
+  updateDisplay();
+}
+
+function tick(){
+  timeLeft--;
+  updateDisplay();
+  const m=movements[currentMove];
+  if(m&&m.bilateral&&!switchCalled&&timeLeft===Math.floor(m.duration/2)){
+    switchCalled=true;switchChime();setTimeout(()=>speak('Switch sides'),300);
+  }
+  if(timeLeft===3)playChime(380,0.05,0.3);
+  if(timeLeft<=0){
+    if(currentMove<movements.length-1)startMovement(currentMove+1);
+    else completeSession();
+  }
+}
+
+function completeSession(){
+  clearInterval(interval);interval=null;running=false;releaseWakeLock();
+  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot done';});
+  movNum.textContent='COMPLETE';movName.textContent='Movement complete';
+  movTarget.textContent='';sideBadge.classList.remove('visible');
+  timeDisp.textContent='\u2713';ring.style.strokeDashoffset=0;
+  document.querySelector('.container').classList.add('state-complete');
+  mainBtn.style.display='none';resetBtn.style.display='';
+  videoLink.style.display='none';searchLink.style.display='none';
+  navControls.classList.remove('visible');
+  formCue.innerHTML='<strong>Done.</strong> Hips and ankles mobile. Spine articulated. Hip rotation opened. Core switched on. Nothing impacted the peroneal tendon.';
+  completionChime();setTimeout(()=>speak('Movement complete.'),600);
+}
+
+function toggleTimer(){
+  if(!running){
+    running=true;mainBtn.textContent='Pause';resetBtn.style.display='';requestWakeLock();
+    getAudioCtx();if(audioCtx.state==='suspended')audioCtx.resume();
+    if(currentMove===0&&timeLeft===0){speak('Beginning morning movement.');setTimeout(()=>startMovement(0),1800);}
+    interval=setInterval(tick,1000);
+  }else{
+    running=false;clearInterval(interval);interval=null;releaseWakeLock();mainBtn.textContent='Resume';
+  }
+}
+function toggleVoice(){voiceOn=!voiceOn;voiceBtn.textContent=voiceOn?'Voice On':'Voice Off';voiceBtn.classList.toggle('active-toggle',voiceOn);}
+function resetTimer(){
+  clearInterval(interval);interval=null;running=false;releaseWakeLock();currentMove=0;timeLeft=0;switchCalled=false;
+  document.querySelector('.container').classList.remove('state-complete');
+  movNum.textContent='READY';movName.textContent='Tap Start to begin';movTarget.textContent='';
+  sideBadge.classList.remove('visible');
+  mainBtn.textContent='Start';mainBtn.style.display='';resetBtn.style.display='none';
+  videoLink.style.display='none';searchLink.style.display='none';
+  navControls.classList.remove('visible');
+  ring.style.strokeDashoffset=0;timeDisp.textContent='0:30';
+  formCue.innerHTML='<strong>Morning Movement</strong> progresses from standing mobility to floor work to core stability. Two-sided movements chime at the halfway point so you know when to switch. No impact \u2014 safe for the R peroneal tendon.';
+  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot';});
+}
+
+const totalSec=movements.reduce((s,m)=>s+m.duration,0);
+document.getElementById('totalTime').textContent='Total: '+Math.floor(totalSec/60)+':'+String(totalSec%60).padStart(2,'0');
+</script>
+</body>
+</html>
