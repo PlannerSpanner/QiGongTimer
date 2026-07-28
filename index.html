@@ -4,275 +4,124 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Morning Flow">
-<title>Morning Flow</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Training">
+<meta name="theme-color" content="#f2ede1">
+<title>Training Timers</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;background:linear-gradient(145deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#e0e0e0;padding:16px;user-select:none;-webkit-user-select:none}
-.container{width:100%;max-width:400px;text-align:center}
-h1{font-size:1.3rem;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#a0b4c8;margin-bottom:4px}
-.subtitle{font-size:0.65rem;letter-spacing:2px;color:#4a6a8a;margin-bottom:18px;text-transform:uppercase}
-.ring-container{position:relative;width:220px;height:220px;margin:0 auto 14px}
-.ring-bg{fill:none;stroke:#1e3050;stroke-width:6}
-.ring-progress{fill:none;stroke:#5dade2;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.3s linear;filter:drop-shadow(0 0 6px rgba(93,173,226,0.3))}
-.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.time-display{font-size:2.8rem;font-weight:200;letter-spacing:2px;color:#fff;font-variant-numeric:tabular-nums}
-.movement-number{font-size:0.7rem;letter-spacing:3px;color:#5dade2;margin-bottom:2px}
-.movement-name{font-size:1.05rem;font-weight:500;color:#c8dce8;margin-bottom:4px;min-height:24px;display:flex;align-items:center;justify-content:center;line-height:1.3;padding:0 8px}
-.movement-target{font-size:0.7rem;color:#5a8aaa;margin-bottom:8px;font-style:italic}
-.video-buttons{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
-.video-link{display:none;text-decoration:none}
-.video-link-inner{display:inline-flex;align-items:center;gap:5px;background:rgba(255,68,68,0.12);color:#ff6b6b;font-size:0.72rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(255,68,68,0.2)}
-.video-link-inner svg{width:14px;height:14px;fill:currentColor}
-.search-link{display:none;text-decoration:none}
-.search-link-inner{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.06);color:#5a8aaa;font-size:0.68rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(255,255,255,0.08)}
-.progress-dots{display:flex;justify-content:center;gap:7px;margin-bottom:14px;flex-wrap:wrap}
-.dot{width:10px;height:10px;border-radius:50%;background:#1e3050;transition:all 0.4s}
-.dot.active{background:#5dade2;box-shadow:0 0 8px rgba(93,173,226,0.5)}
-.dot.done{background:#2e6d8a}
-.nav-controls{display:none;gap:12px;justify-content:center;align-items:center;margin-bottom:12px}
-.nav-controls.visible{display:flex}
-.btn-nav{background:rgba(255,255,255,0.06);color:#a0b4c8;font-size:0.85rem;padding:10px 18px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:4px}
-.btn-nav:active{background:rgba(93,173,226,0.2)}
-.btn-nav:disabled{opacity:0.25;pointer-events:none}
-.btn-nav svg{width:14px;height:14px;fill:currentColor}
-.nav-label{font-size:0.65rem;color:#4a6a8a;letter-spacing:1px}
-.controls{display:flex;gap:12px;justify-content:center;margin-bottom:10px}
-button{border:none;border-radius:50px;cursor:pointer;font-family:inherit;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
-.btn-primary{background:#5dade2;color:#0f3460;font-size:1rem;font-weight:600;padding:12px 36px;letter-spacing:1px}
-.btn-primary:active{transform:scale(0.96);background:#4a9bd4}
-.btn-secondary{background:rgba(255,255,255,0.08);color:#a0b4c8;font-size:0.8rem;padding:8px 20px;border:1px solid rgba(255,255,255,0.1)}
-.btn-secondary:active{background:rgba(255,255,255,0.15)}
-.btn-secondary.active-toggle{background:rgba(93,173,226,0.2);border-color:#5dade2;color:#5dade2}
-.dur-btn{background:rgba(255,255,255,0.06);color:#4a6a8a;font-size:0.75rem;padding:5px 14px;border:1px solid rgba(255,255,255,0.08);border-radius:20px}
-.dur-btn.selected{background:rgba(93,173,226,0.15);color:#a0b4c8;border-color:rgba(93,173,226,0.3)}
-.duration-selector{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
-.form-cue{padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);font-size:0.72rem;color:#5a8aaa;line-height:1.5;text-align:left;min-height:50px}
-.form-cue strong{color:#a0b4c8}
-.state-complete .movement-name{color:#5dade2;font-size:1.2rem}
-.total-time{font-size:0.65rem;color:#4a6a8a;letter-spacing:1px;margin-top:8px}
-.music-tip{margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.04);font-size:0.68rem;color:#4a6a8a;line-height:1.4;text-align:left}
-.music-tip strong{color:#5a8aaa}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;
+  background:linear-gradient(165deg,#f6f1e4 0%,#eef0e2 45%,#e4ecea 100%);
+  color:#3a3d36;padding:30px 18px 44px;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.container{width:100%;max-width:420px;margin:0 auto}
+h1{font-size:1.35rem;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:#4a5548;text-align:center;margin-bottom:5px}
+.subtitle{font-size:0.64rem;letter-spacing:2.5px;color:#8a9080;text-align:center;margin-bottom:7px;text-transform:uppercase}
+.datebar{font-size:0.7rem;letter-spacing:1px;color:#9aa08e;text-align:center;margin-bottom:26px}
+.card{display:block;text-decoration:none;background:rgba(255,255,255,0.62);
+  border:1px solid rgba(90,100,80,0.11);border-left:4px solid var(--accent,#4f7d5e);
+  border-radius:13px;padding:15px 17px;margin-bottom:12px;
+  box-shadow:0 1px 3px rgba(80,90,70,0.05);transition:all 0.18s}
+.card:active{background:rgba(255,255,255,0.9);transform:scale(0.985);box-shadow:0 2px 8px rgba(80,90,70,0.09)}
+.card-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+.card-name{font-size:1.04rem;font-weight:600;color:var(--accent,#4f7d5e)}
+.card-time{font-size:0.68rem;color:#9aa08e;letter-spacing:1px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.card-desc{font-size:0.75rem;color:#61665a;line-height:1.48}
+.card-tag{display:inline-block;font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--accent,#4f7d5e);background:rgba(255,255,255,0.75);
+  border:1px solid rgba(90,100,80,0.13);border-radius:20px;padding:2px 9px;margin-top:9px}
+.section-label{font-size:0.62rem;letter-spacing:2.5px;text-transform:uppercase;color:#9aa08e;margin:24px 0 10px 4px}
+.section-label:first-of-type{margin-top:0}
+.footer{margin-top:28px;padding:13px 16px;background:rgba(255,255,255,0.45);
+  border-radius:11px;border:1px solid rgba(90,100,80,0.09);
+  font-size:0.68rem;color:#7a8072;line-height:1.55;text-align:left}
+.footer strong{color:#4a5548}
 </style>
 </head>
 <body>
-<div class="container" id="app">
-  <h1>Morning Flow</h1>
-  <div class="subtitle">Dynamic Qi Gong · Targeted Rehab · 10 min</div>
-  <div class="duration-selector" id="durSel">
-    <button class="btn dur-btn" onclick="setDuration(45)">45s</button>
-    <button class="btn dur-btn selected" onclick="setDuration(60)">60s</button>
-    <button class="btn dur-btn" onclick="setDuration(90)">90s</button>
-  </div>
-  <div class="ring-container">
-    <svg width="220" height="220" viewBox="0 0 220 220">
-      <circle class="ring-bg" cx="110" cy="110" r="96"/>
-      <circle class="ring-progress" id="ring" cx="110" cy="110" r="96"
-        stroke-dasharray="603.19" stroke-dashoffset="0"
-        transform="rotate(-90 110 110)"/>
-    </svg>
-    <div class="timer-text">
-      <div class="movement-number" id="movNum">READY</div>
-      <div class="time-display" id="timeDisp">1:00</div>
+<div class="container">
+  <h1>Training</h1>
+  <div class="subtitle">Timers &amp; Routines</div>
+  <div class="datebar" id="datebar"></div>
+
+  <!-- ============================================================
+       TO ADD A NEW TIMER: copy one <a class="card"> block,
+       paste it where you want it, and change five things:
+         href       -> the filename, e.g. "strength-session.html"
+         --accent   -> hex color, matched to that timer's own theme
+         card-name  -> display name
+         card-time  -> duration
+         card-desc  -> one-line description
+         card-tag   -> short category label
+
+       NATURAL PALETTE (pick accents from here):
+         moss        #4f7d5e      lake        #3f7d94
+         terracotta  #b5643c      clay        #a8705a
+         amber       #c08a2e      lichen      #7d8f4e
+         slate       #5f6b78      plum        #7a5d7e
+         rose        #a86b74      bark        #6d5a48
+       ============================================================ -->
+
+  <div class="section-label">Daily</div>
+
+  <a class="card" href="morning-flow.html" style="--accent:#3f7d94">
+    <div class="card-top">
+      <span class="card-name">Morning Flow</span>
+      <span class="card-time">10 min</span>
     </div>
-  </div>
-  <div class="movement-name" id="movName">Tap Start to begin</div>
-  <div class="movement-target" id="movTarget"></div>
-  <div class="video-buttons">
-    <a class="video-link" id="videoLink" href="#" target="_blank" rel="noopener">
-      <span class="video-link-inner">
-        <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-        Watch form
-      </span>
-    </a>
-    <a class="search-link" id="searchLink" href="#" target="_blank" rel="noopener">
-      <span class="search-link-inner">Find more demos</span>
-    </a>
-  </div>
-  <div class="progress-dots" id="dots"></div>
-  <div class="nav-controls" id="navControls">
-    <button class="btn btn-nav" id="prevBtn" onclick="prevMovement()" disabled>
-      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-      Prev
-    </button>
-    <span class="nav-label" id="navLabel"></span>
-    <button class="btn btn-nav" id="nextBtn" onclick="nextMovement()">
-      Next
-      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
-    </button>
-  </div>
-  <div class="controls">
-    <button class="btn-primary" id="mainBtn" onclick="toggleTimer()">Start</button>
-    <button class="btn-secondary active-toggle" id="voiceBtn" onclick="toggleVoice()">Voice On</button>
-  </div>
-  <div class="controls">
-    <button class="btn-secondary" id="resetBtn" onclick="resetTimer()" style="display:none">Reset</button>
-  </div>
-  <div class="form-cue" id="formCue">
-    <strong>Morning Flow</strong> blends dynamic Qi Gong with targeted rehab. Every movement is continuous and rhythmic — no holding poses. Each one does double duty: feels like a workout, targets a specific weak point.
-  </div>
-  <div class="total-time" id="totalTime"></div>
-  <div class="music-tip">
-    <strong>Music:</strong> Start your playlist before tapping Start. Chimes and voice prompts play over your music.
+    <div class="card-desc">Dynamic Qi Gong blended with targeted rehab. Continuous, rhythmic movement — nothing held.</div>
+    <span class="card-tag">Mobility · Rehab</span>
+  </a>
+
+  <a class="card" href="morning-movement.html" style="--accent:#b5643c">
+    <div class="card-top">
+      <span class="card-name">Morning Movement</span>
+      <span class="card-time">9 min</span>
+    </div>
+    <div class="card-desc">Standing mobility into floor work into core stability. Chimes at the halfway point on two-sided movements.</div>
+    <span class="card-tag">Mobility · Core</span>
+  </a>
+
+  <div class="section-label">Before Training</div>
+
+  <a class="card" href="hip-activation.html" style="--accent:#4f7d5e">
+    <div class="card-top">
+      <span class="card-name">Hip Activation</span>
+      <span class="card-time">5 min</span>
+    </div>
+    <div class="card-desc">Fires the glute medius before your feet hit the ground. Do this before every run.</div>
+    <span class="card-tag">Pre-run · IT band</span>
+  </a>
+
+  <div class="section-label">Prenatal</div>
+
+  <a class="card" href="pregnancy-stretch.html" style="--accent:#a86b74">
+    <div class="card-top">
+      <span class="card-name">Prenatal Stretch</span>
+      <span class="card-time">10 min</span>
+    </div>
+    <div class="card-desc">Gentle seated, side-lying, and supported stretches. No flat-on-back positions, no balance work.</div>
+    <span class="card-tag">Gentle · Daily</span>
+  </a>
+
+  <a class="card" href="pregnancy-movement.html" style="--accent:#c08a2e">
+    <div class="card-top">
+      <span class="card-name">Birth Prep</span>
+      <span class="card-time">11 min</span>
+    </div>
+    <div class="card-desc">Pelvic floor release and coordination, hip and adductor mobility, pelvic outlet opening.</div>
+    <span class="card-tag">Birth Preparation</span>
+  </a>
+
+  <div class="footer">
+    <strong>Open in Safari</strong> — Chrome on iOS won't keep the screen awake or install to the home screen.<br>
+    <strong>Playing music?</strong> Start it before tapping Start in any timer.
   </div>
 </div>
 
 <script>
-const movements = [
-  {
-    num: 1, name: "Bouncing in place",
-    target: "Calf + Achilles prep · blood flow · warmup",
-    cue: "<strong>Form:</strong> Light, quick bounces on the balls of your feet. Knees soft, shoulders relaxed, arms loose at sides. Let everything jiggle. <strong>Targets:</strong> Calf and Achilles conditioning for running. Gentle impact stimulates bone density. Gets blood moving to warm up every joint before the dynamic movements.",
-    videoUrl: "https://www.youtube.com/results?search_query=qi+gong+bouncing+shaking+warmup",
-    searchQuery: "qi+gong+bouncing+in+place+shaking+warmup"
-  },
-  {
-    num: 2, name: "Rotations with shoulder slaps",
-    target: "Thoracic rotation · mid-back pain relief",
-    cue: "<strong>Form:</strong> Rotate your upper body side to side. Arms stay completely loose — let them swing and slap your shoulders and back naturally. Drive the rotation from your waist, not your arms. <strong>Targets:</strong> Thoracic spine rotation through T4-T8. The loose arms make this feel effortless while mobilizing the exact segment where your chronic mid-back pain lives.",
-    videoUrl: "https://www.youtube.com/results?search_query=qi+gong+upper+body+rotation+loose+arms+shoulder+slaps",
-    searchQuery: "qi+gong+twisting+body+slapping+shoulders+exercise"
-  },
-  {
-    num: 3, name: "Arm sweeps with knee dip",
-    target: "Posterior chain · hip hinge · hamstrings",
-    cue: "<strong>Form:</strong> Both arms sweep forward and up, then back behind you as your knees dip into a slight squat. Continuous, rhythmic. Think of a pendulum — arms and knees move together. <strong>Targets:</strong> Dynamic hip hinge pattern. Activates glutes and hamstrings while opening the chest on the forward sweep. Posterior chain flexibility for running economy.",
-    videoUrl: "https://www.youtube.com/results?search_query=qi+gong+arm+swings+front+back+knee+bend",
-    searchQuery: "qi+gong+double+arm+swing+knee+dip+exercise"
-  },
-  {
-    num: 4, name: "Punching rotations",
-    target: "Serratus anterior · rhomboid relief",
-    cue: "<strong>Form:</strong> Horse stance. Punch to each side with power — alternate left and right. At full extension, PUSH your shoulder blade forward around your ribcage. This is the same protraction cue as your landmine press. <strong>Targets:</strong> The serratus anterior — the weak muscle causing your rhomboid overwork and mid-back pain. The dynamic version feels powerful and satisfying while doing real rehab work.",
-    videoUrl: "https://www.youtube.com/results?search_query=ba+duan+jin+clench+fists+glare+fiercely+punching",
-    searchQuery: "qi+gong+punching+horse+stance+exercise"
-  },
-  {
-    num: 5, name: "Dynamic lateral reaches",
-    target: "Lateral fascia · R-side asymmetry correction",
-    cue: "<strong>Form:</strong> Feet wide, reach one arm overhead and lean to the opposite side. Alternate continuously. Reach LONG through the fingertips — feel the stretch from hip to hand. <strong>Targets:</strong> Lateral fascial line that connects your IT band through your obliques to your lats. Addresses the left-right asymmetry from your R-side kinetic chain. Based on Ba Duan Jin 'Separate Heaven and Earth' but done dynamically.",
-    videoUrl: "https://www.youtube.com/results?search_query=dynamic+standing+lateral+stretch+side+bend+flow",
-    searchQuery: "dynamic+lateral+reach+side+bend+exercise+flow"
-  },
-  {
-    num: 6, name: "Cross-body knee drives",
-    target: "Hip flexor activation · IT band prep · core",
-    cue: "<strong>Form:</strong> Drive one knee up while bringing the opposite elbow to meet it. Alternate sides rhythmically. Stay tall — don't hunch forward. Pump the arms like a sprinter. <strong>Targets:</strong> Hip flexor activation + rotational core stability. The cross-body pattern fires your obliques and glute medius simultaneously — your two biggest IT band protectors. More athletic than the original knee raise with hand slaps.",
-    videoUrl: "https://www.youtube.com/results?search_query=standing+cross+body+knee+drive+exercise",
-    searchQuery: "standing+cross+body+knee+to+elbow+exercise"
-  },
-  {
-    num: 7, name: "Chest opener swings",
-    target: "Shoulder mobility · AC separation rehab",
-    cue: "<strong>Form:</strong> Arms swing wide open to the sides (chest opens, shoulder blades squeeze), then cross in front of your body (chest closes, shoulders protract). Continuous, rhythmic. Alternate which arm is on top when crossing. <strong>Targets:</strong> Pec stretch + posterior shoulder activation through a safe range for your R AC separation. The opening phase activates rhomboids and lower trap; the closing phase activates serratus. Both sides of your mid-back equation in one flowing movement.",
-    videoUrl: "https://www.youtube.com/results?search_query=dynamic+chest+opener+arm+swings+exercise",
-    searchQuery: "dynamic+chest+opener+arm+cross+swings+warmup"
-  },
-  {
-    num: 8, name: "Hip circles",
-    target: "IT band fascial release · hip mobility",
-    cue: "<strong>Form:</strong> Hands on hips. Large, slow circles — push hips forward, to the side, back, and around. Do half the time in each direction. Make the circles as big as possible. <strong>Targets:</strong> Mobilizes the hip capsule in every plane of motion. Stretches the IT band's fascial connections, hip flexors, and glute complex. The circular motion reaches angles that linear stretches miss.",
-    videoUrl: "https://www.youtube.com/results?search_query=standing+hip+circles+mobility+exercise",
-    searchQuery: "standing+hip+circles+large+mobility+warmup"
-  },
-  {
-    num: 9, name: "Bent rotation sweeps",
-    target: "Thoracic + lumbar mobility under load",
-    cue: "<strong>Form:</strong> Bend forward at the hips (~45 degrees). Arms hanging loose. Rotate your upper body side to side, letting your arms sweep and wrap around you. Keep your hips facing forward — all the rotation comes from the spine. <strong>Targets:</strong> Combines your original movements 8 and 9 (upper body rotations with increasing hip bend). The bent position adds a gravity load to the thoracic rotation, making it a more effective mobilization than the upright version.",
-    videoUrl: "https://www.youtube.com/results?search_query=qi+gong+bent+over+rotation+loose+arms+exercise",
-    searchQuery: "bent+over+spinal+rotation+loose+arms+qi+gong"
-  },
-  {
-    num: 10, name: "Jump twists",
-    target: "Full body integration · rotational power",
-    cue: "<strong>Form:</strong> Light jumps while rotating your lower body side to side. Upper body stays relatively stable — the twist comes from the hips and core. Land softly. Build intensity gradually. <strong>Targets:</strong> Integrates everything you just mobilized into one explosive, full-body movement. Rotational power through the core, calf spring, and a fun finish that sends you into your day feeling energized.",
-    videoUrl: "https://www.youtube.com/results?search_query=qi+gong+jump+twist+rotation+exercise",
-    searchQuery: "jump+twist+rotational+exercise+warmup"
-  }
-];
-
-let duration=60,timeLeft=60,currentMove=0,running=false,interval=null,voiceOn=true,audioCtx=null,wakeLock=null;
-const ring=document.getElementById('ring'),timeDisp=document.getElementById('timeDisp'),movNum=document.getElementById('movNum'),movName=document.getElementById('movName'),movTarget=document.getElementById('movTarget'),mainBtn=document.getElementById('mainBtn'),voiceBtn=document.getElementById('voiceBtn'),resetBtn=document.getElementById('resetBtn'),dotsEl=document.getElementById('dots'),formCue=document.getElementById('formCue'),videoLink=document.getElementById('videoLink'),searchLink=document.getElementById('searchLink'),navControls=document.getElementById('navControls'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),navLabel=document.getElementById('navLabel'),circumference=2*Math.PI*96;
-
-movements.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='dot'+i;dotsEl.appendChild(d);});
-
-async function requestWakeLock(){try{if('wakeLock'in navigator){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null;});}}catch(e){}}
-function releaseWakeLock(){if(wakeLock){wakeLock.release();wakeLock=null;}}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&running){requestWakeLock();}});
-
-function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function playChime(freq,vol,dur){try{const ctx=getAudioCtx();if(ctx.state==='suspended')ctx.resume();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,ctx.currentTime);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(vol,ctx.currentTime+0.05);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);osc.connect(gain);gain.connect(ctx.destination);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+dur);}catch(e){}}
-function transitionChime(){playChime(523.25,0.12,1.0);setTimeout(()=>playChime(659.25,0.1,0.8),150);setTimeout(()=>playChime(783.99,0.08,0.6),300);}
-function completionChime(){playChime(523.25,0.12,1.2);setTimeout(()=>playChime(659.25,0.1,1.0),200);setTimeout(()=>playChime(783.99,0.1,1.0),400);setTimeout(()=>playChime(1046.5,0.08,1.5),600);}
-function speak(text){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(text);u.rate=0.85;u.pitch=0.9;u.volume=0.8;speechSynthesis.speak(u);}catch(e){}}
-
-function setDuration(d){if(running)return;duration=d;timeLeft=d;updateDisplay();document.querySelectorAll('.dur-btn').forEach(b=>{b.classList.toggle('selected',parseInt(b.textContent)===d);});updateTotalTime();}
-function updateTotalTime(){const t=duration*10;document.getElementById('totalTime').textContent='Total: '+Math.floor(t/60)+':'+String(t%60).padStart(2,'0');}
-function updateDisplay(){const mins=Math.floor(timeLeft/60);const secs=timeLeft%60;timeDisp.textContent=mins+':'+String(secs).padStart(2,'0');const progress=1-(timeLeft/duration);ring.style.strokeDashoffset=circumference*(1-progress);}
-
-function updateVideoLinks(m){
-  if(m.videoUrl){videoLink.href=m.videoUrl;videoLink.style.display='inline-block';}
-  else{videoLink.style.display='none';}
-  searchLink.href='https://www.youtube.com/results?search_query='+m.searchQuery;
-  searchLink.style.display='inline-block';
-}
-function updateNavButtons(){
-  prevBtn.disabled=currentMove<=0;
-  nextBtn.disabled=currentMove>=movements.length-1;
-  navLabel.textContent=(currentMove+1)+' / '+movements.length;
-  navControls.classList.add('visible');
-}
-function prevMovement(){if(currentMove<=0)return;startMovement(currentMove-1);}
-function nextMovement(){if(currentMove>=movements.length-1)return;startMovement(currentMove+1);}
-
-function startMovement(index){
-  currentMove=index;const m=movements[index];timeLeft=duration;
-  movNum.textContent='MOVEMENT '+m.num+' OF 10';
-  movName.textContent=m.name;
-  movTarget.textContent=m.target;
-  formCue.innerHTML=m.cue;
-  updateVideoLinks(m);
-  updateNavButtons();
-  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot'+(i<index?' done':i===index?' active':'');});
-  transitionChime();setTimeout(()=>speak(m.name),500);updateDisplay();
-}
-
-function tick(){timeLeft--;updateDisplay();if(timeLeft===3)playChime(440,0.06,0.3);if(timeLeft<=0){if(currentMove<movements.length-1)startMovement(currentMove+1);else completeSession();}}
-
-function completeSession(){
-  clearInterval(interval);interval=null;running=false;releaseWakeLock();
-  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot done';});
-  movNum.textContent='COMPLETE';movName.textContent='Flow complete';
-  movTarget.textContent='';timeDisp.textContent='\u2713';ring.style.strokeDashoffset=0;
-  document.querySelector('.container').classList.add('state-complete');
-  mainBtn.style.display='none';resetBtn.style.display='';
-  videoLink.style.display='none';searchLink.style.display='none';
-  navControls.classList.remove('visible');
-  formCue.innerHTML='<strong>Done.</strong> Thoracic spine mobilized. Serratus activated. Hips opened. Posterior chain warm. Calves primed. Go crush it.';
-  completionChime();setTimeout(()=>speak('Flow complete. Go crush it.'),600);
-}
-
-function toggleTimer(){
-  if(!running){running=true;mainBtn.textContent='Pause';resetBtn.style.display='';requestWakeLock();getAudioCtx();if(audioCtx.state==='suspended')audioCtx.resume();
-    if(currentMove===0&&timeLeft===duration){speak('Beginning morning flow.');setTimeout(()=>startMovement(0),1800);}
-    interval=setInterval(tick,1000);
-  }else{running=false;clearInterval(interval);interval=null;releaseWakeLock();mainBtn.textContent='Resume';}
-}
-function toggleVoice(){voiceOn=!voiceOn;voiceBtn.textContent=voiceOn?'Voice On':'Voice Off';voiceBtn.classList.toggle('active-toggle',voiceOn);}
-function resetTimer(){
-  clearInterval(interval);interval=null;running=false;releaseWakeLock();currentMove=0;timeLeft=duration;
-  document.querySelector('.container').classList.remove('state-complete');
-  movNum.textContent='READY';movName.textContent='Tap Start to begin';movTarget.textContent='';
-  mainBtn.textContent='Start';mainBtn.style.display='';resetBtn.style.display='none';
-  videoLink.style.display='none';searchLink.style.display='none';
-  navControls.classList.remove('visible');
-  ring.style.strokeDashoffset=0;
-  formCue.innerHTML='<strong>Morning Flow</strong> blends dynamic Qi Gong with targeted rehab. Every movement is continuous and rhythmic \u2014 no holding poses. Each one does double duty: feels like a workout, targets a specific weak point.';
-  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot';});
-  updateDisplay();
-}
-updateDisplay();updateTotalTime();
+const d = new Date();
+document.getElementById('datebar').textContent =
+  d.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
 </script>
 </body>
 </html>
