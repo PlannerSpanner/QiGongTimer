@@ -6,7 +6,7 @@ deployed to GitHub Pages at https://plannerspanner.github.io/QiGongTimer/
 Built for iPhone Safari (wake lock + Add to Home Screen require Safari, not Chrome).
 
 Apps: `morning-flow` (qi gong warmup), `morning-movement` (mobility/strength),
-`pregnancy-stretch` (Prenatal Stretch, 10 moves), `pregnancy-movement` (Birth Prep, 11 moves).
+`prenatal-stretch` (Prenatal Stretch, 10 moves), `prenatal-movement` (Birth Prep, 11 moves).
 Also `hip-activation.html` — older layout, no figures, timer already timestamp-patched. Leave unless asked.
 
 ## Build

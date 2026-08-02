@@ -3,7 +3,7 @@
 const fs=require('fs'),path=require('path');
 const {chromium}=require('playwright');
 const {serve}=require('./serve');
-const APPS=['morning-flow','morning-movement','pregnancy-stretch','pregnancy-movement'];
+const APPS=['morning-flow','morning-movement','prenatal-stretch','prenatal-movement'];
 const OUT=path.join(__dirname,'screenshots');
 (async()=>{
   fs.mkdirSync(OUT,{recursive:true});

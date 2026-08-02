@@ -4,262 +4,533 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Prenatal Stretch">
 <meta name="theme-color" content="#fdf4f1">
+<link rel="apple-touch-icon" href="icon-prenatal-stretch.png">
 <title>Prenatal Stretch</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
   background:linear-gradient(160deg,#fdf4f1 0%,#fbecf1 42%,#f1eefa 100%);
-  color:#4c3d43;padding:16px;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
-.container{width:100%;max-width:400px;text-align:center}
-h1{font-size:1.2rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#a8546b;margin-bottom:4px}
-.subtitle{font-size:0.63rem;letter-spacing:2px;color:#a98b95;margin-bottom:10px;text-transform:uppercase}
-.safety-banner{font-size:0.67rem;line-height:1.55;color:#8f4550;background:rgba(214,110,120,0.11);border:1px solid rgba(214,110,120,0.3);border-radius:11px;padding:10px 13px;margin-bottom:16px;text-align:left}
-.safety-banner strong{color:#7d353f}
-.ring-container{position:relative;width:210px;height:210px;margin:0 auto 12px}
-.ring-bg{fill:none;stroke:#f2dfe4;stroke-width:6}
-.ring-progress{fill:none;stroke:#d9788f;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.3s linear}
-.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.time-display{font-size:2.7rem;font-weight:200;letter-spacing:2px;color:#4c3d43;font-variant-numeric:tabular-nums}
-.movement-number{font-size:0.68rem;letter-spacing:3px;color:#c4657f;margin-bottom:2px}
-.movement-name{font-size:1.02rem;font-weight:600;color:#7d3f53;margin-bottom:3px;min-height:24px;display:flex;align-items:center;justify-content:center;line-height:1.3;padding:0 8px}
-.movement-target{font-size:0.71rem;color:#a1808b;margin-bottom:6px;font-style:italic}
-.side-badge{display:none;font-size:0.61rem;letter-spacing:2px;color:#b05a76;background:rgba(255,255,255,0.75);border:1px solid rgba(190,120,140,0.3);border-radius:20px;padding:3px 12px;margin-bottom:8px}
-.side-badge.visible{display:inline-block}
-.video-buttons{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
-.video-link{display:none;text-decoration:none}
-.video-link-inner{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.8);color:#c0392b;font-size:0.71rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(192,57,43,0.22)}
-.video-link-inner svg{width:14px;height:14px;fill:currentColor}
-.search-link{display:none;text-decoration:none}
-.search-link-inner{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.65);color:#96737f;font-size:0.67rem;padding:6px 14px;border-radius:50px;border:1px solid rgba(150,115,127,0.2)}
-.progress-dots{display:flex;justify-content:center;gap:7px;margin-bottom:13px;flex-wrap:wrap}
-.dot{width:10px;height:10px;border-radius:50%;background:#eedde3;transition:all 0.4s}
-.dot.active{background:#d9788f;box-shadow:0 0 8px rgba(217,120,143,0.45)}
+  color:#4c3d43;padding:12px 14px 20px;user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent}
+.wrap{width:100%;max-width:400px;text-align:center}
+h1{font-size:0.92rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#a8546b;margin-bottom:1px}
+.sub{font-size:0.55rem;letter-spacing:2px;color:#a98b95;margin-bottom:9px;text-transform:uppercase}
+
+.num{font-size:0.6rem;letter-spacing:3px;color:#c4657f;margin-bottom:1px}
+.nm{font-size:1.06rem;font-weight:600;color:#7d3f53;line-height:1.2;min-height:23px}
+.tg{font-size:0.66rem;color:#a1808b;font-style:italic;min-height:16px;margin-bottom:5px}
+
+.stage{position:relative;width:100%;background:none;border:none;padding:0;margin-bottom:8px}
+.stage svg{width:100%;height:auto;display:block}
+.side-badge{display:none;position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  font-size:0.55rem;letter-spacing:1.5px;color:#a8546b;background:rgba(255,255,255,0.9);
+  border:1px solid rgba(190,120,140,0.3);border-radius:20px;padding:2px 10px;white-space:nowrap}
+.side-badge.visible{display:block}
+
+.barrow{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.tm{font-size:1.5rem;font-weight:200;color:#4c3d43;font-variant-numeric:tabular-nums;
+  letter-spacing:1px;min-width:62px;text-align:left}
+.track{flex:1;height:7px;background:#f2dfe4;border-radius:6px;overflow:hidden}
+.fill{height:100%;width:0%;background:#d9788f;border-radius:6px;transition:width 0.25s linear}
+.count{font-size:0.62rem;letter-spacing:1px;color:#a98b95;min-width:34px;text-align:right}
+
+.dots{display:flex;justify-content:center;gap:5px;margin-bottom:9px}
+.dot{width:8px;height:8px;border-radius:50%;background:#f2dfe4;transition:all 0.35s}
+.dot.active{background:#d9788f;box-shadow:0 0 7px rgba(217,120,143,0.45)}
 .dot.done{background:#e8b6c4}
-.nav-controls{display:none;gap:12px;justify-content:center;align-items:center;margin-bottom:12px}
-.nav-controls.visible{display:flex}
-.btn-nav{background:rgba(255,255,255,0.75);color:#a8546b;font-size:0.85rem;padding:10px 18px;border:1px solid rgba(168,84,107,0.2);display:flex;align-items:center;gap:4px}
-.btn-nav:active{background:rgba(255,255,255,1)}
-.btn-nav:disabled{opacity:0.3;pointer-events:none}
-.btn-nav svg{width:14px;height:14px;fill:currentColor}
-.nav-label{font-size:0.65rem;color:#a98b95;letter-spacing:1px}
-.controls{display:flex;gap:12px;justify-content:center;margin-bottom:10px}
-button{border:none;border-radius:50px;cursor:pointer;font-family:inherit;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
-.btn-primary{background:#d9788f;color:#fff;font-size:1rem;font-weight:600;padding:12px 36px;letter-spacing:1px;box-shadow:0 2px 6px rgba(217,120,143,0.28)}
+
+.cue{padding:9px 12px;background:rgba(255,255,255,0.62);border-radius:11px;
+  border:1px solid rgba(150,115,127,0.16);font-size:0.7rem;color:#6b555d;
+  line-height:1.5;text-align:left;margin-bottom:9px;min-height:52px}
+.cue strong{color:#a8546b}
+
+.row{display:flex;gap:9px;justify-content:center;margin-bottom:8px}
+button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transition:all 0.18s}
+.btn-primary{background:#d9788f;color:#fff;font-size:0.95rem;font-weight:600;
+  padding:11px 34px;letter-spacing:1px;box-shadow:0 2px 6px rgba(217,120,143,0.28)}
 .btn-primary:active{transform:scale(0.96);background:#c4657f}
-.btn-secondary{background:rgba(255,255,255,0.75);color:#a8546b;font-size:0.8rem;padding:8px 20px;border:1px solid rgba(168,84,107,0.2)}
-.btn-secondary:active{background:rgba(255,255,255,1)}
-.btn-secondary.active-toggle{background:rgba(217,120,143,0.14);border-color:rgba(217,120,143,0.45);color:#a8546b}
-.form-cue{padding:11px 14px;background:rgba(255,255,255,0.62);border-radius:11px;border:1px solid rgba(150,115,127,0.16);font-size:0.73rem;color:#6b555d;line-height:1.55;text-align:left;min-height:50px}
-.form-cue strong{color:#a8546b}
-.state-complete .movement-name{color:#c4657f;font-size:1.2rem}
-.total-time{font-size:0.66rem;color:#a98b95;letter-spacing:1px;margin-top:8px}
-.note{margin-top:12px;padding:11px 14px;background:rgba(255,255,255,0.5);border-radius:11px;border:1px solid rgba(150,115,127,0.14);font-size:0.68rem;color:#7d6670;line-height:1.55;text-align:left}
-.note strong{color:#a8546b}
+.btn-sec{background:rgba(255,255,255,0.78);color:#a8546b;font-size:0.74rem;
+  padding:8px 16px;border:1px solid rgba(168,84,107,0.2)}
+.btn-sec:active{background:#fff}
+.btn-sec.on{background:rgba(217,120,143,0.14);border-color:rgba(217,120,143,0.45)}
+.btn-sec:disabled{opacity:0.28;pointer-events:none}
+.btn-sec svg{width:13px;height:13px;fill:currentColor;vertical-align:-2px}
+.vid{font-size:0.63rem;color:#a98b95;text-decoration:none;display:inline-block;margin-top:2px}
+.vid:active{color:#a8546b}
+.state-done .nm{color:#c4657f}
 </style>
 </head>
 <body>
-<div class="container" id="app">
+<div class="wrap" id="app">
   <h1>Prenatal Stretch</h1>
-  <div class="subtitle">Gentle · Low-lying placenta safe · 10 min</div>
-  <div class="safety-banner">
-    <strong>Stop immediately</strong> and call your provider for any vaginal bleeding, cramping, contractions, fluid leaking, dizziness, or sharp pain. Get clearance from your OB or midwife before starting. Nothing here should ever feel like straining.
-  </div>
-  <div class="ring-container">
-    <svg width="210" height="210" viewBox="0 0 210 210">
-      <circle class="ring-bg" cx="105" cy="105" r="92"/>
-      <circle class="ring-progress" id="ring" cx="105" cy="105" r="92"
-        stroke-dasharray="578.05" stroke-dashoffset="0"
-        transform="rotate(-90 105 105)"/>
-    </svg>
-    <div class="timer-text">
-      <div class="movement-number" id="movNum">READY</div>
-      <div class="time-display" id="timeDisp">0:00</div>
-    </div>
-  </div>
-  <div class="movement-name" id="movName">Tap Start to begin</div>
-  <div class="movement-target" id="movTarget"></div>
-  <div class="side-badge" id="sideBadge">BOTH SIDES · SWITCH AT HALFWAY</div>
-  <div class="video-buttons">
-    <a class="video-link" id="videoLink" href="#" target="_blank" rel="noopener">
-      <span class="video-link-inner">
-        <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-        Watch form
-      </span>
-    </a>
-    <a class="search-link" id="searchLink" href="#" target="_blank" rel="noopener">
-      <span class="search-link-inner">Find more demos</span>
-    </a>
-  </div>
-  <div class="progress-dots" id="dots"></div>
-  <div class="nav-controls" id="navControls">
-    <button class="btn btn-nav" id="prevBtn" onclick="prevMovement()" disabled>
-      <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-      Prev
-    </button>
-    <span class="nav-label" id="navLabel"></span>
-    <button class="btn btn-nav" id="nextBtn" onclick="nextMovement()">
-      Next
-      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
-    </button>
-  </div>
-  <div class="controls">
-    <button class="btn-primary" id="mainBtn" onclick="toggleTimer()">Start</button>
-    <button class="btn-secondary active-toggle" id="voiceBtn" onclick="toggleVoice()">Voice On</button>
-  </div>
-  <div class="controls">
-    <button class="btn-secondary" id="resetBtn" onclick="resetTimer()" style="display:none">Reset</button>
-  </div>
-  <div class="form-cue" id="formCue">
-    <strong>About this routine:</strong> Every position is seated, side-lying, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout. Never hold your breath.
-  </div>
-  <div class="total-time" id="totalTime"></div>
-</div>
+  <div class="sub">Gentle · Low-lying placenta safe</div>
 
+  <div class="safety"><strong>Stop and call your provider</strong> for any bleeding, cramping, contractions, fluid leaking, dizziness or sharp pain. Get clearance from your OB or midwife first. Never hold your breath or bear down.</div>
+  <div class="num" id="mNum">READY</div>
+  <div class="nm" id="mName">Tap Start to begin</div>
+  <div class="tg" id="mTarget"></div>
+
+  <div class="stage">
+    <div class="side-badge" id="badge">BOTH SIDES · SWITCH AT HALFWAY</div>
+    <svg id="fig" viewBox="0 0 100 100">
+      <ellipse id="shadow" fill="#f0dde3" opacity="0.5"/>
+      <g id="layer"></g>
+    </svg>
+  </div>
+
+  <div class="barrow">
+    <div class="tm" id="tm">0:00</div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="count" id="count">–/10</div>
+  </div>
+
+  <div class="dots" id="dots"></div>
+  <div class="cue" id="cue"><strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.</div>
+
+  <div class="row">
+    <button class="btn-primary" id="bMain">Start</button>
+    <button class="btn-sec on" id="bVoice">Voice</button>
+  </div>
+  <div class="row">
+    <button class="btn-sec" id="bPrev" disabled><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>Prev</button>
+    <button class="btn-sec" id="bReset">Reset</button>
+    <button class="btn-sec" id="bNext">Next<svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg></button>
+  </div>
+  <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
+</div>
 <script>
-const movements = [
-  {
-    num: 1, name: "Seated breathing", duration: 60, bilateral: false,
-    target: "Settle in · rib and diaphragm expansion",
-    cue: "<strong>Form:</strong> Sit tall on a chair or birth ball, feet flat and wide. Breathe in through the nose and feel the ribs widen sideways, not the chest lifting. Long, slow exhale through the mouth. <strong>Why:</strong> As the uterus grows it crowds the diaphragm. Training sideways rib expansion keeps breathing efficient and reduces the shortness of breath that builds through the third trimester.",
-    searchQuery: "prenatal+diaphragmatic+breathing+rib+expansion"
-  },
-  {
-    num: 2, name: "Seated cat-cow", duration: 45, bilateral: false,
-    target: "Spinal mobility · low back relief",
-    cue: "<strong>Form:</strong> Hands on knees. Round the spine and tuck the pelvis on the exhale, then arch gently and open the chest on the inhale. Slow and small. <strong>Why:</strong> The growing belly pulls the pelvis into a forward tilt, compressing the low back. Moving through both directions relieves that and keeps the lumbar spine mobile.",
-    searchQuery: "seated+cat+cow+pregnancy+stretch"
-  },
-  {
-    num: 3, name: "Seated side reach", duration: 60, bilateral: true,
-    target: "Ribs, obliques, and side body",
-    cue: "<strong>Form:</strong> Seated tall. Reach one arm overhead and lean gently to the opposite side. Keep both sit bones down. Breathe into the stretched side. Switch at the halfway chime. <strong>Why:</strong> Creates space between the ribs and hips — one of the most compressed areas in later pregnancy, and it makes room for the diaphragm.",
-    searchQuery: "seated+side+stretch+pregnancy+ribs"
-  },
-  {
-    num: 4, name: "Seated figure-4", duration: 60, bilateral: true,
-    target: "Glutes and piriformis · sciatic relief",
-    cue: "<strong>Form:</strong> Seated, ankle across the opposite knee. Sit tall and hinge forward slightly from the hips until you feel the outer hip open. Switch at the halfway chime. <strong>Why:</strong> Pregnancy loosens the pelvic ligaments and the piriformis often tightens to compensate, which can irritate the sciatic nerve. This is the direct antidote.",
-    searchQuery: "seated+figure+four+piriformis+stretch+pregnancy"
-  },
-  {
-    num: 5, name: "Supported butterfly", duration: 60, bilateral: false,
-    target: "Inner thighs · pelvic outlet",
-    cue: "<strong>Form:</strong> Sit on a cushion or folded blanket so the hips are above the knees. Soles of the feet together, knees falling open. Let gravity do the work — do not push the knees down. <strong>Why:</strong> Adductor flexibility directly affects how wide the pelvic outlet can open during birth. Gentle, consistent, never forced — the ligaments are already softened by relaxin, so aggressive stretching can destabilize the pelvis.",
-    searchQuery: "supported+bound+angle+butterfly+pose+pregnancy"
-  },
-  {
-    num: 6, name: "Wide-knee child's pose", duration: 60, bilateral: false,
-    target: "Low back, hips, and pelvic floor release",
-    cue: "<strong>Form:</strong> Kneel with knees wide and big toes together, sit back toward the heels. Rest your forearms or a cushion under your chest. Belly hangs comfortably in the space between the knees. <strong>Why:</strong> This is one of the best positions for letting the pelvic floor lengthen and release — the exact quality you want available on birth day.",
-    searchQuery: "wide+knee+childs+pose+pregnancy+modification"
-  },
-  {
-    num: 7, name: "Hands-and-knees rocking", duration: 60, bilateral: false,
-    target: "Pelvic mobility · baby positioning",
-    cue: "<strong>Form:</strong> On hands and knees, wrists under shoulders. Rock the hips slowly forward and back, then in gentle circles. Keep the spine neutral — no deep arching. <strong>Why:</strong> Takes the baby's weight off the spine and encourages an optimal anterior fetal position, which is associated with shorter labors and less back labor.",
-    searchQuery: "hands+and+knees+pelvic+rocking+pregnancy"
-  },
-  {
-    num: 8, name: "Kneeling hip flexor stretch", duration: 60, bilateral: true,
-    target: "Hip flexors · anterior pelvis",
-    cue: "<strong>Form:</strong> Half-kneeling with one foot forward, cushion under the back knee. Tuck the pelvis slightly, then shift weight gently forward. Hold a chair for support. Switch at the halfway chime. <strong>Why:</strong> Tight hip flexors tilt the pelvis forward and worsen back pain. Releasing them also helps the pelvic outlet open.",
-    searchQuery: "kneeling+hip+flexor+stretch+pregnancy+safe"
-  },
-  {
-    num: 9, name: "Standing calf stretch", duration: 60, bilateral: true,
-    target: "Calves · cramping and swelling",
-    cue: "<strong>Form:</strong> Hands on a wall or counter, one foot back with the heel pressing down. Keep the back leg straight. Switch at the halfway chime. <strong>Why:</strong> Calf cramps and swelling are among the most common second and third trimester complaints. Stretching plus the muscle pump action helps both.",
-    searchQuery: "standing+calf+stretch+wall+pregnancy"
-  },
-  {
-    num: 10, name: "Doorway chest opener", duration: 45, bilateral: false,
-    target: "Chest and shoulders · posture",
-    cue: "<strong>Form:</strong> Forearms on a doorframe at shoulder height, step one foot through gently. Feel the chest open. Do not lean hard — a mild stretch is plenty. <strong>Why:</strong> Breast growth and the forward weight shift round the shoulders. Opening the chest relieves upper back tension and gives the lungs more room.",
-    searchQuery: "doorway+chest+stretch+pregnancy+posture"
-  },
-  {
-    num: 11, name: "Side-lying rest", duration: 60, bilateral: false,
-    target: "Recovery · circulation",
-    cue: "<strong>Form:</strong> Lie on your left side with a pillow between the knees and one supporting the belly. Slow breathing. Nothing to do here. <strong>Why:</strong> Left side-lying maximizes blood flow to the placenta by keeping pressure off the vena cava. This is both a rest position and a useful habit to build for sleeping.",
-    searchQuery: "left+side+lying+position+pregnancy+pillow+support"
-  }
+const MOVES=[
+{n:"Seated breathing",cue:"Sit tall, breathe wide into the ribs",dur:60,bil:false,cyc:4.0,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+ A:{p:[0,74,0],yaw:-18,tw:0,s:[6,2],hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
+ B:{p:[0,73.4,0],yaw:-18,tw:0,s:[0,-6],hf:-5,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
+
+{n:"Seated cat-cow",cue:"Round on the exhale, arch on the inhale",dur:45,bil:false,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+ A:{p:[0,74,0],yaw:20,tw:0,s:[40,48],hf:26,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
+ B:{p:[0,74,0],yaw:20,tw:0,s:[32,20],hf:-20,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
+
+{n:"Seated side reach",cue:"Reach overhead, both sit bones stay down",dur:60,bil:true,cyc:3.4,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+ A:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],sl:-16,hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[4,16,2]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
+ B:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],sl:16,hf:0,ikL:{w:[-4,16,2]},ikR:{w:[8,72.5,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
+
+{n:"Seated figure-4",cue:"Ankle across the knee, hinge forward",dur:60,bil:true,cyc:3.4,belly:1,pin:"L", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+ A:{p:[0,74,0],yaw:-18,tw:0,s:[6,4],hf:0,ikL:{k:"knL"},ikR:{k:"ftR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[93,20,120,-88]},
+ B:{p:[0,74,0],yaw:-18,tw:0,s:[34,40],hf:-8,ikL:{k:"knL"},ikR:{k:"ftR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[93,20,120,-88]}},
+
+{n:"Supported butterfly",cue:"Soles together in front, knees open to the sides",dur:60,bil:false,cyc:4.2,belly:1,
+ A:{p:[0,86,0],yaw:-20,tw:0,s:[14,18],hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:16,swR:64},
+ B:{p:[0,86,0],yaw:-20,tw:0,s:[18,24],hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:0,swR:82}},
+
+{n:"Wide-knee child's pose",cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,pin:"LR",
+ A:{p:[0,74,-6],yaw:22,tw:0,s:[88,98],hf:22,ikL:{w:[-13,92,26]},ikR:{w:[13,92,26]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[92,-34,-88,-30],lR:[92,34,-88,30]},
+ B:{p:[0,76,-8],yaw:22,tw:0,s:[92,102],hf:18,ikL:{w:[-13,92,28]},ikR:{w:[13,92,28]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[92,-34,-88,-30],lR:[92,34,-88,30]}},
+
+{n:"Hands-and-knees rocking",cue:"Rock the hips gently, spine stays neutral",dur:60,bil:false,cyc:2.8,belly:1,
+ A:{p:[-0.9,74,-2.22],yaw:22,tw:0,s:[78,78],hf:14,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[7.2,-6,-90,-5],lR:[7.2,6,-90,5]},
+ B:{p:[0.9,74,2.22],yaw:22,tw:0,s:[85,85],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-7.2,-6,-90,-5],lR:[-7.2,6,-90,5]}},
+
+{n:"Kneeling hip flexor stretch",cue:"Tuck the pelvis, shift gently forward",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[16,64,10],[16,93,10]]},{l:[[11,64,10],[21,64,10]]}],
+ A:{p:[0,75,-2],yaw:24,tw:0,s:[4,4],hf:0,ikL:{w:[-8,72,2]},ikR:{w:[14,66,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]},
+ B:{p:[0,75.5,1],yaw:24,tw:0,s:[-6,-6],hf:-8,ikL:{w:[-8,72,4]},ikR:{w:[14,66,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
+
+{n:"Standing calf stretch",cue:"Back heel presses down, back leg straight",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[0,33,33],[0,93,33]]}],
+ A:{p:[0,58,4],yaw:24,tw:0,s:[14,10],hf:-4,ikL:{w:[-9,60,31]},ikR:{w:[9,60,31]},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-6,93,-16],ikFR:[6,93,14]},
+ B:{p:[0,58,5.5],yaw:24,tw:0,s:[16,12],hf:-4,ikL:{w:[-9,60,31]},ikR:{w:[9,60,31]},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-6,93,-16],ikFR:[6,93,14]}},
+
+{n:"Doorway chest opener",cue:"Forearm up on the frame, step gently through",dur:45,bil:true,cyc:3.8,belly:1,pin:"LR", prop:[{l:[[-19,25,2],[-19,93,2]]},{l:[[19,25,2],[19,93,2]]}],
+ A:{p:[0,58,0],yaw:-16,tw:0,s:[3,3],hf:0,aL:[6,-10,8,-8],aR:[0,88,178,2],
+    ikFL:[-7,93,-2],ikFR:[7,93,6]},
+ B:{p:[0,58,1.5],yaw:-16,tw:0,s:[3,3],hf:0,aL:[0,-88,178,-2],aR:[6,10,8,8],
+    ikFL:[-7,93,-2],ikFR:[7,93,6]}}
 ];
 
-let timeLeft=0,currentMove=0,running=false,interval=null,voiceOn=true,audioCtx=null,wakeLock=null,switchCalled=false;
-const ring=document.getElementById('ring'),timeDisp=document.getElementById('timeDisp'),movNum=document.getElementById('movNum'),movName=document.getElementById('movName'),movTarget=document.getElementById('movTarget'),sideBadge=document.getElementById('sideBadge'),mainBtn=document.getElementById('mainBtn'),voiceBtn=document.getElementById('voiceBtn'),resetBtn=document.getElementById('resetBtn'),dotsEl=document.getElementById('dots'),formCue=document.getElementById('formCue'),videoLink=document.getElementById('videoLink'),searchLink=document.getElementById('searchLink'),navControls=document.getElementById('navControls'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),navLabel=document.getElementById('navLabel'),circumference=2*Math.PI*92;
+// ================= 3D skeleton =================
+const L={s1:13,s2:13,nh:9,hr:6.2,up:13,fo:13,th:19,sh:19,shW:7.0,hpW:5.0,ft:6.4};
+const R=d=>d*Math.PI/180;
+const rotY=(v,deg)=>{const c=Math.cos(R(deg)),s=Math.sin(R(deg));
+  return [v[0]*c+v[2]*s,v[1],-v[0]*s+v[2]*c];};
+const add=(a,b,k)=>[a[0]+b[0]*k,a[1]+b[1]*k,a[2]+b[2]*k];
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+const len=v=>Math.hypot(v[0],v[1],v[2]);
+const nrm=v=>{const n=len(v)||1;return [v[0]/n,v[1]/n,v[2]/n];};
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+function rotAxis(v,k,th){const c=Math.cos(th),s=Math.sin(th),kv=cross(k,v),
+  kd=k[0]*v[0]+k[1]*v[1]+k[2]*v[2];
+  return [v[0]*c+kv[0]*s+k[0]*kd*(1-c),v[1]*c+kv[1]*s+k[1]*kd*(1-c),v[2]*c+kv[2]*s+k[2]*kd*(1-c)];}
+function dir(flex,abd){const cb=Math.cos(R(abd));
+  return [Math.sin(R(abd)),Math.cos(R(flex))*cb,Math.sin(R(flex))*cb];}
+function spineDir(flex){return [0,-Math.cos(R(flex)),Math.sin(R(flex))];}
+const rotZb=(v,deg)=>{const c=Math.cos(R(deg)),s=Math.sin(R(deg));
+  return [v[0]*c-v[1]*s, v[0]*s+v[1]*c, v[2]];};
 
-movements.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='dot'+i;dotsEl.appendChild(d);});
-
-async function requestWakeLock(){try{if('wakeLock'in navigator){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null;});}}catch(e){}}
-function releaseWakeLock(){if(wakeLock){wakeLock.release();wakeLock=null;}}
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&running){requestWakeLock();}});
-
-function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function playChime(freq,vol,dur){try{const ctx=getAudioCtx();if(ctx.state==='suspended')ctx.resume();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,ctx.currentTime);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(vol,ctx.currentTime+0.05);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);osc.connect(gain);gain.connect(ctx.destination);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+dur);}catch(e){}}
-function transitionChime(){playChime(392,0.1,1.2);setTimeout(()=>playChime(523.25,0.08,1.0),200);setTimeout(()=>playChime(659.25,0.06,0.8),400);}
-function switchChime(){playChime(587.33,0.09,0.5);setTimeout(()=>playChime(587.33,0.09,0.5),300);}
-function completionChime(){playChime(392,0.1,1.5);setTimeout(()=>playChime(523.25,0.09,1.2),250);setTimeout(()=>playChime(659.25,0.08,1.2),500);setTimeout(()=>playChime(783.99,0.07,2.0),750);}
-function speak(text){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(text);u.rate=0.8;u.pitch=0.95;u.volume=0.8;speechSynthesis.speak(u);}catch(e){}}
-
-function updateDisplay(){const m=movements[currentMove];const dur=m?m.duration:0;const mins=Math.floor(timeLeft/60);const secs=timeLeft%60;timeDisp.textContent=mins+':'+String(secs).padStart(2,'0');if(dur>0){const progress=1-(timeLeft/dur);ring.style.strokeDashoffset=circumference*(1-progress);}}
-function updateVideoLinks(m){videoLink.href='https://www.youtube.com/results?search_query='+m.searchQuery;videoLink.style.display='inline-block';searchLink.href='https://www.youtube.com/results?search_query='+m.searchQuery+'+prenatal';searchLink.style.display='inline-block';}
-function updateNavButtons(){prevBtn.disabled=currentMove<=0;nextBtn.disabled=currentMove>=movements.length-1;navLabel.textContent=(currentMove+1)+' / '+movements.length;navControls.classList.add('visible');}
-function prevMovement(){if(currentMove<=0)return;startMovement(currentMove-1);}
-function nextMovement(){if(currentMove>=movements.length-1)return;startMovement(currentMove+1);}
-
-function startMovement(index){
-  currentMove=index;const m=movements[index];timeLeft=m.duration;switchCalled=false;
-  movNum.textContent='STRETCH '+m.num+' OF '+movements.length;
-  movName.textContent=m.name;movTarget.textContent=m.target;
-  sideBadge.classList.toggle('visible',!!m.bilateral);
-  formCue.innerHTML=m.cue;updateVideoLinks(m);updateNavButtons();
-  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot'+(i<index?' done':i===index?' active':'');});
-  transitionChime();setTimeout(()=>speak(m.name+(m.bilateral?'. Start with your right side.':'')),500);updateDisplay();
+// two-link IK: end effector lands on target, bones keep their length
+function ik(S,T,l1,l2,ref,sign,swivel){
+  let d=sub(T,S); let D=len(d); if(D<1e-6){d=[0,1,0];D=1;}
+  const u=nrm(d), Dc=Math.max(Math.abs(l1-l2)+0.01,Math.min(l1+l2-0.01,D));
+  const cf=(l1*l1+Dc*Dc-l2*l2)/(2*l1*Dc), f=Math.acos(Math.max(-1,Math.min(1,cf)));
+  let ax=cross(u,ref); if(len(ax)<1e-6) ax=cross(u,[0,0,1]); ax=nrm(ax);
+  if(swivel) ax=nrm(rotAxis(ax,u,R(swivel)));   // spin the bend plane about the limb axis
+  return [add(S,rotAxis(u,ax,sign*f),l1), add(S,u,Dc)];
 }
 
-function tick(){
-  timeLeft--;updateDisplay();
-  const m=movements[currentMove];
-  if(m&&m.bilateral&&!switchCalled&&timeLeft===Math.floor(m.duration/2)){switchCalled=true;switchChime();setTimeout(()=>speak('Switch sides'),300);}
-  if(timeLeft===5)playChime(340,0.04,0.3);
-  if(timeLeft<=0){if(currentMove<movements.length-1)startMovement(currentMove+1);else completeSession();}
+function solve(p){
+  const pelvis=p.p, yawP=p.yaw, yawC=p.yaw+p.tw*0.45, yawN=p.yaw+p.tw;
+  const sl=p.sl||0;
+  const chest=add(pelvis,rotY(rotZb(spineDir(p.s[0]),sl),yawP),L.s1);
+  const neck =add(chest, rotY(rotZb(spineDir(p.s[1]),sl),yawC),L.s2);
+  const head =add(neck,  rotY(rotZb(spineDir(p.s[1]+(p.hf||0)),sl),yawN),L.nh);
+  const axS=rotY([1,0,0],yawN), axH=rotY([1,0,0],yawP);
+  const shL=add(neck,axS,-L.shW), shR=add(neck,axS,L.shW);
+  const hpL=add(pelvis,axH,-L.hpW), hpR=add(pelvis,axH,L.hpW);
+  const J={pelvis,chest,neck,head,shL,shR,hpL,hpR};
+  const fk=(o,a,l1,l2,yaw)=>{const j1=add(o,rotY(dir(a[0],a[1]),yaw),l1);
+    return [j1,add(j1,rotY(dir(a[2],a[3]),yaw),l2)];};
+  // legs: IK to a world foot target if given, else forward kinematics
+  const legRef=rotY([0,0,1],yawP);
+  let knL,ftL,knR,ftR;
+  if(p.ikFL){[knL,ftL]=ik(hpL,p.ikFL,L.th,L.sh,legRef,1,p.swL);} else {[knL,ftL]=fk(hpL,p.lL,L.th,L.sh,yawP);}
+  if(p.ikFR){[knR,ftR]=ik(hpR,p.ikFR,L.th,L.sh,legRef,1,p.swR);} else {[knR,ftR]=fk(hpR,p.lR,L.th,L.sh,yawP);}
+  Object.assign(J,{knL,ftL,knR,ftR});
+  const footOf=(kn,ft)=>{
+    const u=nrm(sub(ft,kn));
+    const perp=(r)=>{const d=r[0]*u[0]+r[1]*u[1]+r[2]*u[2];
+      return [r[0]-u[0]*d, r[1]-u[1]*d, r[2]-u[2]*d];};
+    const a=perp(rotY([0,0,1],yawP)), b=perp([0,1,0]);
+    let d=nrm(len(a)>=len(b)?a:b);
+    if(!isFinite(d[0])||len(d)<1e-3) d=rotY([0,0,1],yawP);
+    // a foot may not pass through the floor: if it would, lay it along the floor instead
+    const FL=93;
+    if(ft[1]+d[1]*L.ft > FL){
+      const dy=Math.max(-1,Math.min(1,(FL-ft[1])/L.ft));
+      const h=Math.sqrt(Math.max(0,1-dy*dy));
+      let hsrc=[d[0],0,d[2]];
+      if(len(hsrc)<1e-3) hsrc=[u[0],0,u[2]];
+      if(len(hsrc)<1e-3) hsrc=rotY([0,0,1],yawP);
+      const hz=nrm(hsrc);
+      d=[hz[0]*h, dy, hz[2]*h];
+    }
+    return add(ft,d,L.ft);
+  };
+  J.toeL=footOf(knL,ftL); J.toeR=footOf(knR,ftR);
+  const tgt=s=>!s?null:(s.k?J[s.k]:s.w);
+  const tL=tgt(p.ikL), tR=tgt(p.ikR);
+  let elL,haL,elR,haR;
+  if(tL){[elL,haL]=ik(shL,tL,L.up,L.fo,axS,-1);} else {[elL,haL]=fk(shL,p.aL,L.up,L.fo,yawN);}
+  if(tR){[elR,haR]=ik(shR,tR,L.up,L.fo,axS, 1);} else {[elR,haR]=fk(shR,p.aR,L.up,L.fo,yawN);}
+  return Object.assign(J,{elL,haL,elR,haR});
 }
 
-function completeSession(){
-  clearInterval(interval);interval=null;running=false;releaseWakeLock();
-  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot done';});
-  movNum.textContent='COMPLETE';movName.textContent='Stretch complete';
-  movTarget.textContent='';sideBadge.classList.remove('visible');
-  timeDisp.textContent='\u2713';ring.style.strokeDashoffset=0;
-  document.querySelector('.container').classList.add('state-complete');
-  mainBtn.style.display='none';resetBtn.style.display='';
-  videoLink.style.display='none';searchLink.style.display='none';
-  navControls.classList.remove('visible');
-  formCue.innerHTML='<strong>Done.</strong> Drink water. If anything felt sharp, pulling, or made you dizzy, mention it at your next appointment.';
-  completionChime();setTimeout(()=>speak('Stretch complete.'),600);
+// circular-path helper: knees or hips orbit while feet stay pinned
+function orbitPose(base,o,ph){
+  const p=Object.assign({},base);
+  if(o.swivel){ // knees orbit around a fixed hip-to-ankle axis; feet never move
+    p.swL=o.amp*Math.sin(ph); p.swR=o.amp*Math.sin(ph);
+    return p;
+  }
+  if(o.hips){ // pelvis traces a circle, feet stay planted via leg IK
+    p.p=[base.p[0]+o.rx*Math.sin(ph), base.p[1]+(o.ry||0)*Math.cos(ph)*0.3, base.p[2]+o.rz*Math.cos(ph)];
+    return p;
+  }
+  const drop=(o.floorY-base.p[1])/L.th;
+  const mk=side=>{const f1=o.fB+o.fA*Math.sin(ph), a1=side*6+o.aA*Math.cos(ph);
+    let c2=Math.max(-1,Math.min(1,drop-Math.cos(R(f1))));
+    return [f1,a1,-Math.acos(c2)*180/Math.PI,-a1];};
+  p.lL=mk(-1); p.lR=mk(1);
+  return p;
 }
 
-function toggleTimer(){
-  if(!running){running=true;mainBtn.textContent='Pause';resetBtn.style.display='';requestWakeLock();getAudioCtx();if(audioCtx.state==='suspended')audioCtx.resume();if(currentMove===0&&timeLeft===0)startMovement(0);interval=setInterval(tick,1000);}
-  else{running=false;clearInterval(interval);interval=null;releaseWakeLock();mainBtn.textContent='Resume';}
+const EXTRA={
+"Seated breathing":["<strong>Form:</strong> Sit tall on a chair or birth ball, feet flat on the floor, hands resting on the thighs. Inhale through the nose and feel the ribs widen sideways — not the chest lifting. Long exhale. <strong>Why:</strong> the growing uterus crowds the diaphragm; sideways rib expansion keeps breathing efficient later on.","prenatal+diaphragmatic+breathing+rib+expansion"],
+"Seated cat-cow":["<strong>Form:</strong> Hands on knees. Round the spine and tuck the pelvis on the exhale, arch gently and open the chest on the inhale. Small and slow. <strong>Why:</strong> the belly pulls the pelvis into a forward tilt and compresses the low back — moving both directions relieves it.","seated+cat+cow+pregnancy+stretch"],
+"Seated side reach":["<strong>Form:</strong> Reach one arm overhead, lean gently to the opposite side, both sit bones stay down. Breathe into the stretched side. Switch at the halfway chime. <strong>Why:</strong> creates space between ribs and hips, one of the most compressed areas later in pregnancy.","seated+side+stretch+pregnancy+ribs"],
+"Seated figure-4":["<strong>Form:</strong> Ankle across the opposite knee, sit tall, hinge forward from the hips until the outer hip opens. Switch at the halfway chime. <strong>Why:</strong> relaxin loosens the pelvic ligaments and the piriformis tightens to compensate, which can irritate the sciatic nerve.","seated+figure+four+piriformis+stretch+pregnancy"],
+"Supported butterfly":["<strong>Form:</strong> Sit on a cushion so the hips are above the knees. Soles together, knees falling open. Let gravity do it — never push the knees down. <strong>Why:</strong> adductor flexibility affects how wide the pelvic outlet can open. Gentle beats aggressive; the ligaments are already softened.","supported+bound+angle+butterfly+pose+pregnancy"],
+"Wide-knee child's pose":["<strong>Form:</strong> Knees wide, big toes together, sit back toward the heels with the belly resting in the space between. Forearms or a cushion under the chest. <strong>Why:</strong> one of the best positions for letting the pelvic floor lengthen and release.","wide+knee+childs+pose+pregnancy+modification"],
+"Hands-and-knees rocking":["<strong>Form:</strong> Wrists under shoulders. Rock the hips slowly forward and back, then in gentle circles. Spine stays neutral — no deep arching. <strong>Why:</strong> takes the baby's weight off the spine and encourages an optimal anterior fetal position.","hands+and+knees+pelvic+rocking+pregnancy"],
+"Kneeling hip flexor stretch":["<strong>Form:</strong> Half-kneeling, cushion under the back knee, hand on a chair. Tuck the pelvis slightly, then shift gently forward. Switch at the halfway chime. <strong>Why:</strong> tight hip flexors tilt the pelvis forward and worsen back pain.","kneeling+hip+flexor+stretch+pregnancy+safe"],
+"Standing calf stretch":["<strong>Form:</strong> Hands on a wall, one foot back with the heel pressing down, back leg straight. Switch at the halfway chime. <strong>Why:</strong> calf cramps and swelling are among the most common second and third trimester complaints.","standing+calf+stretch+wall+pregnancy"],
+"Doorway chest opener":["<strong>Form:</strong> One forearm vertical on the doorframe, elbow at shoulder height, step gently through until the chest opens. Switch arms at the halfway chime. A mild stretch is plenty. <strong>Why:</strong> breast growth and the forward weight shift round the shoulders; opening the chest gives the lungs more room.","doorway+chest+stretch+pregnancy+posture"],
+"Left side-lying rest":["<strong>Form:</strong> Left side, pillow between the knees and one under the belly. Slow breathing. Nothing to do here. <strong>Why:</strong> left side-lying keeps pressure off the vena cava and maximises blood flow to the placenta — a good sleeping habit to build now.","left+side+lying+position+pregnancy+pillow+support"]};
+MOVES.forEach(m=>{m.long=EXTRA[m.n][0];m.q=EXTRA[m.n][1];});
+
+// ---------- projection / drawing ----------
+const lerp=(a,b,t)=>a+(b-a)*t;
+const lerpA=(a,b,t)=>(a&&b)?a.map((v,i)=>lerp(v,b[i],t)):(a||b||null);
+function lerpT(A,B,t){if(!A&&!B)return null; if(A&&A.k)return A;
+  if(A&&B&&A.w&&B.w)return {w:lerpA(A.w,B.w,t)}; return A||B;}
+// A leg may be described by joint angles (lL/lR) or by a world foot target (ikFL/ikFR).
+// If the two keyframes disagree, convert the angle-based one to a foot target so the
+// pair can be interpolated in the same space.
+function normalise(m){
+  if(m._norm) return; m._norm=true;
+  const KF=[m.A,m.B,m.M].filter(Boolean);
+  // a foot listed in m.pin is nailed to wherever it starts, in every keyframe
+  if(m.pin){
+    const j=solve(m.A);
+    if(m.pin.indexOf('L')>=0){const t=j.ftL.slice(); KF.forEach(k=>k.ikFL=t.slice());}
+    if(m.pin.indexOf('R')>=0){const t=j.ftR.slice(); KF.forEach(k=>k.ikFR=t.slice());}
+  }
+  // if keyframes mix leg representations, convert the odd ones out to foot targets
+  [['ikFL','ftL'],['ikFR','ftR']].forEach(([ikf,joint])=>{
+    const n=KF.filter(k=>k[ikf]).length;
+    if(n>0&&n<KF.length) KF.forEach(k=>{ if(!k[ikf]) k[ikf]=solve(k)[joint].slice(); });
+  });
+  [['lL','ikFL','ftL'],['lR','ikFR','ftR']].forEach(([ang,ikf,joint])=>{
+    const a=m.A[ikf], b=m.B[ikf];
+    if(!!a===!!b) return;
+    [m.A,m.B].forEach(p=>{ if(!p[ikf]) p[ikf]=solve(p)[joint].slice(); });
+  });
 }
-function toggleVoice(){voiceOn=!voiceOn;voiceBtn.textContent=voiceOn?'Voice On':'Voice Off';voiceBtn.classList.toggle('active-toggle',voiceOn);}
-function resetTimer(){
-  clearInterval(interval);interval=null;running=false;releaseWakeLock();currentMove=0;timeLeft=0;switchCalled=false;
-  document.querySelector('.container').classList.remove('state-complete');
-  movNum.textContent='READY';movName.textContent='Tap Start to begin';movTarget.textContent='';
-  sideBadge.classList.remove('visible');
-  mainBtn.textContent='Start';mainBtn.style.display='';resetBtn.style.display='none';
-  videoLink.style.display='none';searchLink.style.display='none';navControls.classList.remove('visible');
-  ring.style.strokeDashoffset=0;timeDisp.textContent='0:00';
-  formCue.innerHTML='<strong>About this routine:</strong> Every position is seated, side-lying, hands-and-knees, or standing with support \u2014 no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout. Never hold your breath.';
-  movements.forEach((_,i)=>{document.getElementById('dot'+i).className='dot';});
+function blend(A,B,t){const o={swL:lerp(A.swL||0,B.swL||0,t),swR:lerp(A.swR||0,B.swR||0,t),sl:lerp(A.sl||0,B.sl||0,t),
+  p:lerpA(A.p,B.p,t),yaw:lerp(A.yaw,B.yaw,t),tw:lerp(A.tw,B.tw,t),
+  s:lerpA(A.s,B.s,t),hf:lerp(A.hf||0,B.hf||0,t),aL:lerpA(A.aL,B.aL,t),aR:lerpA(A.aR,B.aR,t),
+  ikL:lerpT(A.ikL,B.ikL,t),ikR:lerpT(A.ikR,B.ikR,t)};
+  if(A.ikFL&&B.ikFL) o.ikFL=lerpA(A.ikFL,B.ikFL,t); else o.lL=lerpA(A.lL,B.lL,t);
+  if(A.ikFR&&B.ikFR) o.ikFR=lerpA(A.ikFR,B.ikFR,t); else o.lR=lerpA(A.lR,B.lR,t);
+  if(!o.lL) o.lL=A.lL||B.lL||[0,0,0,0];
+  if(!o.lR) o.lR=A.lR||B.lR||[0,0,0,0];
+  return o;}
+const easeQ=t=>t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+function poseAt(m,ph){
+  normalise(m);
+  if(m.orb) return orbitPose(m.A,m.orb,ph*2*Math.PI);
+  const tri=ph<0.5?ph*2:(1-ph)*2;
+  if(m.M) return tri<0.5 ? blend(m.A,m.M,easeQ(tri*2)) : blend(m.M,m.B,easeQ((tri-0.5)*2));
+  return blend(m.A,m.B,easeQ(tri));}
+let CAM=40; const PITCH=13;
+function project(v){const c=Math.cos(R(CAM)),s=Math.sin(R(CAM));
+  const x=v[0]*c+v[2]*s, z=-v[0]*s+v[2]*c;
+  return {x,y:v[1]*Math.cos(R(PITCH))+z*Math.sin(R(PITCH)),d:z};}
+const LIMBS=[['shL','elL'],['elL','haL'],['shR','elR'],['elR','haR'],
+             ['hpL','knL'],['knL','ftL'],['hpR','knR'],['knR','ftR']];
+const INK='#6d4f1c',LIMB_L='#c2a473',TORSO='#7d5a1e',BELLY='#7d5a1e';
+function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
+  for(let i=0;i<=24;i++){const j=solve(poseAt(m,i/24));
+    for(const k in j){const q=project(j[k]);
+      a=Math.min(a,q.x);b=Math.max(b,q.x);c=Math.min(c,q.y);d=Math.max(d,q.y);}}
+  a-=8;b+=8;c-=9;d+=8;
+  const sc=Math.min(100/(b-a),100/(d-c));
+  return {sc,ox:(100-(b-a)*sc)/2-a*sc,oy:(100-(d-c)*sc)/2-c*sc};}
+const layer=document.getElementById('layer'), shadowEl=document.getElementById('shadow');
+const PROP='#b9a98b';
+let propMk='';
+function buildProps(m,fit){
+  CAM=m.cam||40;
+  if(!m.prop){propMk='';return;}
+  const S=v=>{const q=project(v);return {x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy};};
+  const w=(1.6*fit.sc).toFixed(2);
+  propMk=m.prop.map(p=>{
+    if(p.l){const a=S(p.l[0]),b=S(p.l[1]);
+      return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${w}" stroke-linecap="round"/>`;}
+    const c=S(p.c[0]);
+    return `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${(p.c[1]*fit.sc).toFixed(1)}" fill="none" stroke="${PROP}" stroke-width="${w}"/>`;
+  }).join('');
 }
-const totalSec=movements.reduce((s,m)=>s+m.duration,0);
-document.getElementById('totalTime').textContent='Total: '+Math.floor(totalSec/60)+':'+String(totalSec%60).padStart(2,'0');
+function drawFig(m,fit,ph){
+  CAM=m.cam||40;
+  const pose=poseAt(m,ph);
+  const j=solve(pose), P={};
+  for(const k in j){const q=project(j[k]);P[k]={x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy,d:q.d};}
+  const side=n=>n.endsWith('L')?LIMB_L:INK;
+  const parts=LIMBS.map(([x,y])=>({t:'l',a:P[x],b:P[y],d:(P[x].d+P[y].d)/2,col:side(y),w:1}));
+  parts.push({t:'l',a:P.ftL,b:P.toeL,d:(P.ftL.d+P.toeL.d)/2,col:LIMB_L,w:0.8});
+  parts.push({t:'l',a:P.ftR,b:P.toeR,d:(P.ftR.d+P.toeR.d)/2,col:INK,w:0.8});
+  parts.push({t:'q',pts:[P.shL,P.shR,P.hpR,P.hpL],d:(P.shL.d+P.shR.d+P.hpL.d+P.hpR.d)/4});
+  if(m.belly){
+    const u=nrm(sub(j.chest,j.pelvis));
+    const lat=rotY([1,0,0],pose.yaw);
+    const f=nrm(cross(u,lat));                       // trunk's true front, follows pitch
+    const mid=[(j.chest[0]*0.45+j.pelvis[0]*0.55),(j.chest[1]*0.45+j.pelvis[1]*0.55),(j.chest[2]*0.45+j.pelvis[2]*0.55)];
+    const cq=project(mid), fq=project(add(mid,f,4));
+    const cs={x:cq.x*fit.sc+fit.ox,y:cq.y*fit.sc+fit.oy};
+    let fx=fq.x*fit.sc+fit.ox-cs.x, fy=fq.y*fit.sc+fit.oy-cs.y;
+    const flen=Math.hypot(fx,fy), q=flen/(4*fit.sc);
+    const bd=project(add(mid,f,4.8)).d;
+    // facing the viewer -> full circle; in profile -> half-disc with its flat edge on the trunk;
+    // in between, the back half flattens smoothly so the shape never pops
+    const k=Math.max(0,Math.min(1,(0.82-q)/0.32));
+    if(flen<0.5){fx=0;fy=1;}else{fx/=flen;fy/=flen;}
+    const px=-fy, py=fx, r=7.9*fit.sc;
+    const pts=[];
+    for(let a=-90;a<=90;a+=15){const ca=Math.cos(a*Math.PI/180),sa=Math.sin(a*Math.PI/180);
+      pts.push((cs.x+r*(sa*px+ca*fx)).toFixed(2)+','+(cs.y+r*(sa*py+ca*fy)).toFixed(2));}
+    for(let a=105;a<255;a+=15){const ca=Math.cos(a*Math.PI/180)*k,sa=Math.sin(a*Math.PI/180);
+      pts.push((cs.x+r*(sa*px+ca*fx)).toFixed(2)+','+(cs.y+r*(sa*py+ca*fy)).toFixed(2));}
+    parts.push({t:'bp',pts,d:bd});
+  }
+  // neck line ends at the head circle's rim, so it can never lie across the face
+  {
+    const dx=P.head.x-P.neck.x, dy=P.head.y-P.neck.y, dl=Math.hypot(dx,dy)||1;
+    const r=L.hr*fit.sc*0.8;
+    parts.push({t:'l',a:P.neck,b:{x:P.head.x-dx/dl*r,y:P.head.y-dy/dl*r},d:(P.neck.d+P.head.d)/2,col:INK,w:0.82});
+  }
+  parts.push({t:'h',c:P.head,d:P.head.d+0.02});
+  parts.sort((x,y)=>x.d-y.d);
+  layer.innerHTML=propMk+parts.map(p=>{
+    if(p.t==='l')return `<line x1="${p.a.x.toFixed(2)}" y1="${p.a.y.toFixed(2)}" x2="${p.b.x.toFixed(2)}" y2="${p.b.y.toFixed(2)}" stroke="${p.col}" stroke-width="${(3.0*(p.w||1)*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;
+    if(p.t==='q')return `<polygon points="${p.pts.map(q=>q.x.toFixed(2)+','+q.y.toFixed(2)).join(' ')}" fill="${TORSO}" stroke="${TORSO}" stroke-width="${(2.6*fit.sc).toFixed(2)}" stroke-linejoin="round"/>`;
+    if(p.t==='bp')return `<polygon points="${p.pts.join(' ')}" fill="${BELLY}"/>`;
+    if(p.t==='bc')return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${p.r.toFixed(2)}" fill="${BELLY}"/>`;
+    return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${(L.hr*fit.sc).toFixed(2)}" fill="${INK}"/>`;}).join('');
+}
+// the floor is a fixed plane: its ellipse is placed once per movement and never moves
+let mirrorOn=false;
+function applyMirror(on){
+  mirrorOn=on;
+  if(on) layer.setAttribute('transform','translate(100 0) scale(-1 1)');
+  else layer.removeAttribute('transform');
+  shadowEl.setAttribute('cx',(on?100-groundCx:groundCx).toFixed(2));
+}
+let groundCx=50;
+function placeGround(m,fit){
+  CAM=m.cam||40;
+  const j=solve(poseAt(m,0));
+  const pts=['ftL','ftR','toeL','toeR','haL','haR','knL','knR'].map(k=>j[k]).filter(p=>p[1]>89.5);
+  let gx=0,gz=0;
+  if(pts.length){pts.forEach(p=>{gx+=p[0];gz+=p[2];});gx/=pts.length;gz/=pts.length;}
+  const g=project([gx,93,gz]);
+  groundCx=g.x*fit.sc+fit.ox;
+  shadowEl.setAttribute('cx',groundCx.toFixed(2));
+  shadowEl.setAttribute('cy',(g.y*fit.sc+fit.oy).toFixed(2));
+  shadowEl.setAttribute('rx','40');
+  shadowEl.setAttribute('ry',(40*Math.sin(R(PITCH))).toFixed(2));
+}
+MOVES.forEach(m=>m.fit=fitOf(m));
+
+// ---------- timer ----------
+const $=id=>document.getElementById(id);
+let idx=0,timeLeft=0,running=false,started=false,tick=null,voiceOn=true,actx=null,wl=null,swAt=false;
+const dotsEl=$('dots');
+MOVES.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;dotsEl.appendChild(d);});
+
+async function lockScreen(){try{if('wakeLock'in navigator){wl=await navigator.wakeLock.request('screen');
+  wl.addEventListener('release',()=>{wl=null;});}}catch(e){}}
+function unlockScreen(){if(wl){wl.release();wl=null;}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&running){lockScreen();sync();}});
+
+function ac(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function chime(f,v,d){try{const c=ac();if(c.state==='suspended')c.resume();
+  const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(f,c.currentTime);
+  g.gain.setValueAtTime(0,c.currentTime);g.gain.linearRampToValueAtTime(v,c.currentTime+0.05);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);
+  o.connect(g);g.connect(c.destination);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
+const cTrans=()=>{chime(440,.12,1);setTimeout(()=>chime(554.37,.1,.8),150);setTimeout(()=>chime(659.25,.08,.6),300);};
+const cSwitch=()=>{chime(659.25,.1,.5);setTimeout(()=>chime(659.25,.1,.5),280);};
+const cDone=()=>{chime(440,.12,1.2);setTimeout(()=>chime(554.37,.1,1),200);
+  setTimeout(()=>chime(659.25,.1,1),400);setTimeout(()=>chime(880,.08,1.5),600);};
+function say(t){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(t);
+  u.rate=.85;u.pitch=.9;u.volume=.8;speechSynthesis.speak(u);}catch(e){}}
+
+function paint(){
+  const m=MOVES[idx];
+  $('mNum').textContent='MOVEMENT '+(idx+1)+' OF '+MOVES.length;
+  $('mName').textContent=m.n; $('mTarget').textContent=m.cue;
+  $('cue').innerHTML=m.long;
+  $('count').textContent=(idx+1)+'/'+MOVES.length;
+  $('badge').classList.toggle('visible',!!m.bil);
+  $('vid').href='https://www.youtube.com/results?search_query='+m.q;
+  $('bPrev').disabled=idx<=0; $('bNext').disabled=idx>=MOVES.length-1;
+  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<idx?' done':i===idx?' active':'');});
+  clock();
+}
+function clock(){
+  const m=MOVES[idx];
+  $('tm').textContent=Math.floor(timeLeft/60)+':'+String(timeLeft%60).padStart(2,'0');
+  $('fill').style.width=(100*(1-timeLeft/m.dur)).toFixed(1)+'%';
+}
+let segEnd=0,pausedRem=0;
+function go(i){
+  idx=i; const m=MOVES[idx]; timeLeft=m.dur; swAt=false;
+  segEnd=Date.now()+m.dur*1000; pausedRem=m.dur*1000;
+  paint(); cTrans();
+  setTimeout(()=>say(m.n+(m.bil?'. Start with your right side.':'')),420);
+}
+function sync(){
+  if(!running)return;
+  let rem=Math.ceil((segEnd-Date.now())/1000);
+  let jumped=false;
+  while(rem<=0){
+    if(idx>=MOVES.length-1){finish();return;}
+    idx++; const m=MOVES[idx]; segEnd+=m.dur*1000; swAt=false; jumped=true;
+    rem=Math.ceil((segEnd-Date.now())/1000);
+  }
+  if(jumped){
+    const m=MOVES[idx]; paint(); cTrans();
+    setTimeout(()=>say(m.n+(m.bil?'. Start with your right side.':'')),420);
+  }
+  if(rem!==timeLeft){
+    timeLeft=rem; clock();
+    const m=MOVES[idx];
+    if(m.bil&&!swAt&&timeLeft<=Math.floor(m.dur/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say('Switch sides'),300);}
+    if(timeLeft===3)chime(380,.05,.3);
+  }
+}
+function finish(){
+  clearInterval(tick);tick=null;running=false;started=false;unlockScreen();
+  MOVES.forEach((_,i)=>$('d'+i).className='dot done');
+  $('mNum').textContent='COMPLETE';$('mName').textContent='Movement complete';$('mTarget').textContent='';
+  $('badge').classList.remove('visible');
+  document.querySelector('.wrap').classList.add('state-done');
+  $('cue').innerHTML="<strong>Done.</strong> Drink water. If anything felt sharp, pulling, or made you dizzy, mention it at your next appointment.";
+  $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
+  cDone();setTimeout(()=>say('Movement complete.'),600);
+}
+$('bMain').onclick=()=>{
+  if(!running){
+    running=true;$('bMain').textContent='Pause';lockScreen();ac();if(actx.state==='suspended')actx.resume();
+    if(!started){started=true;go(0);}
+    else{segEnd=Date.now()+pausedRem;}
+    tick=setInterval(sync,300);
+  } else {
+    running=false;pausedRem=Math.max(0,segEnd-Date.now());
+    clearInterval(tick);tick=null;unlockScreen();$('bMain').textContent='Resume';
+  }
+};
+$('bVoice').onclick=()=>{voiceOn=!voiceOn;$('bVoice').classList.toggle('on',voiceOn);};
+$('bPrev').onclick=()=>{if(idx>0){started=true;go(idx-1);}};
+$('bNext').onclick=()=>{if(idx<MOVES.length-1){started=true;go(idx+1);}};
+$('bReset').onclick=()=>{
+  clearInterval(tick);tick=null;running=false;started=false;unlockScreen();
+  idx=0;timeLeft=MOVES[0].dur;swAt=false;
+  document.querySelector('.wrap').classList.remove('state-done');
+  $('bMain').style.display='';$('bMain').textContent='Start';
+  $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
+  $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
+  $('count').textContent='\u2013/12';
+  $('cue').innerHTML="<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support \u2014 no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.";
+  MOVES.forEach((_,i)=>$('d'+i).className='dot');
+};
+
+// figure animates continuously, whatever the timer is doing
+let t0=performance.now(),last=0,curFit=null;
+(function loop(now){
+  if(now-last>30){last=now;const m=MOVES[idx];
+    if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);buildProps(m,m.fit);applyMirror(false);}
+    drawFig(m,m.fit,((now-t0)/1000%m.cyc)/m.cyc);}
+  requestAnimationFrame(loop);
+})(performance.now());
+timeLeft=MOVES[0].dur;
 </script>
 </body>
 </html>

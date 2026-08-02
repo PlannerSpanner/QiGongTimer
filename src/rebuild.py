@@ -36,11 +36,11 @@ build(os.path.join(OUT,'morning-movement.html'),'data2.js',open('mm_extra.js',en
  'Morning Movement','Mobility · Control · Stability','icon-morning-movement.png','#fdf7e9',A12,
  '<strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.',
  '<strong>Done.</strong> Hips and ankles mobile, spine articulated, hip rotation opened, core switched on. Nothing loaded the peroneal tendon.')
-build(os.path.join(OUT,'pregnancy-stretch.html'),'d_stretch.js',open('x_stretch.js',encoding='utf-8').read(),
+build(os.path.join(OUT,'prenatal-stretch.html'),'d_stretch.js',open('x_stretch.js',encoding='utf-8').read(),
  'Prenatal Stretch','Gentle · Low-lying placenta safe','icon-prenatal-stretch.png','#fdf4f1',ROSE,
  '<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.',
  '<strong>Done.</strong> Drink water. If anything felt sharp, pulling, or made you dizzy, mention it at your next appointment.',banner=BAN)
-build(os.path.join(OUT,'pregnancy-movement.html'),'d_birth.js',open('x_birth.js',encoding='utf-8').read(),
+build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',encoding='utf-8').read(),
  'Birth Prep','Pelvic mobility · Floor release','icon-birth-prep.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
  '<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.',banner=BAN)

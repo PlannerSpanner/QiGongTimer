@@ -54,6 +54,6 @@ function run(app){
   console.log(`${app.padEnd(20)} top-level ok | figure drawn: ${!!drawn} (${feet} lines) | ground placed: ${!!ground}`);
   if(!drawn||!ground) process.exitCode=1;
 }
-for(const app of ['morning-flow','morning-movement','pregnancy-stretch','pregnancy-movement']){
+for(const app of ['morning-flow','morning-movement','prenatal-stretch','prenatal-movement']){
   try{run(app);}catch(e){console.log(app,'RUNTIME ERROR:',e.message);process.exitCode=1;}
 }
