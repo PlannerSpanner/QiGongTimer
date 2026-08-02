@@ -32,7 +32,9 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     `orb` = orbital pose (hip circles). `cam` = per-movement camera yaw (default 40).
     `prop` = array of `{l:[[xyz],[xyz]]}` lines / `{c:[[xyz],r]}` circles, drawn behind the figure.
   - Colors are STATIC identity roles: INK (right limbs, head, neck), LIMB_L (left limbs, lighter),
-    TORSO (quad + belly). No depth-based color changes — that was removed deliberately.
+    TORSO (quad + belly). Hues are themed per app by build.py's swap tables (blue flow, rose
+    prenatal-stretch, amber elsewhere) but roles never change within an app. No depth-based
+    color changes — that was removed deliberately.
   - Belly: polygon that morphs full-circle (facing viewer) → half-disc flat on the trunk (profile),
     driven by the projected foreshortening of the trunk-front vector. Never re-add a hard mode switch;
     it pops mid-animation.

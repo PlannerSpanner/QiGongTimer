@@ -1,7 +1,8 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.dirname(os.getcwd())  # repo root — built HTML lives there for GitHub Pages
 exec(open('build.py', encoding='utf-8').read())
-BLUE=dict(n=10,accent='#2e7d94',css=[
+BLUE=dict(n=10,accent='#2e7d94',
+ fig=[('#6d4f1c','#245e70'),('#c2a473','#93b8c4'),('#7d5a1e','#2e7d94')],css=[
  ('#fdf7e9 0%,#fdf0dc 45%,#f4f3e3 100%','#eef6f8 0%,#e6f0f5 45%,#eaf2ee 100%'),
  ('#a5762a','#2e7d94'),('#a4947a','#8aa2ab'),('#bd8629','#3f96ae'),('#7d5a1e','#245e70'),
  ('#9c8b6d','#7d97a0'),('#f0e5cd','#d9e8ee'),('#dd9a3c','#3f96ae'),('#ecca8e','#a8cdd9'),
@@ -11,7 +12,9 @@ BLUE=dict(n=10,accent='#2e7d94',css=[
  ('rgba(221,154,60,0.45)','rgba(63,150,174,0.45)'),('rgba(221,154,60,0.5)','rgba(63,150,174,0.5)'),
  ('rgba(180,140,60,0.3)','rgba(63,150,174,0.3)'),('#e8dcc0','#d3e4ea'),
  ('#6d4f1c','#245e70'),('#c2a473','#93b8c4'),('#7d5a1e','#2e7d94'),('#caac79','#9dc2cd')])
-ROSE=dict(n=10,accent='#a8546b',warnText='#8f4550',warnBg='rgba(214,110,120,0.11)',
+ROSE=dict(n=10,accent='#a8546b',
+ fig=[('#6d4f1c','#7d3f53'),('#c2a473','#cfa8b3'),('#7d5a1e','#a8546b')],
+ warnText='#8f4550',warnBg='rgba(214,110,120,0.11)',
  warnBorder='rgba(214,110,120,0.3)',warnStrong='#7d353f',css=[
  ('#fdf7e9 0%,#fdf0dc 45%,#f4f3e3 100%','#fdf4f1 0%,#fbecf1 42%,#f1eefa 100%'),
  ('#a5762a','#a8546b'),('#a4947a','#a98b95'),('#bd8629','#c4657f'),('#7d5a1e','#7d3f53'),

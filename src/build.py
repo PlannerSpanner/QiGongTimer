@@ -33,6 +33,11 @@ def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_ms
     for a, b in colors['css']:
         head = head.replace(a, b)
     body = TPL
+    # theme the figure: explicit INK/LIMB_L/TORSO map per theme \u2014 the head css table
+    # has duplicate source hexes, so it must not be reused here (identity roles stay
+    # static per app \u2014 see CLAUDE.md)
+    for a, b in colors.get('fig', []):
+        body = body.replace(a, b)
     body = body.replace("'\u2013/12'", "'\u2013/%d'" % colors['n'])
     body = re.sub(r"\$\('cue'\)\.innerHTML='<strong>Done\.</strong>[^;]*;",
                   "$('cue').innerHTML=%s;" % json.dumps(done_msg), body)

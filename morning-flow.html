@@ -309,7 +309,7 @@ function project(v){const c=Math.cos(R(CAM)),s=Math.sin(R(CAM));
   return {x,y:v[1]*Math.cos(R(PITCH))+z*Math.sin(R(PITCH)),d:z};}
 const LIMBS=[['shL','elL'],['elL','haL'],['shR','elR'],['elR','haR'],
              ['hpL','knL'],['knL','ftL'],['hpR','knR'],['knR','ftR']];
-const INK='#6d4f1c',LIMB_L='#c2a473',TORSO='#7d5a1e',BELLY='#7d5a1e';
+const INK='#245e70',LIMB_L='#93b8c4',TORSO='#2e7d94',BELLY='#2e7d94';
 function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
   for(let i=0;i<=24;i++){const j=solve(poseAt(m,i/24));
     for(const k in j){const q=project(j[k]);
