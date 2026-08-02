@@ -67,11 +67,11 @@ const MOVES=[
  B:{p:[0,73.6,0],yaw:-18,tw:0,s:[-2,-4],hf:-3,ikL:{w:[-3,70.5,8]},ikR:{w:[3,70.5,8]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
 
-{n:"Wide-knee child's pose",cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,pin:"LR",
- A:{p:[0,74,-6],yaw:22,tw:0,s:[88,98],hf:22,ikL:{w:[-13,92,26]},ikR:{w:[13,92,26]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[92,-34,-88,-30],lR:[92,34,-88,30]},
- B:{p:[0,76,-8],yaw:22,tw:0,s:[92,102],hf:18,ikL:{w:[-13,92,28]},ikR:{w:[13,92,28]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[92,-34,-88,-30],lR:[92,34,-88,30]}},
+{n:"Wide-knee child's pose",cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,cam:58,
+ A:{p:[0,83.5,-9],yaw:22,tw:0,s:[112,90],hf:4,ikL:{w:[-8,92.5,33]},ikR:{w:[10,92.5,33]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[67,-22,-89,15],lR:[67,22,-89,-15]},
+ B:{p:[0,84.5,-10.5],yaw:22,tw:0,s:[116,92],hf:2,ikL:{w:[-8,92.5,33]},ikR:{w:[10,92.5,33]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[67,-22,-89,15],lR:[67,22,-89,-15]}},
 
 {n:"Left side-lying rest",cue:"Pillow between the knees, soft breathing",dur:60,bil:false,cyc:5.0,belly:1,
  A:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],

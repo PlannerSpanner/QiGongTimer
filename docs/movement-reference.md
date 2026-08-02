@@ -335,7 +335,9 @@ standing. Breathe continuously.
 - **Anchors:** passive **pelvic floor lengthening** — this is a release position, not a
   stretch to push; genuine rest for the low back.
 - **Faults:** knees too narrow (compressing the belly); breath holding.
-- **Figure:** folded kneeling shape, hips toward heels, chest low, knees clearly wide.
+- **Figure:** near-profile camera: hips resting back over the folded shins (the high
+  point), torso sloping down over the thighs, head low, arms reaching forward along
+  the floor past the head. Knees flare wider than the ankles.
 
 ## 7. Hands-and-knees rocking — 60s, 2.8s cycle, alternating (fore–aft)
 - **Setup:** quadruped, wrists under shoulders, knees under hips.
