@@ -47,4 +47,14 @@ build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',
  'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
  '<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.',banner=BAN,x2=True)
+# stamp index.html too (hand-edited, so the stamp is refreshed here; deterministic:
+# hash of the content with an emptied stamp, idempotent across rebuilds)
+import hashlib, re as _re
+_ip = os.path.join(OUT, 'index.html')
+_s = open(_ip, encoding='utf-8').read()
+_z = _re.sub(r"BUILDV='[0-9a-f]*'", "BUILDV=''", _s, count=1)
+_v = hashlib.sha1(_z.encode('utf-8')).hexdigest()[:10]
+_ns = _re.sub(r"BUILDV='[0-9a-f]*'", "BUILDV='%s'" % _v, _s, count=1)
+if _ns != _s:
+    open(_ip, 'w', encoding='utf-8', newline='\n').write(_ns)
 print("built")

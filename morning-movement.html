@@ -102,6 +102,7 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
+const BUILDV='1752727625';
 const MOVES=[
 {n:"Deep squats",cue:"Sink until you're almost sitting on your heels",dur:30,bil:false,cyc:2.8,pin:"LR",
  A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
@@ -594,6 +595,25 @@ $('bReset').onclick=()=>{
   $('cue').innerHTML="<strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact \u2014 safe for the right peroneal tendon.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
+
+// auto-update: home-screen standalone pages cache hard. On every launch and return to
+// foreground, refetch this page from the network and compare build stamps; if a newer
+// build is live, refresh the HTTP cache and swap to it — but never during a session.
+async function freshCheck(){try{
+  if(typeof BUILDV==='undefined'||started||running)return;
+  const r=await fetch(location.href,{cache:'no-store'});
+  const m=(await r.text()).match(/BUILDV='([0-9a-f]+)'/);
+  if(!m||m[1]===BUILDV)return;
+  const n=Date.now(),l=+(sessionStorage.getItem('bvr')||0);
+  if(n-l<15000)return;                       // one swap attempt per 15s, no reload loops
+  sessionStorage.setItem('bvr',String(n));
+  try{await fetch(location.href,{cache:'reload'});}catch(e){}
+  location.reload();
+}catch(e){}}
+if(window.addEventListener){
+  window.addEventListener('pageshow',freshCheck);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')freshCheck();});
+}
 
 // figure animates continuously, whatever the timer is doing
 let t0=performance.now(),last=0,curFit=null,brPh=0;

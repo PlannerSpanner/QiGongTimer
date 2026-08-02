@@ -104,6 +104,7 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
+const BUILDV='cc0a23aedf';
 const MOVES=[
 {n:"Seated breathing",cue:"Sit tall, breathe wide into the ribs",dur:60,bil:false,cyc:4.0,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[6,2],hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
@@ -584,6 +585,25 @@ $('bReset').onclick=()=>{
   $('cue').innerHTML="<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support \u2014 no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
+
+// auto-update: home-screen standalone pages cache hard. On every launch and return to
+// foreground, refetch this page from the network and compare build stamps; if a newer
+// build is live, refresh the HTTP cache and swap to it — but never during a session.
+async function freshCheck(){try{
+  if(typeof BUILDV==='undefined'||started||running)return;
+  const r=await fetch(location.href,{cache:'no-store'});
+  const m=(await r.text()).match(/BUILDV='([0-9a-f]+)'/);
+  if(!m||m[1]===BUILDV)return;
+  const n=Date.now(),l=+(sessionStorage.getItem('bvr')||0);
+  if(n-l<15000)return;                       // one swap attempt per 15s, no reload loops
+  sessionStorage.setItem('bvr',String(n));
+  try{await fetch(location.href,{cache:'reload'});}catch(e){}
+  location.reload();
+}catch(e){}}
+if(window.addEventListener){
+  window.addEventListener('pageshow',freshCheck);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')freshCheck();});
+}
 
 // figure animates continuously, whatever the timer is doing
 let t0=performance.now(),last=0,curFit=null,brPh=0;

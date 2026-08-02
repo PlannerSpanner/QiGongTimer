@@ -1,4 +1,4 @@
-import json, os, re
+import hashlib, json, os, re
 
 MM = open(os.path.join(OUT, 'morning-movement.html'), encoding='utf-8').read()
 HEAD = MM.split('<script>')[0]
@@ -49,5 +49,9 @@ def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_ms
     body = re.sub(r"(\$\('bReset'\)\.onclick[\s\S]*?)\$\('cue'\)\.innerHTML='<strong>Morning Movement</strong>[^;]*;",
                   lambda m: m.group(1) + "$('cue').innerHTML=%s;" % json.dumps(intro), body)
     html = head + '<script>\n' + open(data_file, encoding='utf-8').read() + '\n' + ENG + '\n' + extra + '\n' + body + '</script>\n</body>\n</html>\n'
+    # build stamp for the launch-time freshness check (deterministic: hash of the
+    # unstamped content, so unchanged sources still rebuild byte-identical)
+    ver = hashlib.sha1(html.encode('utf-8')).hexdigest()[:10]
+    html = html.replace('<script>\n', "<script>\nconst BUILDV='%s';\n" % ver, 1)
     open(out, 'w', encoding='utf-8', newline='\n').write(html)
     return html

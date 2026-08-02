@@ -121,11 +121,27 @@ h1{font-size:1.75rem;font-weight:700;letter-spacing:-0.02em;color:#3f4a3d}
 </div>
 
 <script>
+const BUILDV='a1a8e1741e';
 const d = new Date(), h = d.getHours();
 document.getElementById('greet').textContent =
   h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
 document.getElementById('datebar').textContent =
   d.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
+
+// auto-update: on every launch/foreground, swap in the latest deployed version
+// (stamp is written by src/rebuild.py; loop-guarded via sessionStorage)
+async function freshCheck(){try{
+  const r=await fetch(location.href,{cache:'no-store'});
+  const m=(await r.text()).match(/BUILDV='([0-9a-f]+)'/);
+  if(!m||!BUILDV||m[1]===BUILDV)return;
+  const n=Date.now(),l=+(sessionStorage.getItem('bvr')||0);
+  if(n-l<15000)return;
+  sessionStorage.setItem('bvr',String(n));
+  try{await fetch(location.href,{cache:'reload'});}catch(e){}
+  location.reload();
+}catch(e){}}
+addEventListener('pageshow',freshCheck);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')freshCheck();});
 </script>
 </body>
 </html>

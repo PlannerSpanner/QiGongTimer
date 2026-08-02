@@ -308,6 +308,25 @@ $('bReset').onclick=()=>{
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
 
+// auto-update: home-screen standalone pages cache hard. On every launch and return to
+// foreground, refetch this page from the network and compare build stamps; if a newer
+// build is live, refresh the HTTP cache and swap to it — but never during a session.
+async function freshCheck(){try{
+  if(typeof BUILDV==='undefined'||started||running)return;
+  const r=await fetch(location.href,{cache:'no-store'});
+  const m=(await r.text()).match(/BUILDV='([0-9a-f]+)'/);
+  if(!m||m[1]===BUILDV)return;
+  const n=Date.now(),l=+(sessionStorage.getItem('bvr')||0);
+  if(n-l<15000)return;                       // one swap attempt per 15s, no reload loops
+  sessionStorage.setItem('bvr',String(n));
+  try{await fetch(location.href,{cache:'reload'});}catch(e){}
+  location.reload();
+}catch(e){}}
+if(window.addEventListener){
+  window.addEventListener('pageshow',freshCheck);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')freshCheck();});
+}
+
 // figure animates continuously, whatever the timer is doing
 let t0=performance.now(),last=0,curFit=null,brPh=0;
 (function loop(now){
