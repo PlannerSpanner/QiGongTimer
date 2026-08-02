@@ -159,6 +159,15 @@ function chime(f,v,d){try{const c=ac();if(c.state==='suspended')c.resume();
   g.gain.setValueAtTime(0,c.currentTime);g.gain.linearRampToValueAtTime(v,c.currentTime+0.05);
   g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);
   o.connect(g);g.connect(c.destination);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
+// breath-tempo tone: gentle sine glide, quieter than the chimes. Rising = inhale,
+// falling = exhale, fired from the animation loop so it stays locked to the figure.
+function breathTone(f0,f1,d){try{const c=ac();if(c.state==='suspended')c.resume();
+  const o=c.createOscillator(),g=c.createGain();o.type='sine';
+  o.frequency.setValueAtTime(f0,c.currentTime);
+  o.frequency.linearRampToValueAtTime(f1,c.currentTime+d);
+  g.gain.setValueAtTime(0,c.currentTime);g.gain.linearRampToValueAtTime(0.055,c.currentTime+d*0.3);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);
+  o.connect(g);g.connect(c.destination);o.start(c.currentTime);o.stop(c.currentTime+d);}catch(e){}}
 const cTrans=()=>{chime(440,.12,1);setTimeout(()=>chime(554.37,.1,.8),150);setTimeout(()=>chime(659.25,.08,.6),300);};
 const cSwitch=()=>{chime(659.25,.1,.5);setTimeout(()=>chime(659.25,.1,.5),280);};
 const cDone=()=>{chime(440,.12,1.2);setTimeout(()=>chime(554.37,.1,1),200);
@@ -248,11 +257,19 @@ $('bReset').onclick=()=>{
 };
 
 // figure animates continuously, whatever the timer is doing
-let t0=performance.now(),last=0,curFit=null;
+let t0=performance.now(),last=0,curFit=null,brPh=0;
 (function loop(now){
   if(now-last>30){last=now;const m=MOVES[idx];
     if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);buildProps(m,m.fit);applyMirror(false);}
-    drawFig(m,m.fit,((now-t0)/1000%m.cyc)/m.cyc);}
+    const ph=((now-t0)/1000%m.cyc)/m.cyc;
+    // breath-tempo audio on flagged movements: cycle wrap = inhale start (rising),
+    // halfway = exhale start (falling). Only while the timer runs and audio exists.
+    if(running&&m.br&&actx){
+      if(ph<brPh)breathTone(196,294,m.cyc*0.42);
+      else if(brPh<0.5&&ph>=0.5)breathTone(294,196,m.cyc*0.48);
+    }
+    brPh=ph;
+    drawFig(m,m.fit,ph);}
   requestAnimationFrame(loop);
 })(performance.now());
 timeLeft=MOVES[0].dur;

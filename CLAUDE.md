@@ -73,8 +73,8 @@ Pages deploys). After push: hard-refresh on iPhone Safari.
 
 ## Backlog (agreed with Will, rough priority)
 
-1. Playwright screenshot QA of the real pages (mid-animation, timer states, background/return).
-2. Breath-tempo audio for Birth Prep breathing movements (Web Audio, inhale/exhale tones at cyc).
-3. Session logging to localStorage (date/completions) + streaks.
-4. PWA: manifest + service worker for full offline.
-5. Polish: figure-4 knee flare, cobra asymmetric tempo, knee-circles readability.
+1. Session logging to localStorage (date/completions) + streaks.
+2. PWA: manifest + service worker for full offline.
+3. Polish: figure-4 knee flare, cobra asymmetric tempo, knee-circles readability.
+
+Done: Playwright QA (qa/, `npm run gauntlet`), breath-tempo audio (br flag, qa/breath.js).

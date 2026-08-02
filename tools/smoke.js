@@ -29,7 +29,7 @@ function run(app){
   const env={document:doc,
     navigator:{wakeLock:{request:async()=>({addEventListener(){},release(){}})}},
     window:{AudioContext:function(){this.state='running';this.currentTime=0;
-      this.resume=()=>{};this.createOscillator=()=>({type:'',frequency:{setValueAtTime(){}},connect(){},start(){},stop(){}});
+      this.resume=()=>{};this.createOscillator=()=>({type:'',frequency:{setValueAtTime(){},linearRampToValueAtTime(){}},connect(){},start(){},stop(){}});
       this.createGain=()=>({gain:{setValueAtTime(){},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){}});
       this.destination={};}},
     SpeechSynthesisUtterance:function(t){this.t=t;},

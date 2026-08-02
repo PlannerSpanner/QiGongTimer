@@ -382,6 +382,10 @@ pelvic floor matters more than strength. Release and coordination first, plus th
 adductor mobility that lets the pelvic outlet open. All prenatal constraints apply; never
 bear down.
 
+Movements 1 and 9 carry **breath-tempo audio** (`br` flag): a soft rising tone marks the
+inhale (first half of the cycle), a falling tone marks the exhale (second half), locked to
+the same phase that animates the figure. Tones play only while the timer runs.
+
 ## 1. Breath and pelvic floor release — 90s, 5s cycle, symmetric
 - **Setup:** tall sit on a chair; one hand on the belly, one on the chest.
 - **Execution:** inhale into the belly hand and feel the pelvic floor **soften and widen

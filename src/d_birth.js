@@ -1,5 +1,5 @@
 const MOVES=[
-{n:"Breath and pelvic floor release",cue:"One hand on the belly, one on the chest — soften down",dur:90,bil:false,cyc:5.0,belly:1,pin:"LR",
+{n:"Breath and pelvic floor release",cue:"One hand on the belly, one on the chest — soften down",dur:90,bil:false,cyc:5.0,br:1,belly:1,pin:"LR",
  prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],hf:0,ikL:{w:[-2,69,7]},ikR:{w:[2,61,7]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
@@ -53,7 +53,7 @@ const MOVES=[
  B:{p:[0,58,-1],yaw:-16,tw:0,s:[16,14],hf:8,aL:[26,-16,34,-12],aR:[26,16,34,12],
     ikFL:[-7,93,8],ikFR:[7,93,8]}},
 
-{n:"Pelvic floor coordination",cue:"Both hands low on the belly — lift, then fully let go",dur:90,bil:false,cyc:5.4,belly:1,pin:"LR",
+{n:"Pelvic floor coordination",cue:"Both hands low on the belly — lift, then fully let go",dur:90,bil:false,cyc:5.4,br:1,belly:1,pin:"LR",
  prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[2,0],hf:0,ikL:{w:[-3,70,7]},ikR:{w:[3,70,7]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
