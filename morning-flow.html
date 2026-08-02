@@ -433,8 +433,32 @@ const cTrans=()=>{chime(440,.12,1);setTimeout(()=>chime(554.37,.1,.8),150);setTi
 const cSwitch=()=>{chime(659.25,.1,.5);setTimeout(()=>chime(659.25,.1,.5),280);};
 const cDone=()=>{chime(440,.12,1.2);setTimeout(()=>chime(554.37,.1,1),200);
   setTimeout(()=>chime(659.25,.1,1),400);setTimeout(()=>chime(880,.08,1.5),600);};
+// pick the most natural installed voice: iOS/macOS "Enhanced"/"Premium" voices and
+// Edge "Natural" voices beat the robotic default by a mile when present. The list is
+// async on most browsers, so re-pick on voiceschanged.
+let voicePick=null;
+function pickVoice(){try{
+  const vs=speechSynthesis.getVoices(); if(!vs||!vs.length)return;
+  const NICE=['ava','zoe','samantha','allison','serena','karen','moira','tessa','nicky'];
+  let best=null,bs=0;
+  vs.forEach(v=>{
+    if(!/^en/i.test(v.lang))return;
+    const n=v.name.toLowerCase(); let s=0.1;
+    if(n.includes('premium'))s+=8;
+    if(n.includes('enhanced'))s+=6;
+    if(n.includes('natural'))s+=6;
+    if(n.startsWith('google'))s+=5;
+    const i=NICE.findIndex(x=>n.includes(x)); if(i>=0)s+=4-i*0.1;
+    if(/^en-us/i.test(v.lang))s+=1;
+    if(v.localService)s+=0.5;
+    if(s>bs){bs=s;best=v;}});
+  if(best)voicePick=best;
+}catch(e){}}
+if(window.speechSynthesis&&speechSynthesis.getVoices){pickVoice();
+  if(speechSynthesis.addEventListener)speechSynthesis.addEventListener('voiceschanged',pickVoice);}
 function say(t){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(t);
-  u.rate=.85;u.pitch=.9;u.volume=.8;speechSynthesis.speak(u);}catch(e){}}
+  if(voicePick)u.voice=voicePick;
+  u.rate=.8;u.pitch=1;u.volume=.8;speechSynthesis.speak(u);}catch(e){}}
 
 function paint(){
   const m=MOVES[idx];
