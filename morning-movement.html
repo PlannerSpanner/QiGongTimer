@@ -460,6 +460,7 @@ function paint(){
   $('cue').innerHTML=m.long;
   $('count').textContent=(idx+1)+'/'+MOVES.length;
   $('badge').classList.toggle('visible',!!m.bil);
+  $('badge').textContent=m.orb?'REVERSES · CHANGE DIRECTION AT HALFWAY':'BOTH SIDES · SWITCH AT HALFWAY';
   $('vid').href='https://www.youtube.com/results?search_query='+m.q;
   $('bPrev').disabled=idx<=0; $('bNext').disabled=idx>=MOVES.length-1;
   MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<idx?' done':i===idx?' active':'');});
@@ -475,7 +476,7 @@ function go(i){
   idx=i; const m=MOVES[idx]; timeLeft=m.dur; swAt=false;
   segEnd=Date.now()+m.dur*1000; pausedRem=m.dur*1000;
   paint(); cTrans();
-  setTimeout(()=>say(m.n+(m.bil?'. Start with your right side.':'')),420);
+  setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
 }
 function sync(){
   if(!running)return;
@@ -488,12 +489,12 @@ function sync(){
   }
   if(jumped){
     const m=MOVES[idx]; paint(); cTrans();
-    setTimeout(()=>say(m.n+(m.bil?'. Start with your right side.':'')),420);
+    setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
   }
   if(rem!==timeLeft){
     timeLeft=rem; clock();
     const m=MOVES[idx];
-    if(m.bil&&!swAt&&timeLeft<=Math.floor(m.dur/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say('Switch sides'),300);}
+    if(m.bil&&!swAt&&timeLeft<=Math.floor(m.dur/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
     if(timeLeft===3)chime(380,.05,.3);
   }
 }
