@@ -1,0 +1,26 @@
+{
+  "name": "movement-app",
+  "version": "1.0.0",
+  "description": "Stick-figure exercise timers — QA tooling",
+  "scripts": {
+    "gauntlet": "node tools/smoke.js && node tools/lint.js && node tools/geo.js && node qa/shots.js && node qa/catchup.js",
+    "qa:shots": "node qa/shots.js",
+    "qa:catchup": "node qa/catchup.js",
+    "qa:strips": "node tools/dump.js && python3 tools/strips.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PlannerSpanner/QiGongTimer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/PlannerSpanner/QiGongTimer/issues"
+  },
+  "homepage": "https://github.com/PlannerSpanner/QiGongTimer#readme",
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
