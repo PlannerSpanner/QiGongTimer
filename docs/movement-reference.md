@@ -29,15 +29,15 @@ These shaped movement selection and form limits; do not edit them away:
 
 ## Prenatal constraints (both prenatal apps)
 
-- **Low-lying placenta safe**: no lying flat on the back (aortocaval compression and per
-  provider guidance), no inversions, no balance challenges, no breath-holding or bearing
-  down (Valsalva). Every position is seated, hands-and-knees, side-lying, or standing with
-  support.
+- **Position rules**: no lying flat on the back (aortocaval compression), no inversions,
+  no balance challenges, no breath-holding or bearing down (Valsalva). Every position is
+  seated, hands-and-knees, side-lying, or standing with support.
 - **Relaxin**: ligaments are softened; gravity-only stretching, never pushed end range —
   especially adductors (butterfly) and anything asymmetric across the pelvis.
-- **Supported deep squat depth** stays shallow until the provider clears deeper work.
-- Safety banner (bleeding, cramping, contractions, fluid leak, dizziness, sharp pain →
-  stop and call the provider) appears on both prenatal apps.
+- **Placenta status**: cleared of placenta previa / low-lying placenta (2026-08-02), so the
+  apps carry a general listen-to-your-body banner rather than an urgent call-your-provider
+  warning, and supported squat depth is limited by comfort and stability, not placenta
+  position. If status ever changes, restore the aggressive banner and shallow-squat cap.
 
 ## Sides & direction protocol
 
@@ -278,7 +278,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 
 ---
 
-# Prenatal Stretch — 10 movements, gentle, low-lying-placenta safe
+# Prenatal Stretch — 10 movements, gentle stretch & release
 
 All prenatal constraints above apply. Everything seated, hands-and-knees, or supported
 standing. Breathe continuously.
@@ -412,10 +412,10 @@ bear down.
 - **Setup:** holding a counter or chair back.
 - **Execution:** lower only as far as comfortable, heels down if possible, knees tracking
   out; **rise slowly on the exhale**.
-- **Anchors:** squatting can widen the pelvic outlet substantially — but with a low-lying
-  placenta keep it **shallow and supported** until the provider clears deeper work; no
-  breath holding at any depth.
-- **Faults:** bouncing at the bottom; heels lifting; going deep because it feels fine.
+- **Anchors:** squatting can widen the pelvic outlet substantially; depth is limited by
+  comfort and stability — build it gradually rather than chasing range; no breath holding
+  at any depth.
+- **Faults:** bouncing at the bottom; heels lifting; forcing depth on an unstable day.
 - **Figure:** supported squat with prop, modest depth, heels down.
 
 ## 5. Side-lying clamshells — 60s, 2.6s cycle, unilateral (switch)
