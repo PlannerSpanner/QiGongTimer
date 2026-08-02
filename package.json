@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PlannerSpanner/QiGongTimer.git"
+    "url": "git+https://github.com/PlannerSpanner/MovementApp.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/PlannerSpanner/QiGongTimer/issues"
+    "url": "https://github.com/PlannerSpanner/MovementApp/issues"
   },
-  "homepage": "https://github.com/PlannerSpanner/QiGongTimer#readme",
+  "homepage": "https://github.com/PlannerSpanner/MovementApp#readme",
   "devDependencies": {
     "playwright": "^1.62.1"
   }

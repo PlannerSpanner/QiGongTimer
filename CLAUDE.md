@@ -1,8 +1,8 @@
 # Movement App — stick-figure exercise timers
 
 Four single-file HTML exercise timer apps with animated 3D stick-figure demonstrations,
-deployed to GitHub Pages at https://plannerspanner.github.io/QiGongTimer/
-(repo `PlannerSpanner/QiGongTimer` — username lowercase in URL, repo capitalized).
+deployed to GitHub Pages at https://plannerspanner.github.io/MovementApp/
+(repo `PlannerSpanner/MovementApp` — username lowercase in URL, repo capitalized).
 Built for iPhone Safari (wake lock + Add to Home Screen require Safari, not Chrome).
 
 Apps: `morning-flow` (qi gong warmup), `morning-movement` (mobility/strength),
