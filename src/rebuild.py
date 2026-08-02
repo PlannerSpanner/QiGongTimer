@@ -25,7 +25,7 @@ ROSE=dict(n=10,accent='#a8546b',
  ('rgba(221,154,60,0.45)','rgba(217,120,143,0.45)'),('rgba(221,154,60,0.5)','rgba(217,120,143,0.45)'),
  ('rgba(180,140,60,0.3)','rgba(190,120,140,0.3)'),('#e8dcc0','#f0dde3'),
  ('#6d4f1c','#7d3f53'),('#c2a473','#cfa8b3'),('#7d5a1e','#a8546b'),('#caac79','#dcbcc4')])
-A11=dict(n=11,accent='#a5762a',warnText='#8d5326',warnBg='rgba(214,140,70,0.12)',
+A11=dict(n=12,accent='#a5762a',warnText='#8d5326',warnBg='rgba(214,140,70,0.12)',
  warnBorder='rgba(214,140,70,0.32)',warnStrong='#7a441c',css=[])
 A12=dict(n=12,accent='#a5762a',css=[])
 BAN=("<strong>Listen to your body.</strong> Ease off anything that feels sharp or wrong, "

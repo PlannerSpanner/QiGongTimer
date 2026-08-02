@@ -48,7 +48,7 @@ Three kinds of movement use, or deliberately don't use, that mechanism:
 |---|---|---|---|
 | Unilateral (one side at a time) | mirror + chime | "Switch sides" | Punching rotations*, Dynamic lateral reaches, Cross-body knee drives*, Lateral weight shifts, Reverse lunges, 90/90 with a fold, Thread the needle, Seated side reach, Seated figure-4, Kneeling hip flexor stretch, Standing calf stretch, Doorway chest opener, Side-lying clamshells, Kneeling lunge with support |
 | Direction change (orbital) | mirror reverses the circle | "Change direction" | Hip circles, Knee circles, Birth ball hip circles |
-| Alternating within each rep | none needed | — | Rotations with shoulder slaps, Chest opener swings, Bent rotation sweeps, Pedaling down dog, Arm sweeps, Bouncing, Hands-and-knees rocking, Supported butterfly with rock |
+| Alternating within each rep | none needed | — | Rotations with shoulder slaps, Chest opener swings, Bent rotation sweeps, Pedaling down dog, Arm sweeps, Bouncing, Hands-and-knees rocking, Supported butterfly with rock, Windshield wipers |
 | Deliberately one-sided | none — do not "fix" | — | Left side-lying rest (left side only: vena cava decompression) |
 
 \* Punching rotations and knee drives alternate within the rep as performed by a human, but
@@ -375,16 +375,19 @@ standing. Breathe continuously.
 
 ---
 
-# Birth Prep — 11 movements: pelvic mobility and floor release
+# Birth Prep — 12 movements: pelvic mobility and floor release
 
 The organizing idea: for perineal protection, the ability to **relax and lengthen** the
 pelvic floor matters more than strength. Release and coordination first, plus the hip and
 adductor mobility that lets the pelvic outlet open. All prenatal constraints apply; never
 bear down.
 
-Movements 1 and 9 carry **breath-tempo audio** (`br` flag): a soft rising tone marks the
+Movements 1 and 10 carry **breath-tempo audio** (`br` flag): a soft rising tone marks the
 inhale (first half of the cycle), a falling tone marks the exhale (second half), locked to
 the same phase that animates the figure. Tones play only while the timer runs.
+
+This app also carries the **session-length toggle** (13 min / 26 min): doubles every
+movement's duration before starting; locked mid-session, unlocked by Reset.
 
 ## 1. Breath and pelvic floor release — 90s, 5s cycle, symmetric
 - **Setup:** tall sit on a chair; one hand on the belly, one on the chest.
@@ -431,7 +434,22 @@ the same phase that animates the figure. Tones play only while the timer runs.
 - **Figure:** stacked side-lying position, top knee hinging open like a shell, heels
   touching at all times.
 
-## 6. Supported butterfly with rock — 60s, 3s cycle, alternating (side-to-side)
+## 6. Windshield wipers — 60s, 4s cycle, alternating (side-to-side)
+- **Setup:** seated on the floor leaning back onto the hands or a low cushion/bolster,
+  feet flat and wider than hip-width, knees bent.
+- **Execution:** both knees sweep slowly side to side together, lifting up through the
+  midline and lowering toward the floor on each side; exhale as they fall.
+- **Anchors:** feet stay planted (they roll on their edges, they don't step); no forcing
+  at the bottom of the drop — relaxin range rules apply; the torso stays quiet on its
+  supports, spine long.
+- **Faults:** pulling the knees down at end range; feet skidding; slumping through the
+  low back.
+- **Why:** paired internal/external hip rotation mobilises the pelvis through the ranges
+  labour positions use and eases low-back/SI tension.
+- **Figure:** seated recline on a bolster prop, both knees sweeping the same direction,
+  one dipping inward-low while the other opens outward; feet fixed wide.
+
+## 7. Supported butterfly with rock — 60s, 3s cycle, alternating (side-to-side)
 - **Setup:** elevated on a cushion, soles together, knees open (as Prenatal Stretch #5).
 - **Execution:** rock gently side to side.
 - **Anchors:** never push the knees down; the rock stays small — forcing range can
@@ -439,7 +457,7 @@ the same phase that animates the figure. Tones play only while the timer runs.
 - **Faults:** turning the rock into a stretch contest; hands loading the thighs.
 - **Figure:** butterfly diamond with a small lateral sway.
 
-## 7. Kneeling lunge with support — 60s, 3.6s cycle, unilateral (switch)
+## 8. Kneeling lunge with support — 60s, 3.6s cycle, unilateral (switch)
 - **Setup:** half-kneeling, cushion under the back knee, hand on a chair.
 - **Execution:** shift weight gently forward; back; repeat; switch at the halfway chime.
 - **Anchors:** **asymmetric hip positions help the baby navigate the pelvis** and are
@@ -448,7 +466,7 @@ the same phase that animates the figure. Tones play only while the timer runs.
 - **Faults:** deep aggressive lunge; losing the support hand.
 - **Figure:** half-kneel with chair prop and small forward-back translation.
 
-## 8. Standing wall pelvic tilts — 60s, 3.4s cycle, symmetric
+## 9. Standing wall pelvic tilts — 60s, 3.4s cycle, symmetric
 - **Setup:** back against a wall, feet a step forward.
 - **Execution:** exhale — flatten the low back into the wall; inhale — release. Small and
   controlled.
@@ -457,7 +475,7 @@ the same phase that animates the figure. Tones play only while the timer runs.
 - **Faults:** knee-bend doing the flattening; shoulders peeling off the wall.
 - **Figure:** upright stance at the wall with subtle pelvic tilt cycle.
 
-## 9. Pelvic floor coordination — 90s, 5.4s cycle, symmetric
+## 10. Pelvic floor coordination — 90s, 5.4s cycle, symmetric
 - **Setup:** tall sit, both hands resting low on the belly.
 - **Execution:** exhale — a **gentle** pelvic floor lift; inhale — a complete, deliberate
   release.
@@ -466,12 +484,12 @@ the same phase that animates the figure. Tones play only while the timer runs.
 - **Faults:** max-effort kegels; holding the lift; breath reversal.
 - **Figure:** still tall sit with slow breath rhythm (visually similar to #1 — correct).
 
-## 10. Wide-knee child's pose — 60s, 4.4s cycle, symmetric
+## 11. Wide-knee child's pose — 60s, 4.4s cycle, symmetric
 - Identical anchors to Prenatal Stretch #6: passive pelvic floor lengthening, knees wide,
   belly between, genuine rest.
 - **Figure:** wide-knee fold, chest low.
 
-## 11. Left side-lying rest — 60s, 5s cycle, deliberately left side only — never add a switch
+## 12. Left side-lying rest — 60s, 5s cycle, deliberately left side only — never add a switch
 - **Setup:** lying on the **left** side, pillow between the knees, one under the belly.
 - **Execution:** nothing — return to the soft downward-widening breath from movement 1.
 - **Anchors:** left side-lying keeps pressure off the **vena cava** and maximizes placental

@@ -33,6 +33,13 @@ const MOVES=[
  B:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
     lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:48}},
 
+{n:"Windshield wipers",cue:"Feet wide, knees sweep side to side together",dur:60,bil:false,cyc:4.0,belly:1,cam:6,
+ prop:[{l:[[-14,86.2,-8],[14,86.2,-8]]}],
+ A:{p:[0,83.5,-2],yaw:0,tw:0,s:[-20,-8],hf:16,ikL:{w:[-10.5,84.6,-8]},ikR:{w:[10.5,84.6,-8]},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-15,91.3,9],ikFR:[15,91.3,9],lL:[0,0,0,0],lR:[0,0,0,0],swL:-135,swR:-40},
+ B:{p:[0,83.5,-2],yaw:0,tw:0,s:[-20,-8],hf:16,ikL:{w:[-10.5,84.6,-8]},ikR:{w:[10.5,84.6,-8]},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-15,91.3,9],ikFR:[15,91.3,9],lL:[0,0,0,0],lR:[0,0,0,0],swL:42,swR:135}},
+
 {n:"Supported butterfly with rock",cue:"Soles together, rock gently side to side",dur:60,bil:false,cyc:3.0,belly:1,
  A:{p:[0,86,0],yaw:-20,tw:0,s:[14,18],sl:-10,hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:8,swR:74},
