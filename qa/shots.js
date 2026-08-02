@@ -26,7 +26,10 @@ const OUT=path.join(__dirname,'screenshots');
     console.log(`${app.padEnd(20)} start: ${btn==='Pause'?'ok':'FAIL('+btn+')'} | ${num} | figure drawn: ${svg.includes('<line')}`);
     if(!ok)fail=true;
   }
+  await page.goto(`http://127.0.0.1:${srv.port}/index.html`);          // launcher
+  await page.waitForTimeout(300);
+  await page.screenshot({path:path.join(OUT,'index.png'),fullPage:true});
   await browser.close(); srv.close();
-  console.log(fail?'SHOTS FAIL':`SHOTS PASS — ${APPS.length*2} screenshots in qa/screenshots/`);
+  console.log(fail?'SHOTS FAIL':`SHOTS PASS — ${APPS.length*2+1} screenshots in qa/screenshots/`);
   process.exit(fail?1:0);
 })().catch(e=>{console.error(e);process.exit(1);});
