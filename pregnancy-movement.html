@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Morning Movement">
+<meta name="apple-mobile-web-app-title" content="Birth Prep">
 <meta name="theme-color" content="#fdf7e9">
-<link rel="apple-touch-icon" href="icon-morning-movement.png">
-<title>Morning Movement</title>
+<link rel="apple-touch-icon" href="icon-birth-prep.png">
+<title>Birth Prep</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;
@@ -61,14 +61,16 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
 .btn-sec svg{width:13px;height:13px;fill:currentColor;vertical-align:-2px}
 .vid{font-size:0.63rem;color:#a4947a;text-decoration:none;display:inline-block;margin-top:2px}
 .vid:active{color:#a5762a}
-.state-done .nm{color:#c8862e}
+.state-done .nm{color:#a5762a}
+.safety{font-size:0.62rem;line-height:1.5;color:#8d5326;background:rgba(214,140,70,0.12);border:1px solid rgba(214,140,70,0.32);border-radius:10px;padding:7px 11px;margin-bottom:9px;text-align:left}.safety strong{color:#7a441c}
 </style>
 </head>
 <body>
 <div class="wrap" id="app">
-  <h1>Morning Movement</h1>
-  <div class="sub">Mobility · Control · Stability</div>
+  <h1>Birth Prep</h1>
+  <div class="sub">Pelvic mobility · Floor release</div>
 
+  <div class="safety"><strong>Stop and call your provider</strong> for any bleeding, cramping, contractions, fluid leaking, dizziness or sharp pain. Get clearance from your OB or midwife first. Never hold your breath or bear down.</div>
   <div class="num" id="mNum">READY</div>
   <div class="nm" id="mName">Tap Start to begin</div>
   <div class="tg" id="mTarget"></div>
@@ -84,11 +86,11 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <div class="barrow">
     <div class="tm" id="tm">0:00</div>
     <div class="track"><div class="fill" id="fill"></div></div>
-    <div class="count" id="count">–/12</div>
+    <div class="count" id="count">–/11</div>
   </div>
 
   <div class="dots" id="dots"></div>
-  <div class="cue" id="cue"><strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.</div>
+  <div class="cue" id="cue"><strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.</div>
 
   <div class="row">
     <button class="btn-primary" id="bMain">Start</button>
@@ -103,74 +105,78 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
 </div>
 <script>
 const MOVES=[
-{n:"Deep squats",cue:"Sink until you're almost sitting on your heels",dur:30,bil:false,cyc:2.8,pin:"LR",
- A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
- B:{p:[0,78,-12],yaw:22,tw:0,s:[26,20],hf:-6,ikL:{w:[-9,68,12]},ikR:{w:[9,68,12]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[0,0,0,0],lR:[0,0,0,0]}},
+{n:"Breath and pelvic floor release",cue:"One hand on the belly, one on the chest — soften down",dur:90,bil:false,cyc:5.0,belly:1,pin:"LR",
+ prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+ A:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],hf:0,ikL:{w:[-2,69,7]},ikR:{w:[2,61,7]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
+ B:{p:[0,73.4,0],yaw:-18,tw:0,s:[0,-4],hf:-4,ikL:{w:[-2,69.5,8]},ikR:{w:[2,60.5,8]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
 
-{n:"Parallel squats",cue:"Stop at thighs parallel, chest up",dur:30,bil:false,cyc:2.4,pin:"LR",
- A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
- B:{p:[0,71,-11],yaw:22,tw:0,s:[20,16],hf:-4,ikL:{w:[-9,62,12]},ikR:{w:[9,62,12]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[0,0,0,0],lR:[0,0,0,0]}},
+{n:"Hands-and-knees pelvic rocking",cue:"Rock the hips, spine stays neutral",dur:60,bil:false,cyc:2.8,belly:1,
+ A:{p:[-0.9,74,-2.22],yaw:22,tw:0,s:[78,78],hf:14,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[7.2,-6,-90,-5],lR:[7.2,6,-90,5]},
+ B:{p:[0.9,74,2.22],yaw:22,tw:0,s:[85,85],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-7.2,-6,-90,-5],lR:[-7.2,6,-90,5]}},
 
-{n:"Knee circles",cue:"Hands on bent knees, feet planted, circle the knees",dur:30,bil:true,cyc:3.2,
- pin:"LR",orb:{swivel:true,amp:26},
- A:{p:[0,62.2,0],yaw:-22,tw:0,s:[74,80],hf:22,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[48,-13,-18,13],lR:[48,13,-18,-13]},
- B:{p:[0,62.2,0],yaw:-22,tw:0,s:[74,80],hf:22,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[48,-13,-18,13],lR:[48,13,-18,-13]}},
+{n:"Birth ball hip circles",cue:"Sit tall on the ball, circle from the pelvis",dur:60,bil:true,cyc:3.2,belly:1,
+ prop:[{c:[[0,81,0],9]}],
+ orb:{hips:true,rx:6,rz:5,ry:1},
+ A:{p:[0,72,0],yaw:-18,tw:0,s:[4,4],hf:0,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-9,93,14],ikFR:[9,93,14]},
+ B:{p:[0,72,0],yaw:-18,tw:0,s:[4,4],hf:0,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-9,93,14],ikFR:[9,93,14]}},
 
-{n:"Reverse lunges",cue:"Step back, front shin stays vertical",dur:30,bil:true,cyc:3.2,pin:"R",
- A:{p:[0,55.2,0],yaw:24,tw:0,s:[2,2],aL:[-6,-10,-6,-8],aR:[6,10,6,8],lL:[-4,-6,4,-5],lR:[4,6,-4,5]},
- M:{p:[0,63,-8],yaw:24,tw:0,s:[5,3],aL:[-2,-10,-2,-8],aR:[2,10,2,8],lL:[8,-6,-70,-5],lR:[4,6,-4,5]},
- B:{p:[0,72,-18],yaw:24,tw:0,s:[8,6],aL:[2,-10,4,-8],aR:[-2,10,-4,8],lL:[-12,-6,-94,-5],lR:[4,6,-4,5]}},
+{n:"Supported deep squat",cue:"Hold support, only as deep as is comfortable",dur:60,bil:false,cyc:3.4,belly:1,
+ prop:[{l:[[-20,54,20],[20,54,20]]},{l:[[-18,54,20],[-18,93,20]]},{l:[[18,54,20],[18,93,20]]}],
+ A:{p:[0,58,0],yaw:-20,tw:0,s:[6,6],hf:0,ikL:{w:[-15,54,20]},ikR:{w:[15,54,20]},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-13,93,2],ikFR:[13,93,2]},
+ B:{p:[0,76,-4],yaw:-20,tw:0,s:[16,14],hf:-6,ikL:{w:[-15,54,20]},ikR:{w:[15,54,20]},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-13,93,2],ikFR:[13,93,2]}},
 
-{n:"Hip hinges",cue:"Deadlift pattern — push the hips straight back",dur:30,bil:false,cyc:2.8,pin:"LR",
- A:{p:[0,55.2,0],yaw:24,tw:0,s:[2,2],aL:[0,-9,0,-7],aR:[0,9,0,7],lL:[-4,-6,4,-5],lR:[4,6,-4,5]},
- B:{p:[0,57.5,-9],yaw:24,tw:0,s:[52,56],hf:-14,aL:[0,-8,0,-6],aR:[0,8,0,6],
-    lL:[0,0,0,0],lR:[0,0,0,0]}},
+{n:"Side-lying clamshells",cue:"Heels glued together — only the top knee opens",dur:60,bil:true,cyc:2.6,belly:1,
+ A:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:6},
+ B:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:48}},
 
-{n:"Folded cat-cows",cue:"Hands on bent knees, round then arch the spine",dur:30,bil:false,cyc:3.4,pin:"LR",
- A:{p:[0,64,0],yaw:22,tw:0,s:[74,86],hf:28,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[40,-6,-40,-5],lR:[40,6,-40,5]},
- B:{p:[0,64,0],yaw:22,tw:0,s:[72,70],hf:-26,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[40,-6,-40,-5],lR:[40,6,-40,5]}},
+{n:"Supported butterfly with rock",cue:"Soles together, rock gently side to side",dur:60,bil:false,cyc:3.0,belly:1,
+ A:{p:[0,86,0],yaw:-20,tw:0,s:[14,18],sl:-10,hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:8,swR:74},
+ B:{p:[0,86,0],yaw:-20,tw:0,s:[14,18],sl:10,hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:8,swR:74}},
 
-{n:"Cobra press-ups",cue:"Press the chest up, hips stay down",dur:60,bil:false,cyc:3.2,
- A:{p:[0,90.5,4],yaw:18,tw:0,s:[74,66],hf:10,ikL:{w:[-9,93,20]},ikR:{w:[9,93,20]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-92,-6,-88,-5],lR:[-96,6,-92,5]},
- B:{p:[0,90.5,4],yaw:18,tw:0,s:[46,24],hf:-22,ikL:{w:[-9,93,20]},ikR:{w:[9,93,20]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-92,-6,-88,-5],lR:[-96,6,-92,5]}},
+{n:"Kneeling lunge with support",cue:"Hand on a chair, shift gently forward",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR",
+ prop:[{l:[[16,64,10],[16,93,10]]},{l:[[11,64,10],[21,64,10]]}],
+ A:{p:[0,75,-2],yaw:24,tw:0,s:[4,4],hf:0,ikL:{w:[-8,72,2]},ikR:{w:[14,66,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]},
+ B:{p:[0,75.5,1],yaw:24,tw:0,s:[-8,-8],hf:-10,ikL:{w:[-8,72,4]},ikR:{w:[14,66,10]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
 
-{n:"Pedaling down dog",cue:"Alternate pressing each heel down",dur:60,bil:false,cyc:2.2,
- A:{p:[0,56,-2],yaw:20,tw:0,s:[136,136],hf:20,ikL:{w:[-9,93,34]},ikR:{w:[9,93,34]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-24,-6,-24,-5],lR:[-20,6,-40,5]},
- B:{p:[0,56,-2],yaw:20,tw:0,s:[136,136],hf:20,ikL:{w:[-9,93,34]},ikR:{w:[9,93,34]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-20,-6,-40,-5],lR:[-24,6,-24,5]}},
+{n:"Standing wall pelvic tilts",cue:"Flatten the low back on the exhale",dur:60,bil:false,cyc:3.4,belly:1,pin:"LR",
+ prop:[{l:[[0,34,-8],[0,93,-8]]}],
+ A:{p:[0,58,-4],yaw:-16,tw:0,s:[-14,-12],hf:-8,aL:[26,-16,34,-12],aR:[26,16,34,12],
+    ikFL:[-7,93,8],ikFR:[7,93,8]},
+ B:{p:[0,58,-1],yaw:-16,tw:0,s:[16,14],hf:8,aL:[26,-16,34,-12],aR:[26,16,34,12],
+    ikFL:[-7,93,8],ikFR:[7,93,8]}},
 
-{n:"Tuck + untuck",cue:"Back stays on the floor — only the pelvis rolls",dur:60,bil:false,cyc:3.6,pin:"LR",
- A:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,ikL:{w:[-12,91.5,-4]},ikR:{w:[12,91.5,-4]},
-    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-5,93,12],ikFR:[5,93,12]},
- B:{p:[0,89.5,3],yaw:14,tw:0,s:[-92,-86],hf:2,ikL:{w:[-12,91.5,-4]},ikR:{w:[12,91.5,-4]},
-    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-5,93,12],ikFR:[5,93,12]}},
+{n:"Pelvic floor coordination",cue:"Both hands low on the belly — lift, then fully let go",dur:90,bil:false,cyc:5.4,belly:1,pin:"LR",
+ prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+ A:{p:[0,74,0],yaw:-18,tw:0,s:[2,0],hf:0,ikL:{w:[-3,70,7]},ikR:{w:[3,70,7]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
+ B:{p:[0,73.6,0],yaw:-18,tw:0,s:[-2,-4],hf:-3,ikL:{w:[-3,70.5,8]},ikR:{w:[3,70.5,8]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
 
-{n:"90/90 with a fold",cue:"Z-sit: front shin across, back shin behind — fold forward",dur:60,bil:true,cyc:3.4,cam:58,
- A:{p:[0,90,0],yaw:-8,tw:0,s:[6,4],hf:0,ikL:{w:[-14,92,-6]},ikR:{w:[10,92,6]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lR:[88,12,6,-86],lL:[57,-76,-90,-6]},
- B:{p:[0,90,0],yaw:-8,tw:0,s:[42,48],hf:-8,ikL:{w:[-4,92,16]},ikR:{w:[12,92,18]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lR:[88,12,6,-86],lL:[57,-76,-90,-6]}},
+{n:"Wide-knee child's pose",cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,pin:"LR",
+ A:{p:[0,74,-6],yaw:22,tw:0,s:[88,98],hf:22,ikL:{w:[-13,92,26]},ikR:{w:[13,92,26]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[92,-34,-88,-30],lR:[92,34,-88,30]},
+ B:{p:[0,76,-8],yaw:22,tw:0,s:[92,102],hf:18,ikL:{w:[-13,92,28]},ikR:{w:[13,92,28]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[92,-34,-88,-30],lR:[92,34,-88,30]}},
 
-{n:"Thread the needle",cue:"Reach up, then slide the arm under",dur:60,bil:true,cyc:3.6,pin:"LR",
- A:{p:[0,74,-2],yaw:16,tw:52,s:[-74,-74],hf:-18,ikL:{w:[-9,93,-14]},
-    aL:[0,0,0,0],aR:[-58,58,-68,54],lL:[0,-6,90,-5],lR:[4,6,94,5]},
- B:{p:[0,76,-2],yaw:16,tw:-58,s:[-78,-86],hf:26,ikL:{w:[-9,93,-14]},
-    aL:[0,0,0,0],aR:[72,-74,62,-70],lL:[0,-6,90,-5],lR:[4,6,94,5]}},
-
-{n:"Plank hold",pin:"LR",cue:"One straight line, push the floor away",dur:60,bil:false,cyc:4.0,
- A:{p:[0,84,0],yaw:24,tw:0,s:[80,80],hf:18,ikL:{w:[-7,93,32]},ikR:{w:[7,93,32]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-80,-6,-88,-5],lR:[-80,6,-88,5]},
- B:{p:[0,82,0],yaw:24,tw:0,s:[80,80],hf:18,ikL:{w:[-7,93,32]},ikR:{w:[7,93,32]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-80,-6,-88,-5],lR:[-80,6,-88,5]}}
+{n:"Left side-lying rest",cue:"Pillow between the knees, soft breathing",dur:60,bil:false,cyc:5.0,belly:1,
+ A:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],lR:[62,8,-82,6]},
+ B:{p:[0,80,0],yaw:70,tw:0,s:[78,82],hf:14,aL:[72,-16,84,-12],aR:[66,16,82,12],
+    lL:[60,-8,-83,-6],lR:[64,8,-81,6]}}
 ];
 
 // ================= 3D skeleton =================
@@ -268,22 +274,19 @@ function orbitPose(base,o,ph){
   return p;
 }
 
-
-// long-form coaching cues + demo search terms, keyed to the pose table above
 const EXTRA={
-"Deep squats":["<strong>Form:</strong> Feet shoulder-width, heels down. Hips go back first, then straight down until you are nearly sitting on your heels — torso and shins stay parallel to each other, ankles folding to about 65° at the bottom","deep+bodyweight+squat+mobility+drill"],
-"Parallel squats":["<strong>Form:</strong> Same pattern, but stop when the thighs reach parallel. Chest stays prouder than the deep squat; knees track over the second toe and the heels never lift","parallel+squat+form+bodyweight"],
-"Knee circles":["<strong>Form:</strong> Knees bent, hands resting on them, feet planted. Circle the knees one direction, reverse at the halfway chime. <strong>Ankle note:</strong> weight even on both feet — shrink the circle if the right ankle complains.","standing+knee+circles+joint+mobility"],
-"Reverse lunges":["<strong>Form:</strong> Step back about two feet, landing on the ball of the back foot. Front shin stays vertical — knee stacked over ankle — both knees near 90°, back knee hovering an inch or two off the floor","reverse+lunge+proper+form"],
-"Hip hinges":["<strong>Form:</strong> Soft knees, push the hips straight BACK — not down. Chest travels forward, spine stays long, arms hang on the bar path. <strong>Training link:</strong> this is your narrow sumo deadlift pattern, grooved daily without load.","hip+hinge+drill+deadlift+pattern"],
-"Folded cat-cows":["<strong>Form:</strong> Knees bent, hands resting on them. Round the spine on the exhale, arch and open the chest on the inhale. <strong>Training link:</strong> targets T4–T8 extension — where your chronic mid-back pain lives.","standing+folded+cat+cow+spinal+mobility"],
-"Cobra press-ups":["<strong>Form:</strong> Face down, hands under shoulders. Press the chest up, hips stay on the floor. Lower with control. <strong>Shoulder note:</strong> elbows tucked close to the ribs — flaring them loads the right AC joint.","cobra+press+up+mckenzie+extension"],
-"Pedaling down dog":["<strong>Form:</strong> Alternate pressing one heel toward the floor while the other knee bends. Slow and rhythmic. <strong>Ankle note:</strong> gentle calf and Achilles work with no peroneal load — keep the foot tracking straight, not rolling outward.","pedaling+downward+dog+calf+stretch"],
-"Tuck + untuck":["<strong>Form:</strong> Lie flat, knees bent, feet flat. Only the pelvis moves: flatten the low back into the floor, then let it arch gently away. Everything above the ribs stays quiet on the ground","pelvic+tilt+tuck+untuck+core+control"],
-"90/90 with a fold":["<strong>Form:</strong> Z-sit: front leg's outer thigh and shin flat on the floor, back leg's inner thigh down with the shin pointing straight behind you. Sit tall, then hinge forward over the front shin without rounding","90+90+hip+stretch+with+forward+fold"],
-"Thread the needle":["<strong>Form:</strong> On hands and knees. Reach one arm to the ceiling, then slide it under the opposite armpit and let the shoulder rest toward the floor. Switch at the halfway chime. <strong>Training link:</strong> thoracic rotation plus scapular mobility — your mid-back and right shoulder IR limitation.","thread+the+needle+thoracic+rotation+stretch"],
-"Plank hold":["<strong>Form:</strong> Forearms down, body in one straight line. Squeeze the glutes, brace, don't let the hips sag or pike. <strong>Shoulder note:</strong> forearm plank is kinder to the right AC joint — push the floor away to fire the serratus, same cue as your landmine press.","forearm+plank+proper+form+serratus"]};
-MOVES.forEach(m=>{m.long=EXTRA[m.n][0]; m.q=EXTRA[m.n][1];});
+"Breath and pelvic floor release":["<strong>Form:</strong> Sit tall on a chair. One hand on the belly, one on the chest. Inhale into the belly hand and feel the pelvic floor soften and widen; exhale and simply let it be","pelvic+floor+relaxation+breathing+birth+preparation"],
+"Hands-and-knees pelvic rocking":["<strong>Form:</strong> Wrists under shoulders, rock the pelvis slowly forward and back, spine near neutral. <strong>Why:</strong> encourages an optimal anterior fetal position and mobilises the sacroiliac joints. Also one of the most-used labour positions, so the pattern is worth knowing in your body.","hands+and+knees+pelvic+tilt+rocking+pregnancy"],
+"Birth ball hip circles":["<strong>Form:</strong> Sit tall on the ball, feet flat and wide so feet and ball form a tripod, hips level with or above the knees. Circle from the pelvis like a slow hula hoop — the shoulders stay quiet","birth+ball+hip+circles+pregnancy"],
+"Supported deep squat":["<strong>Form:</strong> Hold a counter or chair back. Lower only as far as is comfortable, heels down if possible, knees tracking out. Rise slowly on the exhale. <strong>Why:</strong> squatting can widen the pelvic outlet substantially. <strong>Caution:</strong> with a low-lying placenta keep it shallow and supported until your provider clears deeper work.","supported+deep+squat+pregnancy+birth+preparation"],
+"Side-lying clamshells":["<strong>Form:</strong> Hips stacked, knees bent, heels glued together. Only the top knee opens — the pelvis must not roll backward. The lift is small; the control is the exercise","side+lying+clamshell+pregnancy+glute+medius"],
+"Supported butterfly with rock":["<strong>Form:</strong> Sit elevated on a cushion, soles together, knees open, rock gently side to side. Never push the knees down. <strong>Why:</strong> adductor flexibility determines how wide the pelvis can open. Forcing range can destabilise an already-softened pelvis.","bound+angle+pose+pregnancy+hip+opening"],
+"Kneeling lunge with support":["<strong>Form:</strong> Half-kneeling, cushion under the back knee, hand on a chair, shift weight gently forward. Switch at the halfway chime. <strong>Why:</strong> asymmetric hip positions help the baby navigate the pelvis and are commonly used to resolve a stalled labour.","half+kneeling+lunge+pregnancy+hip+flexor"],
+"Standing wall pelvic tilts":["<strong>Form:</strong> Back against a wall, feet a step forward. Flatten the low back into the wall on the exhale, release on the inhale. Small and controlled. <strong>Why:</strong> conscious pelvic control reduces back pain now and gives you an active tool for back labour.","standing+wall+pelvic+tilt+pregnancy"],
+"Pelvic floor coordination":["<strong>Form:</strong> Both hands rest low on the belly. On the exhale, a gentle pelvic floor lift; on the inhale, a complete, deliberate release. The release is the important half for birth","pelvic+floor+contract+and+release+pregnancy"],
+"Wide-knee child's pose":["<strong>Form:</strong> Knees wide, big toes together, sitting back toward the heels, belly resting between the knees. <strong>Why:</strong> passive pelvic floor lengthening, and a genuine rest position for the low back.","wide+knee+childs+pose+pregnancy"],
+"Left side-lying rest":["<strong>Form:</strong> Left side, pillow between the knees and under the belly. Return to the soft downward-widening breath from movement one. <strong>Why:</strong> maximises placental blood flow, and links the release breathing to a position you'll use in labour and in sleep.","left+side+lying+pregnancy+pillow+support"]};
+MOVES.forEach(m=>{m.long=EXTRA[m.n][0];m.q=EXTRA[m.n][1];});
 
 // ---------- projection / drawing ----------
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -503,7 +506,7 @@ function finish(){
   $('mNum').textContent='COMPLETE';$('mName').textContent='Movement complete';$('mTarget').textContent='';
   $('badge').classList.remove('visible');
   document.querySelector('.wrap').classList.add('state-done');
-  $('cue').innerHTML="<strong>Done.</strong> Hips and ankles mobile, spine articulated, hip rotation opened, core switched on. Nothing loaded the peroneal tendon.";
+  $('cue').innerHTML="<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.";
   $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
   cDone();setTimeout(()=>say('Movement complete.'),600);
 }
@@ -529,7 +532,7 @@ $('bReset').onclick=()=>{
   $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
   $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
   $('count').textContent='\u2013/12';
-  $('cue').innerHTML="<strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact \u2014 safe for the right peroneal tendon.";
+  $('cue').innerHTML="<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
 
