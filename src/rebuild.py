@@ -32,19 +32,19 @@ BAN=("<strong>Listen to your body.</strong> Ease off anything that feels sharp o
      "and mention it to your provider. Breathe continuously — never hold your breath "
      "or bear down.")
 build(os.path.join(OUT,'morning-flow.html'),'d_flow.js',open('x_flow.js',encoding='utf-8').read(),
- 'Morning Flow','Dynamic Qi Gong · Targeted Rehab','icon-morning-flow.png','#eef6f8',BLUE,
+ 'Morning Flow','Dynamic Qi Gong · Targeted Rehab','icon-app.png','#eef6f8',BLUE,
  '<strong>Morning Flow</strong> runs about 8 minutes. Every movement is continuous and rhythmic — nothing is held. Each one does double duty: it feels like a workout and targets a specific weak point.',
  '<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, posterior chain warm, calves primed. Go get it.')
 build(os.path.join(OUT,'morning-movement.html'),'data2.js',open('mm_extra.js',encoding='utf-8').read(),
- 'Morning Movement','Mobility · Control · Stability','icon-morning-movement.png','#fdf7e9',A12,
+ 'Morning Movement','Mobility · Control · Stability','icon-app.png','#fdf7e9',A12,
  '<strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.',
  '<strong>Done.</strong> Hips and ankles mobile, spine articulated, hip rotation opened, core switched on. Nothing loaded the peroneal tendon.')
 build(os.path.join(OUT,'prenatal-stretch.html'),'d_stretch.js',open('x_stretch.js',encoding='utf-8').read(),
- 'Prenatal Stretch','Gentle · Stretch & Release','icon-prenatal-stretch.png','#fdf4f1',ROSE,
+ 'Prenatal Stretch','Gentle · Stretch & Release','icon-app.png','#fdf4f1',ROSE,
  '<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.',
  '<strong>Done.</strong> Drink water. If anything felt sharp, pulling, or made you dizzy, mention it at your next appointment.',banner=BAN)
 build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',encoding='utf-8').read(),
- 'Birth Prep','Pelvic mobility · Floor release','icon-birth-prep.png','#fdf7e9',A11,
+ 'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
  '<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.',banner=BAN)
 print("built")

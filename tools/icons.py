@@ -1,5 +1,6 @@
-# apple-touch-icons: signature pose per app on its theme gradient, 180x180 opaque PNG.
-# Reads frames.json (run tools/dump.js first, AFTER a rebuild, so colors are themed).
+# Single app icon (icon-app.png): the whole collection is ONE home-screen app whose
+# home page is index.html, so every page shares this icon. Moss-toned standing figure
+# on the launcher's sage gradient. Reads frames.json (node tools/dump.js first).
 import json, re, os
 from PIL import Image, ImageDraw
 
@@ -9,13 +10,11 @@ data = json.load(open(os.path.join(ROOT, 'frames.json')))
 
 SS = 3; SIZE = 180; S = SIZE * SS; K = S / 100.0
 
-# app -> (movement, frame idx, gradient top, gradient bottom, ground tint, out file)
-ICONS = {
- 'morning-flow':      ('Hip circles',            0, '#eef6f8', '#dcebf1', '#cfe2ea', 'icon-morning-flow.png'),
- 'morning-movement':  ('Deep squats',            3, '#fdf7e9', '#f7ecd2', '#ecdfc0', 'icon-morning-movement.png'),
- 'prenatal-stretch':  ('Supported butterfly',    0, '#fdf4f1', '#f9e7ee', '#f0d9e0', 'icon-prenatal-stretch.png'),
- 'prenatal-movement': ('Birth ball hip circles', 0, '#fdf7e9', '#f7ecd2', '#ecdfc0', 'icon-birth-prep.png'),
-}
+# launcher identity: index.html background family + moss figure
+GRAD_TOP, GRAD_BOT, GROUND = '#f6f1e4', '#e4ecea', '#dde5d9'
+# morning-flow's standing pose, recolored from its teal theme to the launcher moss
+POSE_APP, POSE_MOVE, POSE_FRAME = 'morning-flow', 'Hip circles', 0
+RECOLOR = {'#245e70': '#3d5f48', '#93b8c4': '#9dbfa8', '#2e7d94': '#4f7d5e'}
 
 def hexc(s): s = s.lstrip('#'); return tuple(int(s[i:i+2], 16) for i in (0, 2, 4))
 
@@ -27,10 +26,10 @@ def gradient(top, bot):
         img.paste(tuple(round(t[i] + (b[i] - t[i]) * f) for i in range(3)), (0, y, S, y + 1))
     return img
 
-def draw(markup, shadow, img, ground):
+def draw(markup, shadow, img):
     d = ImageDraw.Draw(img)
     cx, cy, rx, ry = (float(shadow[a]) for a in ('cx', 'cy', 'rx', 'ry'))
-    d.ellipse([(cx-rx)*K, (cy-ry)*K, (cx+rx)*K, (cy+ry)*K], fill=hexc(ground))
+    d.ellipse([(cx-rx)*K, (cy-ry)*K, (cx+rx)*K, (cy+ry)*K], fill=hexc(GROUND))
     for tag in re.finditer(r'<(line|polygon|circle)\s([^/]*)/>', markup):
         kind, attrs = tag.group(1), tag.group(2)
         a = dict(re.findall(r'([\w-]+)="([^"]*)"', attrs))
@@ -48,10 +47,12 @@ def draw(markup, shadow, img, ground):
             else:
                 d.ellipse([cx2-r, cy2-r, cx2+r, cy2+r], fill=hexc(a['fill']))
 
-for app, (mv_name, fi, top, bot, ground, out) in ICONS.items():
-    mv = next(m for m in data[app] if m['n'] == mv_name)
-    img = gradient(top, bot)
-    draw(mv['frames'][fi], mv['shadow'], img, ground)
-    img = img.resize((SIZE, SIZE), Image.LANCZOS)
-    img.save(os.path.join(ROOT, out))
-    print(out, 'from', app, '/', mv_name, 'frame', fi)
+mv = next(m for m in data[POSE_APP] if m['n'] == POSE_MOVE)
+markup = mv['frames'][POSE_FRAME]
+for a, b in RECOLOR.items():
+    markup = markup.replace(a, b)
+img = gradient(GRAD_TOP, GRAD_BOT)
+draw(markup, mv['shadow'], img)
+img = img.resize((SIZE, SIZE), Image.LANCZOS)
+img.save(os.path.join(ROOT, 'icon-app.png'))
+print('icon-app.png from', POSE_APP, '/', POSE_MOVE, 'frame', POSE_FRAME)

@@ -7,11 +7,14 @@ ENG  = open('eng2.js', encoding='utf-8').read()
 
 def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_msg, banner=None):
     head = HEAD
-    head = head.replace('<meta name="apple-mobile-web-app-title" content="Morning Movement">',
-                        f'<meta name="apple-mobile-web-app-title" content="{title}">')
+    # one home-screen app: every page shares the same icon and web-app title, so the
+    # identity is identical no matter which page gets saved. Regex (not literal) targets
+    # so the current template values can never break the next rebuild.
+    head = re.sub(r'<meta name="apple-mobile-web-app-title" content="[^"]*">',
+                  '<meta name="apple-mobile-web-app-title" content="Movement">', head)
     head = head.replace('<title>Morning Movement</title>', f'<title>{title}</title>')
-    head = head.replace('<link rel="apple-touch-icon" href="icon-morning-movement.png">',
-                        f'<link rel="apple-touch-icon" href="{icon}">')
+    head = re.sub(r'<link rel="apple-touch-icon" href="[^"]*">',
+                  f'<link rel="apple-touch-icon" href="{icon}">', head)
     head = head.replace('<meta name="theme-color" content="#fdf7e9">',
                         f'<meta name="theme-color" content="{theme}">')
     head = head.replace('<h1>Morning Movement</h1>', f'<h1>{title}</h1>')
