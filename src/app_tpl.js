@@ -214,7 +214,10 @@ function pickVoice(){try{
 }catch(e){}}
 if(window.speechSynthesis&&speechSynthesis.getVoices){pickVoice();
   if(speechSynthesis.addEventListener)speechSynthesis.addEventListener('voiceschanged',pickVoice);}
-function say(t){if(!voiceOn)return;try{const u=new SpeechSynthesisUtterance(t);
+function say(t){if(!voiceOn)return;try{
+  pickVoice();   // iOS Safari: voiceschanged often never fires and getVoices() is
+                 // empty/compact-only at load — re-pick at speak time, every time
+  const u=new SpeechSynthesisUtterance(t);
   if(voicePick)u.voice=voicePick;
   u.rate=.8;u.pitch=1;u.volume=.8;speechSynthesis.speak(u);}catch(e){}}
 
@@ -284,7 +287,8 @@ $('bMain').onclick=()=>{
     clearInterval(tick);tick=null;unlockScreen();$('bMain').textContent='Resume';
   }
 };
-$('bVoice').onclick=()=>{voiceOn=!voiceOn;$('bVoice').classList.toggle('on',voiceOn);};
+$('bVoice').onclick=()=>{voiceOn=!voiceOn;$('bVoice').classList.toggle('on',voiceOn);
+  if(voiceOn){pickVoice();say('Voice on. Using '+(voicePick?voicePick.name:'the default voice'));}};
 $('bPrev').onclick=()=>{if(idx>0){started=true;go(idx-1);}};
 $('bNext').onclick=()=>{if(idx<MOVES.length-1){started=true;go(idx+1);}};
 $('bReset').onclick=()=>{
