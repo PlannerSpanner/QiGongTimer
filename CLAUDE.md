@@ -45,11 +45,9 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
 
 ## Non-negotiable QA gauntlet (run before every commit)
 
-    node tools/smoke.js      # executes each app in a stub DOM, presses Start, renders frames
-    node tools/lint.js       # emitted-SVG checks: belly orientation/placement, static colors, no ghost lines
-    # geometry invariants (limb lengths ±0.2, toe len 6.4, thru-floor y>95.5, standing feet planted,
-    # foot drift ≤1.8 outside the allowed set) — see the geo block in tools/ or rewrite from lint's pattern
-    node tools/dump.js && python3 tools/strips.py   # per-frame SVG → PNG contact sheets (needs Pillow)
+    npm run gauntlet   # smoke + lint + geo + Playwright: shots (incl. index), catchup,
+                       # breath tones, 2x toggle, auto-update freshness
+    node tools/dump.js && python3 tools/strips.py   # fallback PIL contact sheets (needs Pillow)
     python3 tools/ascii.py <app> "<movement>" 0,3    # text-mode pose render
 
 Hard-won lessons encoded in these tools:
@@ -69,7 +67,21 @@ Hard-won lessons encoded in these tools:
 ## Deployment
 
 Built HTML at repo root for GitHub Pages. One commit per change set (stacked commits cancel
-Pages deploys). After push: hard-refresh on iPhone Safari.
+Pages deploys). Pages auto-update themselves on launch/foreground via BUILDV content-hash
+stamps (written by build.py; rebuild.py also stamps index.html — so run rebuild after ANY
+index.html edit). No manual refresh needed on the phone after the first relaunch.
+
+One home-screen app: every page shares icon-app.png and web-app title "Movement";
+index.html is the launcher. Never add per-app icons (Will's explicit choice).
+
+## Voice ceiling (researched 2026-08-02, Apple-confirmed)
+
+iOS never exposes downloaded Enhanced/Premium voices to web pages — only pre-installed
+ones (Apple engineer, developer.apple.com/forums/thread/723503). Don't retry settings
+tricks; the say() picker already re-picks per utterance and grabs the best available
+(and would auto-benefit if Apple ever relents). Real upgrade paths: pre-generated TTS
+audio cues baked into the builds, or a native WKWebView shell (AVSpeechSynthesizer can
+use downloaded voices) — shell needs a Mac/CI + $99/yr, deferred.
 
 ## Backlog (agreed with Will, rough priority)
 
