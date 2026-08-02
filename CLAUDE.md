@@ -60,7 +60,9 @@ Hard-won lessons encoded in these tools:
 - Left/right swivel cones are asymmetric — never mirror a swivel by sign-flip; re-fit numerically.
 - Movement fidelity is research-anchored: squats hit ankle 90°→65° with tibia∥torso,
   lunge front shin vertical + back knee hover, clamshell heels welded, 90/90 is a Z-sit, etc.
-  When editing poses, verify against published form cues, then re-run the gauntlet.
+  The canonical form source for ALL movements (setup, sequence, direction, side protocol,
+  anchors, faults, what the figure must show) is docs/movement-reference.md — check pose or
+  cue edits against it first, keep it updated, then re-run the gauntlet.
 
 ## Deployment
 
