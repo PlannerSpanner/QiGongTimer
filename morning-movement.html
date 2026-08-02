@@ -501,12 +501,17 @@ function pickVoice(){try{
 }catch(e){}}
 if(window.speechSynthesis&&speechSynthesis.getVoices){pickVoice();
   if(speechSynthesis.addEventListener)speechSynthesis.addEventListener('voiceschanged',pickVoice);}
+let sayRef=null;
 function say(t){if(!voiceOn)return;try{
   pickVoice();   // iOS Safari: voiceschanged often never fires and getVoices() is
                  // empty/compact-only at load — re-pick at speak time, every time
   const u=new SpeechSynthesisUtterance(t);
-  if(voicePick)u.voice=voicePick;
-  u.rate=.8;u.pitch=1;u.volume=.8;speechSynthesis.speak(u);}catch(e){}}
+  // iOS ignores u.voice unless u.lang matches it; keep a live ref too, or WebKit
+  // can GC the utterance mid-speech and fall back to the default voice
+  if(voicePick){u.voice=voicePick;u.lang=voicePick.lang;}
+  u.rate=.8;u.pitch=1;u.volume=.8;
+  sayRef=u;u.onend=()=>{if(sayRef===u)sayRef=null;};
+  speechSynthesis.speak(u);}catch(e){}}
 
 function paint(){
   const m=MOVES[idx];
