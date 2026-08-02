@@ -46,5 +46,5 @@ build(os.path.join(OUT,'prenatal-stretch.html'),'d_stretch.js',open('x_stretch.j
 build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',encoding='utf-8').read(),
  'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
- '<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.',banner=BAN)
+ '<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.',banner=BAN,x2=True)
 print("built")
