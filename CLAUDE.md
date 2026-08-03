@@ -69,6 +69,20 @@ Hard-won lessons encoded in these tools:
   The canonical form source for ALL movements (setup, sequence, direction, side protocol,
   anchors, faults, what the figure must show) is docs/movement-reference.md — check pose or
   cue edits against it first, keep it updated, then re-run the gauntlet.
+- The global 13° camera pitch flattens any floor-plane spread to ~22% of its true angle on
+  screen (learned fitting Prone Y raises: a wide Y reads as a shallow fork; the camera that
+  shows the full Y loses the prone read). Pick per-movement `cam` for what must READ, not
+  for anatomical truth — Y raises use cam:72 side-on; don't relitigate.
+- build.py reads its page template from the ALREADY-BUILT morning-movement.html, so any
+  literal-string replace of a stamped value goes silently stale the moment the baked value
+  changes (the count badges + reset counts were wrong for months this way). New stamped
+  values must use regex replaces (`–/\d+` style). Bonus trap: app_tpl.js contains the
+  6-char escape text `–`, not an en-dash — Python string literals decode, JS source
+  doesn't. Messages embed via json.dumps(..., ensure_ascii=False) so typographic chars
+  (’ —) land as literal UTF-8 — keep it that way.
+- tools/geo.js evals the built script sliced at `const layer=document.getElementById`;
+  tools/lint.js slices at `const $=id=>...`. Timer/segment code must stay after the
+  `const $=` line in app_tpl.js or those tools break.
 
 ## Deployment
 
@@ -89,10 +103,29 @@ tricks; the say() picker already re-picks per utterance and grabs the best avail
 audio cues baked into the builds, or a native WKWebView shell (AVSpeechSynthesizer can
 use downloaded voices) — shell needs a Mac/CI + $99/yr, deferred.
 
+## Copy voice (Will's explicit preferences)
+
+Ending messages: short, positive, puns on the session's own movements ("Prone to
+greatness", "Stretch goals: met", "You’re on the ball"). NO safety warnings in ending
+messages, written or spoken — the persistent prenatal banner carries that. The finish
+voice says only "Movement complete."
+
+## Working style (agreed with Will, 2026-08-03)
+
+For plan-sized changes in this repo, execute inline rather than fanning out one subagent
+per task — the sources are small, the plan usually contains exact code, and per-task
+subagent dispatch + review roughly tripled wall-clock on the transitions work. Reserve
+multi-agent for genuinely parallel or risky work, and never put bottom-tier models on
+character-precision edits (a one-character apostrophe fix took 3 review rounds that way).
+One independent review at the end still pays for itself: it caught the stale count-badge
+stamping bugs. Design docs/plans from past features live in docs/superpowers/.
+
 ## Backlog (agreed with Will, rough priority)
 
 1. Session logging to localStorage (date/completions) + streaks.
 2. PWA: manifest + service worker for full offline.
 3. Polish: figure-4 knee flare, cobra asymmetric tempo, knee-circles readability.
 
-Done: Playwright QA (qa/, `npm run gauntlet`), breath-tempo audio (br flag, qa/breath.js).
+Done: Playwright QA (qa/, `npm run gauntlet`), breath-tempo audio (br flag, qa/breath.js),
+setup transitions (pos tags → derived 8s GET SET UP gaps, qa/trans.js), prone Y raises
+(Morning Movement 8/13), punny ending messages, launcher times incl. setup gaps.
