@@ -104,63 +104,63 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='cc0a23aedf';
+const BUILDV='f21ef313c9';
 const MOVES=[
-{n:"Seated breathing",cue:"Sit tall, breathe wide into the ribs",dur:60,bil:false,cyc:4.0,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+{n:"Seated breathing",pos:'chair',cue:"Sit tall, breathe wide into the ribs",dur:60,bil:false,cyc:4.0,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[6,2],hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
  B:{p:[0,73.4,0],yaw:-18,tw:0,s:[0,-6],hf:-5,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
 
-{n:"Seated cat-cow",cue:"Round on the exhale, arch on the inhale",dur:45,bil:false,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+{n:"Seated cat-cow",pos:'chair',cue:"Round on the exhale, arch on the inhale",dur:45,bil:false,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:20,tw:0,s:[40,48],hf:26,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
  B:{p:[0,74,0],yaw:20,tw:0,s:[32,20],hf:-20,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
 
-{n:"Seated side reach",cue:"Reach overhead, both sit bones stay down",dur:60,bil:true,cyc:3.4,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+{n:"Seated side reach",pos:'chair',cue:"Reach overhead, both sit bones stay down",dur:60,bil:true,cyc:3.4,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],sl:-16,hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[4,16,2]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
  B:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],sl:16,hf:0,ikL:{w:[-4,16,2]},ikR:{w:[8,72.5,10]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
 
-{n:"Seated figure-4",cue:"Ankle across the knee, hinge forward",dur:60,bil:true,cyc:3.4,belly:1,pin:"L", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
+{n:"Seated figure-4",pos:'chair',cue:"Ankle across the knee, hinge forward",dur:60,bil:true,cyc:3.4,belly:1,pin:"L", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[6,4],hf:0,ikL:{k:"knL"},ikR:{k:"ftR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[93,20,120,-88]},
  B:{p:[0,74,0],yaw:-18,tw:0,s:[34,40],hf:-8,ikL:{k:"knL"},ikR:{k:"ftR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[93,20,120,-88]}},
 
-{n:"Supported butterfly",cue:"Soles together in front, knees open to the sides",dur:60,bil:false,cyc:4.2,belly:1,
+{n:"Supported butterfly",pos:'seated',cue:"Soles together in front, knees open to the sides",dur:60,bil:false,cyc:4.2,belly:1,
  A:{p:[0,86,0],yaw:-20,tw:0,s:[14,18],hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:16,swR:64},
  B:{p:[0,86,0],yaw:-20,tw:0,s:[18,24],hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:0,swR:82}},
 
-{n:"Wide-knee child's pose",cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,cam:58,
+{n:"Wide-knee child's pose",pos:'kneeling',cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,cam:58,
  A:{p:[0,83.5,-9],yaw:22,tw:0,s:[112,90],hf:4,ikL:{w:[-8,92.5,33]},ikR:{w:[10,92.5,33]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[67,-22,-89,15],lR:[67,22,-89,-15]},
  B:{p:[0,84.5,-10.5],yaw:22,tw:0,s:[116,92],hf:2,ikL:{w:[-8,92.5,33]},ikR:{w:[10,92.5,33]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[67,-22,-89,15],lR:[67,22,-89,-15]}},
 
-{n:"Hands-and-knees rocking",cue:"Rock the hips gently, spine stays neutral",dur:60,bil:false,cyc:2.8,belly:1,
+{n:"Hands-and-knees rocking",pos:'quadruped',cue:"Rock the hips gently, spine stays neutral",dur:60,bil:false,cyc:2.8,belly:1,
  A:{p:[-0.9,74,-2.22],yaw:22,tw:0,s:[78,78],hf:14,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[7.2,-6,-90,-5],lR:[7.2,6,-90,5]},
  B:{p:[0.9,74,2.22],yaw:22,tw:0,s:[85,85],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-7.2,-6,-90,-5],lR:[-7.2,6,-90,5]}},
 
-{n:"Kneeling hip flexor stretch",cue:"Tuck the pelvis, shift gently forward",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[16,64,10],[16,93,10]]},{l:[[11,64,10],[21,64,10]]}],
+{n:"Kneeling hip flexor stretch",pos:'kneeling',cue:"Tuck the pelvis, shift gently forward",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[16,64,10],[16,93,10]]},{l:[[11,64,10],[21,64,10]]}],
  A:{p:[0,75,-2],yaw:24,tw:0,s:[4,4],hf:0,ikL:{w:[-8,72,2]},ikR:{w:[14,66,10]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]},
  B:{p:[0,75.5,1],yaw:24,tw:0,s:[-6,-6],hf:-8,ikL:{w:[-8,72,4]},ikR:{w:[14,66,10]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
 
-{n:"Standing calf stretch",cue:"Back heel presses down, back leg straight",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[0,33,33],[0,93,33]]}],
+{n:"Standing calf stretch",pos:'wall',cue:"Back heel presses down, back leg straight",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[0,33,33],[0,93,33]]}],
  A:{p:[0,58,4],yaw:24,tw:0,s:[14,10],hf:-4,ikL:{w:[-9,60,31]},ikR:{w:[9,60,31]},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-6,93,-16],ikFR:[6,93,14]},
  B:{p:[0,58,5.5],yaw:24,tw:0,s:[16,12],hf:-4,ikL:{w:[-9,60,31]},ikR:{w:[9,60,31]},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-6,93,-16],ikFR:[6,93,14]}},
 
-{n:"Doorway chest opener",cue:"Forearm up on the frame, step gently through",dur:45,bil:true,cyc:3.8,belly:1,pin:"LR", prop:[{l:[[-19,25,2],[-19,93,2]]},{l:[[19,25,2],[19,93,2]]}],
+{n:"Doorway chest opener",pos:'doorway',cue:"Forearm up on the frame, step gently through",dur:45,bil:true,cyc:3.8,belly:1,pin:"LR", prop:[{l:[[-19,25,2],[-19,93,2]]},{l:[[19,25,2],[19,93,2]]}],
  A:{p:[0,58,0],yaw:-16,tw:0,s:[3,3],hf:0,aL:[6,-10,8,-8],aR:[0,88,178,2],
     ikFL:[-7,93,-2],ikFR:[7,93,6]},
  B:{p:[0,58,1.5],yaw:-16,tw:0,s:[3,3],hf:0,aL:[0,-88,178,-2],aR:[6,10,8,8],
@@ -423,12 +423,29 @@ MOVES.forEach(m=>m.fit=fitOf(m));
 // ---------- timer ----------
 const $=id=>document.getElementById(id);
 let idx=0,timeLeft=0,running=false,started=false,tick=null,voiceOn=true,actx=null,wl=null,swAt=false;
+// ---------- segments: movements plus derived setup gaps ----------
+// A gap is inserted wherever consecutive movements' pos tags differ. For a gap
+// segment, m is the UPCOMING movement (so the figure previews it). Gaps are never
+// bilateral, never multiplied by the 2x toggle, and invisible to dots/counts/nav.
+const POS_CUE={standing:'Stand up.',prone:'Lie face down.',supine:'Lie on your back.',
+  seated:'Sit on the floor.',quadruped:'Come to hands and knees.',downdog:'Push back into down dog.',
+  sidelying:'Lie on your side.',kneeling:'Come to kneeling.',chair:'Sit on your chair.',
+  ball:'Sit on your ball.',wall:'Stand at the wall.',doorway:'Stand in the doorway.'};
+const TRANS_DUR=8;
+const SEGS=[];
+MOVES.forEach((m,i)=>{
+  if(i>0&&m.pos&&MOVES[i-1].pos&&m.pos!==MOVES[i-1].pos)SEGS.push({trans:true,m,mi:i,dur:TRANS_DUR});
+  SEGS.push({m,mi:i,dur:m.dur});
+});
+const sdur=s=>s.trans?s.dur:s.dur*dm;
+const segOfMove=mi=>SEGS.findIndex(s=>!s.trans&&s.mi===mi);
+const posCue=m=>m.posCue||POS_CUE[m.pos]||'Get into position.';
 // optional session-length toggle (enabled per app at build time): dm multiplies every
 // movement duration. Locked once the session has started; Reset unlocks it.
 const X2OPT=false;
 let dm=1;
 if(X2OPT){
-  const tot=Math.round(MOVES.reduce((a,m)=>a+m.dur,0)/60);
+  const mvT=MOVES.reduce((a,m)=>a+m.dur,0), trT=SEGS.reduce((a,s)=>a+(s.trans?s.dur:0),0);
   $('mNum').insertAdjacentHTML('beforebegin',
     '<style>.x2row{display:flex;gap:7px;justify-content:center;margin:0 0 11px}'
     +'.x2b{font-family:inherit;cursor:pointer;font-size:0.66rem;letter-spacing:0.5px;'
@@ -436,7 +453,7 @@ if(X2OPT){
     +'background:transparent;color:inherit;opacity:0.5;transition:opacity 0.15s}'
     +'.x2b.on{opacity:1;font-weight:600;background:rgba(255,255,255,0.6)}</style>'
     +'<div class="x2row"><button class="x2b on" id="x1b"></button><button class="x2b" id="x2b"></button></div>');
-  $('x1b').textContent=tot+' min'; $('x2b').textContent=(tot*2)+' min';
+  $('x1b').textContent=Math.round((mvT+trT)/60)+' min'; $('x2b').textContent=Math.round((mvT*2+trT)/60)+' min';
   const setM=k=>{if(started)return; dm=k;
     $('x1b').classList.toggle('on',k===1); $('x2b').classList.toggle('on',k===2);
     timeLeft=MOVES[0].dur*dm; clock();};
@@ -505,48 +522,49 @@ function say(t){if(!voiceOn)return;try{
   speechSynthesis.speak(u);}catch(e){}}
 
 function paint(){
-  const m=MOVES[idx];
-  $('mNum').textContent='MOVEMENT '+(idx+1)+' OF '+MOVES.length;
-  $('mName').textContent=m.n; $('mTarget').textContent=m.cue;
+  const g=SEGS[idx], m=g.m;
+  $('mNum').textContent=g.trans?'GET SET UP':'MOVEMENT '+(g.mi+1)+' OF '+MOVES.length;
+  $('mName').textContent=m.n; $('mTarget').textContent=g.trans?posCue(m):m.cue;
   $('cue').innerHTML=m.long;
-  $('count').textContent=(idx+1)+'/'+MOVES.length;
-  $('badge').classList.toggle('visible',!!m.bil);
+  $('count').textContent=(g.mi+1)+'/'+MOVES.length;
+  $('badge').classList.toggle('visible',!g.trans&&!!m.bil);
   $('badge').textContent=m.orb?'REVERSES · CHANGE DIRECTION AT HALFWAY':'BOTH SIDES · SWITCH AT HALFWAY';
   $('vid').href='https://www.youtube.com/results?search_query='+m.q;
-  $('bPrev').disabled=idx<=0; $('bNext').disabled=idx>=MOVES.length-1;
-  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<idx?' done':i===idx?' active':'');});
+  $('bPrev').disabled=!g.trans&&g.mi<=0; $('bNext').disabled=!g.trans&&g.mi>=MOVES.length-1;
+  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<g.mi?' done':i===g.mi?' active':'');});
   clock();
 }
 function clock(){
-  const m=MOVES[idx];
   $('tm').textContent=Math.floor(timeLeft/60)+':'+String(timeLeft%60).padStart(2,'0');
-  $('fill').style.width=(100*(1-timeLeft/(m.dur*dm))).toFixed(1)+'%';
+  $('fill').style.width=(100*(1-timeLeft/sdur(SEGS[idx]))).toFixed(1)+'%';
 }
 let segEnd=0,pausedRem=0;
 function go(i){
-  idx=i; const m=MOVES[idx]; timeLeft=m.dur*dm; swAt=false;
-  segEnd=Date.now()+m.dur*dm*1000; pausedRem=m.dur*dm*1000;
-  paint(); cTrans();
-  setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
+  idx=i; const g=SEGS[idx]; timeLeft=sdur(g); swAt=false;
+  segEnd=Date.now()+timeLeft*1000; pausedRem=timeLeft*1000;
+  paint(); announce(g);
+}
+// gap start: soft double chime + the position instruction; movement start keeps the
+// full transition chime + name, so nothing is announced twice
+function announce(g){
+  if(g.trans){cSwitch();setTimeout(()=>say(posCue(g.m)),300);}
+  else{cTrans();setTimeout(()=>say(g.m.n+(g.m.bil&&!g.m.orb?'. Start with your right side.':'')),420);}
 }
 function sync(){
   if(!running)return;
   let rem=Math.ceil((segEnd-Date.now())/1000);
   let jumped=false;
   while(rem<=0){
-    if(idx>=MOVES.length-1){finish();return;}
-    idx++; const m=MOVES[idx]; segEnd+=m.dur*dm*1000; swAt=false; jumped=true;
+    if(idx>=SEGS.length-1){finish();return;}
+    idx++; segEnd+=sdur(SEGS[idx])*1000; swAt=false; jumped=true;
     rem=Math.ceil((segEnd-Date.now())/1000);
   }
-  if(jumped){
-    const m=MOVES[idx]; paint(); cTrans();
-    setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
-  }
+  if(jumped){paint(); announce(SEGS[idx]);}
   if(rem!==timeLeft){
     timeLeft=rem; clock();
-    const m=MOVES[idx];
-    if(m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
-    if(timeLeft===3)chime(380,.05,.3);
+    const g=SEGS[idx], m=g.m;
+    if(!g.trans&&m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
+    if(timeLeft===3)chime(380,.05,.3); // also inside gaps: 3s warning before the movement starts
   }
 }
 function finish(){
@@ -555,7 +573,7 @@ function finish(){
   $('mNum').textContent='COMPLETE';$('mName').textContent='Movement complete';$('mTarget').textContent='';
   $('badge').classList.remove('visible');
   document.querySelector('.wrap').classList.add('state-done');
-  $('cue').innerHTML="<strong>Done.</strong> Drink water. If anything felt sharp, pulling, or made you dizzy, mention it at your next appointment.";
+  $('cue').innerHTML="<strong>Done.</strong> Stretch goals: met. Butterflies earned. Sip some water.";
   $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
   cDone();setTimeout(()=>say('Movement complete.'),600);
 }
@@ -572,8 +590,8 @@ $('bMain').onclick=()=>{
 };
 $('bVoice').onclick=()=>{voiceOn=!voiceOn;$('bVoice').classList.toggle('on',voiceOn);
   if(voiceOn){pickVoice();say('Voice on. Using '+(voicePick?voicePick.name:'the default voice'));}};
-$('bPrev').onclick=()=>{if(idx>0){started=true;go(idx-1);}};
-$('bNext').onclick=()=>{if(idx<MOVES.length-1){started=true;go(idx+1);}};
+$('bPrev').onclick=()=>{const t=SEGS[idx].mi-1;if(t>=0){started=true;go(segOfMove(t));}};
+$('bNext').onclick=()=>{const g=SEGS[idx],t=g.trans?g.mi:g.mi+1;if(t<=MOVES.length-1){started=true;go(segOfMove(t));}};
 $('bReset').onclick=()=>{
   clearInterval(tick);tick=null;running=false;started=false;unlockScreen();
   idx=0;timeLeft=MOVES[0].dur*dm;swAt=false;
@@ -581,8 +599,8 @@ $('bReset').onclick=()=>{
   $('bMain').style.display='';$('bMain').textContent='Start';
   $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
   $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
-  $('count').textContent='\u2013/12';
-  $('cue').innerHTML="<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support \u2014 no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.";
+  $('count').textContent='\u2013/10';
+  $('cue').innerHTML="<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
 
@@ -608,12 +626,12 @@ if(window.addEventListener){
 // figure animates continuously, whatever the timer is doing
 let t0=performance.now(),last=0,curFit=null,brPh=0;
 (function loop(now){
-  if(now-last>30){last=now;const m=MOVES[idx];
+  if(now-last>30){last=now;const m=SEGS[idx].m;
     if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);buildProps(m,m.fit);applyMirror(false);}
     const ph=((now-t0)/1000%m.cyc)/m.cyc;
     // breath-tempo audio on flagged movements: cycle wrap = inhale start (rising),
     // halfway = exhale start (falling). Only while the timer runs and audio exists.
-    if(running&&m.br&&actx){
+    if(running&&m.br&&!SEGS[idx].trans&&actx){
       if(ph<brPh)breathTone(196,294,m.cyc*0.42);
       else if(brPh<0.5&&ph>=0.5)breathTone(294,196,m.cyc*0.48);
     }

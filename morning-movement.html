@@ -84,11 +84,11 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <div class="barrow">
     <div class="tm" id="tm">0:00</div>
     <div class="track"><div class="fill" id="fill"></div></div>
-    <div class="count" id="count">–/12</div>
+    <div class="count" id="count">–/13</div>
   </div>
 
   <div class="dots" id="dots"></div>
-  <div class="cue" id="cue"><strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.</div>
+  <div class="cue" id="cue"><strong>Morning Movement</strong> runs about 10 minutes: standing mobility, then floor work, then core. Short setup pauses appear before position changes. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.</div>
 
   <div class="row">
     <button class="btn-primary" id="bMain">Start</button>
@@ -102,72 +102,80 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='1752727625';
+const BUILDV='37c12f35ed';
 const MOVES=[
-{n:"Deep squats",cue:"Sink until you're almost sitting on your heels",dur:30,bil:false,cyc:2.8,pin:"LR",
+{n:"Deep squats",pos:'standing',cue:"Sink until you're almost sitting on your heels",dur:30,bil:false,cyc:2.8,pin:"LR",
  A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
  B:{p:[0,78,-12],yaw:22,tw:0,s:[26,20],hf:-6,ikL:{w:[-9,68,12]},ikR:{w:[9,68,12]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[0,0,0,0],lR:[0,0,0,0]}},
 
-{n:"Parallel squats",cue:"Stop at thighs parallel, chest up",dur:30,bil:false,cyc:2.4,pin:"LR",
+{n:"Parallel squats",pos:'standing',cue:"Stop at thighs parallel, chest up",dur:30,bil:false,cyc:2.4,pin:"LR",
  A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
  B:{p:[0,71,-11],yaw:22,tw:0,s:[20,16],hf:-4,ikL:{w:[-9,62,12]},ikR:{w:[9,62,12]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[0,0,0,0],lR:[0,0,0,0]}},
 
-{n:"Knee circles",cue:"Hands on bent knees, feet planted, circle the knees",dur:30,bil:true,cyc:3.2,
+{n:"Knee circles",pos:'standing',cue:"Hands on bent knees, feet planted, circle the knees",dur:30,bil:true,cyc:3.2,
  pin:"LR",orb:{swivel:true,amp:26},
  A:{p:[0,62.2,0],yaw:-22,tw:0,s:[74,80],hf:22,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[48,-13,-18,13],lR:[48,13,-18,-13]},
  B:{p:[0,62.2,0],yaw:-22,tw:0,s:[74,80],hf:22,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[48,-13,-18,13],lR:[48,13,-18,-13]}},
 
-{n:"Reverse lunges",cue:"Step back, front shin stays vertical",dur:30,bil:true,cyc:3.2,pin:"R",
+{n:"Reverse lunges",pos:'standing',cue:"Step back, front shin stays vertical",dur:30,bil:true,cyc:3.2,pin:"R",
  A:{p:[0,55.2,0],yaw:24,tw:0,s:[2,2],aL:[-6,-10,-6,-8],aR:[6,10,6,8],lL:[-4,-6,4,-5],lR:[4,6,-4,5]},
  M:{p:[0,63,-8],yaw:24,tw:0,s:[5,3],aL:[-2,-10,-2,-8],aR:[2,10,2,8],lL:[8,-6,-70,-5],lR:[4,6,-4,5]},
  B:{p:[0,72,-18],yaw:24,tw:0,s:[8,6],aL:[2,-10,4,-8],aR:[-2,10,-4,8],lL:[-12,-6,-94,-5],lR:[4,6,-4,5]}},
 
-{n:"Hip hinges",cue:"Deadlift pattern — push the hips straight back",dur:30,bil:false,cyc:2.8,pin:"LR",
+{n:"Hip hinges",pos:'standing',cue:"Deadlift pattern — push the hips straight back",dur:30,bil:false,cyc:2.8,pin:"LR",
  A:{p:[0,55.2,0],yaw:24,tw:0,s:[2,2],aL:[0,-9,0,-7],aR:[0,9,0,7],lL:[-4,-6,4,-5],lR:[4,6,-4,5]},
  B:{p:[0,57.5,-9],yaw:24,tw:0,s:[52,56],hf:-14,aL:[0,-8,0,-6],aR:[0,8,0,6],
     lL:[0,0,0,0],lR:[0,0,0,0]}},
 
-{n:"Folded cat-cows",cue:"Hands on bent knees, round then arch the spine",dur:30,bil:false,cyc:3.4,pin:"LR",
+{n:"Folded cat-cows",pos:'standing',cue:"Hands on bent knees, round then arch the spine",dur:30,bil:false,cyc:3.4,pin:"LR",
  A:{p:[0,64,0],yaw:22,tw:0,s:[74,86],hf:28,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[40,-6,-40,-5],lR:[40,6,-40,5]},
  B:{p:[0,64,0],yaw:22,tw:0,s:[72,70],hf:-26,ikL:{k:"knL"},ikR:{k:"knR"},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[40,-6,-40,-5],lR:[40,6,-40,5]}},
 
-{n:"Cobra press-ups",cue:"Press the chest up, hips stay down",dur:60,bil:false,cyc:3.2,
+{n:"Cobra press-ups",pos:'prone',cue:"Press the chest up, hips stay down",dur:60,bil:false,cyc:3.2,
  A:{p:[0,90.5,4],yaw:18,tw:0,s:[74,66],hf:10,ikL:{w:[-9,93,20]},ikR:{w:[9,93,20]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-92,-6,-88,-5],lR:[-96,6,-92,5]},
  B:{p:[0,90.5,4],yaw:18,tw:0,s:[46,24],hf:-22,ikL:{w:[-9,93,20]},ikR:{w:[9,93,20]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-92,-6,-88,-5],lR:[-96,6,-92,5]}},
 
-{n:"Pedaling down dog",cue:"Alternate pressing each heel down",dur:60,bil:false,cyc:2.2,
+// side-on camera (cam 72): the only yaw where BOTH hands project past the head and the
+// arms straddle it — the Y opens across the screen instead of collapsing along the body.
+{n:"Prone Y raises",pos:'prone',cue:"Thumbs up, float the arms — shoulder blades down and back",dur:30,bil:false,cyc:3.0,cam:72,
+ A:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-9.7,92.2,53.7]},ikR:{w:[37.1,92.2,38.5]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
+ B:{p:[0,90.5,4],yaw:18,tw:0,s:[86,81],hf:28,ikL:{w:[-9.8,86.8,53.5]},ikR:{w:[37.1,86.8,38.3]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]}},
+
+{n:"Pedaling down dog",pos:'downdog',cue:"Alternate pressing each heel down",dur:60,bil:false,cyc:2.2,
  A:{p:[0,56,-2],yaw:20,tw:0,s:[136,136],hf:20,ikL:{w:[-9,93,34]},ikR:{w:[9,93,34]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-24,-6,-24,-5],lR:[-20,6,-40,5]},
  B:{p:[0,56,-2],yaw:20,tw:0,s:[136,136],hf:20,ikL:{w:[-9,93,34]},ikR:{w:[9,93,34]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-20,-6,-40,-5],lR:[-24,6,-24,5]}},
 
-{n:"Tuck + untuck",cue:"Back stays on the floor — only the pelvis rolls",dur:60,bil:false,cyc:3.6,pin:"LR",
+{n:"Tuck + untuck",pos:'supine',cue:"Back stays on the floor — only the pelvis rolls",dur:60,bil:false,cyc:3.6,pin:"LR",
  A:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,ikL:{w:[-12,91.5,-4]},ikR:{w:[12,91.5,-4]},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-5,93,12],ikFR:[5,93,12]},
  B:{p:[0,89.5,3],yaw:14,tw:0,s:[-92,-86],hf:2,ikL:{w:[-12,91.5,-4]},ikR:{w:[12,91.5,-4]},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-5,93,12],ikFR:[5,93,12]}},
 
-{n:"90/90 with a fold",cue:"Z-sit: front shin across, back shin behind — fold forward",dur:60,bil:true,cyc:3.4,cam:58,
+{n:"90/90 with a fold",pos:'seated',cue:"Z-sit: front shin across, back shin behind — fold forward",dur:60,bil:true,cyc:3.4,cam:58,
  A:{p:[0,90,0],yaw:-8,tw:0,s:[6,4],hf:0,ikL:{w:[-14,92,-6]},ikR:{w:[10,92,6]},
     aL:[0,0,0,0],aR:[0,0,0,0],lR:[88,12,6,-86],lL:[57,-76,-90,-6]},
  B:{p:[0,90,0],yaw:-8,tw:0,s:[42,48],hf:-8,ikL:{w:[-4,92,16]},ikR:{w:[12,92,18]},
     aL:[0,0,0,0],aR:[0,0,0,0],lR:[88,12,6,-86],lL:[57,-76,-90,-6]}},
 
-{n:"Thread the needle",cue:"Reach up, then slide the arm under",dur:60,bil:true,cyc:3.6,pin:"LR",
+{n:"Thread the needle",pos:'quadruped',cue:"Reach up, then slide the arm under",dur:60,bil:true,cyc:3.6,pin:"LR",
  A:{p:[0,74,-2],yaw:16,tw:52,s:[-74,-74],hf:-18,ikL:{w:[-9,93,-14]},
     aL:[0,0,0,0],aR:[-58,58,-68,54],lL:[0,-6,90,-5],lR:[4,6,94,5]},
  B:{p:[0,76,-2],yaw:16,tw:-58,s:[-78,-86],hf:26,ikL:{w:[-9,93,-14]},
     aL:[0,0,0,0],aR:[72,-74,62,-70],lL:[0,-6,90,-5],lR:[4,6,94,5]}},
 
-{n:"Plank hold",pin:"LR",cue:"One straight line, push the floor away",dur:60,bil:false,cyc:4.0,
+{n:"Plank hold",pos:'quadruped',pin:"LR",cue:"One straight line, push the floor away",dur:60,bil:false,cyc:4.0,
  A:{p:[0,84,0],yaw:24,tw:0,s:[80,80],hf:18,ikL:{w:[-7,93,32]},ikR:{w:[7,93,32]},
     aL:[0,0,0,0],aR:[0,0,0,0],lL:[-80,-6,-88,-5],lR:[-80,6,-88,5]},
  B:{p:[0,82,0],yaw:24,tw:0,s:[80,80],hf:18,ikL:{w:[-7,93,32]},ikR:{w:[7,93,32]},
@@ -279,6 +287,7 @@ const EXTRA={
 "Hip hinges":["<strong>Form:</strong> Soft knees, push the hips straight BACK — not down. Chest travels forward, spine stays long, arms hang on the bar path. <strong>Training link:</strong> this is your narrow sumo deadlift pattern, grooved daily without load.","hip+hinge+drill+deadlift+pattern"],
 "Folded cat-cows":["<strong>Form:</strong> Knees bent, hands resting on them. Round the spine on the exhale, arch and open the chest on the inhale. <strong>Training link:</strong> targets T4–T8 extension — where your chronic mid-back pain lives.","standing+folded+cat+cow+spinal+mobility"],
 "Cobra press-ups":["<strong>Form:</strong> Face down, hands under shoulders. Press the chest up, hips stay on the floor. Lower with control. <strong>Shoulder note:</strong> elbows tucked close to the ribs — flaring them loads the right AC joint.","cobra+press+up+mckenzie+extension"],
+"Prone Y raises":["<strong>Form:</strong> Face down, arms overhead at about 30–45° out from the midline — the Y — thumbs up. Draw the shoulder blades down and back and float the arms an inch or two; neck neutral, gaze down. Lower with control. <strong>Shoulder note:</strong> pure lower-trap work — the balancing side of the right AC joint, with zero load on it.","prone+y+raise+lower+trap+exercise"],
 "Pedaling down dog":["<strong>Form:</strong> Alternate pressing one heel toward the floor while the other knee bends. Slow and rhythmic. <strong>Ankle note:</strong> gentle calf and Achilles work with no peroneal load — keep the foot tracking straight, not rolling outward.","pedaling+downward+dog+calf+stretch"],
 "Tuck + untuck":["<strong>Form:</strong> Lie flat, knees bent, feet flat. Only the pelvis moves: flatten the low back into the floor, then let it arch gently away. Everything above the ribs stays quiet on the ground","pelvic+tilt+tuck+untuck+core+control"],
 "90/90 with a fold":["<strong>Form:</strong> Z-sit: front leg's outer thigh and shin flat on the floor, back leg's inner thigh down with the shin pointing straight behind you. Sit tall, then hinge forward over the front shin without rounding","90+90+hip+stretch+with+forward+fold"],
@@ -433,12 +442,29 @@ MOVES.forEach(m=>m.fit=fitOf(m));
 // ---------- timer ----------
 const $=id=>document.getElementById(id);
 let idx=0,timeLeft=0,running=false,started=false,tick=null,voiceOn=true,actx=null,wl=null,swAt=false;
+// ---------- segments: movements plus derived setup gaps ----------
+// A gap is inserted wherever consecutive movements' pos tags differ. For a gap
+// segment, m is the UPCOMING movement (so the figure previews it). Gaps are never
+// bilateral, never multiplied by the 2x toggle, and invisible to dots/counts/nav.
+const POS_CUE={standing:'Stand up.',prone:'Lie face down.',supine:'Lie on your back.',
+  seated:'Sit on the floor.',quadruped:'Come to hands and knees.',downdog:'Push back into down dog.',
+  sidelying:'Lie on your side.',kneeling:'Come to kneeling.',chair:'Sit on your chair.',
+  ball:'Sit on your ball.',wall:'Stand at the wall.',doorway:'Stand in the doorway.'};
+const TRANS_DUR=8;
+const SEGS=[];
+MOVES.forEach((m,i)=>{
+  if(i>0&&m.pos&&MOVES[i-1].pos&&m.pos!==MOVES[i-1].pos)SEGS.push({trans:true,m,mi:i,dur:TRANS_DUR});
+  SEGS.push({m,mi:i,dur:m.dur});
+});
+const sdur=s=>s.trans?s.dur:s.dur*dm;
+const segOfMove=mi=>SEGS.findIndex(s=>!s.trans&&s.mi===mi);
+const posCue=m=>m.posCue||POS_CUE[m.pos]||'Get into position.';
 // optional session-length toggle (enabled per app at build time): dm multiplies every
 // movement duration. Locked once the session has started; Reset unlocks it.
 const X2OPT=false;
 let dm=1;
 if(X2OPT){
-  const tot=Math.round(MOVES.reduce((a,m)=>a+m.dur,0)/60);
+  const mvT=MOVES.reduce((a,m)=>a+m.dur,0), trT=SEGS.reduce((a,s)=>a+(s.trans?s.dur:0),0);
   $('mNum').insertAdjacentHTML('beforebegin',
     '<style>.x2row{display:flex;gap:7px;justify-content:center;margin:0 0 11px}'
     +'.x2b{font-family:inherit;cursor:pointer;font-size:0.66rem;letter-spacing:0.5px;'
@@ -446,7 +472,7 @@ if(X2OPT){
     +'background:transparent;color:inherit;opacity:0.5;transition:opacity 0.15s}'
     +'.x2b.on{opacity:1;font-weight:600;background:rgba(255,255,255,0.6)}</style>'
     +'<div class="x2row"><button class="x2b on" id="x1b"></button><button class="x2b" id="x2b"></button></div>');
-  $('x1b').textContent=tot+' min'; $('x2b').textContent=(tot*2)+' min';
+  $('x1b').textContent=Math.round((mvT+trT)/60)+' min'; $('x2b').textContent=Math.round((mvT*2+trT)/60)+' min';
   const setM=k=>{if(started)return; dm=k;
     $('x1b').classList.toggle('on',k===1); $('x2b').classList.toggle('on',k===2);
     timeLeft=MOVES[0].dur*dm; clock();};
@@ -515,48 +541,49 @@ function say(t){if(!voiceOn)return;try{
   speechSynthesis.speak(u);}catch(e){}}
 
 function paint(){
-  const m=MOVES[idx];
-  $('mNum').textContent='MOVEMENT '+(idx+1)+' OF '+MOVES.length;
-  $('mName').textContent=m.n; $('mTarget').textContent=m.cue;
+  const g=SEGS[idx], m=g.m;
+  $('mNum').textContent=g.trans?'GET SET UP':'MOVEMENT '+(g.mi+1)+' OF '+MOVES.length;
+  $('mName').textContent=m.n; $('mTarget').textContent=g.trans?posCue(m):m.cue;
   $('cue').innerHTML=m.long;
-  $('count').textContent=(idx+1)+'/'+MOVES.length;
-  $('badge').classList.toggle('visible',!!m.bil);
+  $('count').textContent=(g.mi+1)+'/'+MOVES.length;
+  $('badge').classList.toggle('visible',!g.trans&&!!m.bil);
   $('badge').textContent=m.orb?'REVERSES · CHANGE DIRECTION AT HALFWAY':'BOTH SIDES · SWITCH AT HALFWAY';
   $('vid').href='https://www.youtube.com/results?search_query='+m.q;
-  $('bPrev').disabled=idx<=0; $('bNext').disabled=idx>=MOVES.length-1;
-  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<idx?' done':i===idx?' active':'');});
+  $('bPrev').disabled=!g.trans&&g.mi<=0; $('bNext').disabled=!g.trans&&g.mi>=MOVES.length-1;
+  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<g.mi?' done':i===g.mi?' active':'');});
   clock();
 }
 function clock(){
-  const m=MOVES[idx];
   $('tm').textContent=Math.floor(timeLeft/60)+':'+String(timeLeft%60).padStart(2,'0');
-  $('fill').style.width=(100*(1-timeLeft/(m.dur*dm))).toFixed(1)+'%';
+  $('fill').style.width=(100*(1-timeLeft/sdur(SEGS[idx]))).toFixed(1)+'%';
 }
 let segEnd=0,pausedRem=0;
 function go(i){
-  idx=i; const m=MOVES[idx]; timeLeft=m.dur*dm; swAt=false;
-  segEnd=Date.now()+m.dur*dm*1000; pausedRem=m.dur*dm*1000;
-  paint(); cTrans();
-  setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
+  idx=i; const g=SEGS[idx]; timeLeft=sdur(g); swAt=false;
+  segEnd=Date.now()+timeLeft*1000; pausedRem=timeLeft*1000;
+  paint(); announce(g);
+}
+// gap start: soft double chime + the position instruction; movement start keeps the
+// full transition chime + name, so nothing is announced twice
+function announce(g){
+  if(g.trans){cSwitch();setTimeout(()=>say(posCue(g.m)),300);}
+  else{cTrans();setTimeout(()=>say(g.m.n+(g.m.bil&&!g.m.orb?'. Start with your right side.':'')),420);}
 }
 function sync(){
   if(!running)return;
   let rem=Math.ceil((segEnd-Date.now())/1000);
   let jumped=false;
   while(rem<=0){
-    if(idx>=MOVES.length-1){finish();return;}
-    idx++; const m=MOVES[idx]; segEnd+=m.dur*dm*1000; swAt=false; jumped=true;
+    if(idx>=SEGS.length-1){finish();return;}
+    idx++; segEnd+=sdur(SEGS[idx])*1000; swAt=false; jumped=true;
     rem=Math.ceil((segEnd-Date.now())/1000);
   }
-  if(jumped){
-    const m=MOVES[idx]; paint(); cTrans();
-    setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
-  }
+  if(jumped){paint(); announce(SEGS[idx]);}
   if(rem!==timeLeft){
     timeLeft=rem; clock();
-    const m=MOVES[idx];
-    if(m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
-    if(timeLeft===3)chime(380,.05,.3);
+    const g=SEGS[idx], m=g.m;
+    if(!g.trans&&m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
+    if(timeLeft===3)chime(380,.05,.3); // also inside gaps: 3s warning before the movement starts
   }
 }
 function finish(){
@@ -565,7 +592,7 @@ function finish(){
   $('mNum').textContent='COMPLETE';$('mName').textContent='Movement complete';$('mTarget').textContent='';
   $('badge').classList.remove('visible');
   document.querySelector('.wrap').classList.add('state-done');
-  $('cue').innerHTML="<strong>Done.</strong> Hips and ankles mobile, spine articulated, hip rotation opened, core switched on. Nothing loaded the peroneal tendon.";
+  $('cue').innerHTML="<strong>Done.</strong> Needle threaded, cobra charmed, plank held. Prone to greatness.";
   $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
   cDone();setTimeout(()=>say('Movement complete.'),600);
 }
@@ -582,8 +609,8 @@ $('bMain').onclick=()=>{
 };
 $('bVoice').onclick=()=>{voiceOn=!voiceOn;$('bVoice').classList.toggle('on',voiceOn);
   if(voiceOn){pickVoice();say('Voice on. Using '+(voicePick?voicePick.name:'the default voice'));}};
-$('bPrev').onclick=()=>{if(idx>0){started=true;go(idx-1);}};
-$('bNext').onclick=()=>{if(idx<MOVES.length-1){started=true;go(idx+1);}};
+$('bPrev').onclick=()=>{const t=SEGS[idx].mi-1;if(t>=0){started=true;go(segOfMove(t));}};
+$('bNext').onclick=()=>{const g=SEGS[idx],t=g.trans?g.mi:g.mi+1;if(t<=MOVES.length-1){started=true;go(segOfMove(t));}};
 $('bReset').onclick=()=>{
   clearInterval(tick);tick=null;running=false;started=false;unlockScreen();
   idx=0;timeLeft=MOVES[0].dur*dm;swAt=false;
@@ -591,8 +618,8 @@ $('bReset').onclick=()=>{
   $('bMain').style.display='';$('bMain').textContent='Start';
   $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
   $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
-  $('count').textContent='\u2013/12';
-  $('cue').innerHTML="<strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact \u2014 safe for the right peroneal tendon.";
+  $('count').textContent='\u2013/13';
+  $('cue').innerHTML="<strong>Morning Movement</strong> runs about 10 minutes: standing mobility, then floor work, then core. Short setup pauses appear before position changes. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
 
@@ -618,12 +645,12 @@ if(window.addEventListener){
 // figure animates continuously, whatever the timer is doing
 let t0=performance.now(),last=0,curFit=null,brPh=0;
 (function loop(now){
-  if(now-last>30){last=now;const m=MOVES[idx];
+  if(now-last>30){last=now;const m=SEGS[idx].m;
     if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);buildProps(m,m.fit);applyMirror(false);}
     const ph=((now-t0)/1000%m.cyc)/m.cyc;
     // breath-tempo audio on flagged movements: cycle wrap = inhale start (rising),
     // halfway = exhale start (falling). Only while the timer runs and audio exists.
-    if(running&&m.br&&actx){
+    if(running&&m.br&&!SEGS[idx].trans&&actx){
       if(ph<brPh)breathTone(196,294,m.cyc*0.42);
       else if(brPh<0.5&&ph>=0.5)breathTone(294,196,m.cyc*0.48);
     }

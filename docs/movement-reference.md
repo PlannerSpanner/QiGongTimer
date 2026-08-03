@@ -161,7 +161,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 
 ---
 
-# Morning Movement — 12 movements: standing mobility → floor → core, no impact
+# Morning Movement — 13 movements: standing mobility → floor → core, no impact. 8s setup gaps are auto-inserted between position changes (pos tags).
 
 ## 1. Deep squats — 30s, 2.8s cycle, symmetric, feet pinned
 - **Setup:** feet shoulder-width, toes slightly out, heels down.
@@ -227,7 +227,22 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** hips lifting (turning it into up-dog); shoulders shrugging to the ears.
 - **Figure:** chest arcing up while pelvis and legs stay grounded.
 
-## 8. Pedaling down dog — 60s, 2.2s cycle, alternating
+## 8. Prone Y raises — 30s, 3.0s cycle, symmetric
+- **Setup:** face down (straight after cobra — no position change), arms overhead at
+  ~30–45° out from the midline, thumbs up.
+- **Execution:** draw the shoulder blades down and back and float the arms an inch or
+  two off the floor; lower with control. Chest may barely graze up; neck neutral,
+  gaze down.
+- **Anchors (research-anchored):** lift comes from the **lower traps**, not low-back
+  extension; **no shrugging** — shoulders stay away from the ears; thumbs-up
+  rotation throughout. Friendly to the right AC joint — trains the lower-trap side
+  of that balance.
+- **Faults:** shrugging into the ears; cranking the neck up; ballistic swinging;
+  arching the low back to fake height.
+- **Figure:** prone with Y-angled arms visibly floating and lowering; pelvis and legs
+  quiet throughout.
+
+## 9. Pedaling down dog — 60s, 2.2s cycle, alternating
 - **Setup:** inverted V — hands and feet down, hips high.
 - **Execution:** alternately press one heel toward the floor while the other knee bends;
   slow and rhythmic.
@@ -236,7 +251,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** bouncing the heel; rolling the pedaling foot outward; sagging shoulders.
 - **Figure:** high-hip V with alternating heel drop (small foot travel expected in QA).
 
-## 9. Tuck + untuck — 60s, 3.6s cycle, symmetric, feet pinned
+## 10. Tuck + untuck — 60s, 3.6s cycle, symmetric, feet pinned
 - **Setup:** supine, knees bent, feet flat, arms relaxed.
 - **Execution:** flatten the low back into the floor (posterior tilt), then let it arch
   gently away (anterior tilt). Only the pelvis moves.
@@ -245,7 +260,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** glute squeeze doing the work; lifting the hips; moving the ribcage.
 - **Figure:** subtle pelvic roll with the back on the floor, feet planted.
 
-## 10. 90/90 with a fold — 60s, 3.4s cycle, unilateral (switch)
+## 11. 90/90 with a fold — 60s, 3.4s cycle, unilateral (switch)
 - **Setup (research-anchored — this is a Z-sit):** front leg at 90° with its **outer** thigh
   and shin flat on the floor; back leg at 90° with its **inner** thigh down and the shin
   pointing straight behind; sit tall on both sit bones as much as the hips allow.
@@ -257,7 +272,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Figure:** unmistakable Z-sit geometry (not a cross-legged sit), then a flat-back hinge
   over the front shin.
 
-## 11. Thread the needle — 60s, 3.6s cycle, unilateral (switch), knees pinned
+## 12. Thread the needle — 60s, 3.6s cycle, unilateral (switch), knees pinned
 - **Setup:** quadruped — wrists under shoulders, knees under hips.
 - **Execution:** reach one arm to the ceiling opening the chest, then slide it palm-up under
   the opposite armpit until the shoulder and ear rest toward the floor; re-thread; switch at
@@ -267,7 +282,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** hips swinging sideways; collapsing onto the head instead of the shoulder.
 - **Figure:** quadruped base fixed while one arm sweeps from ceiling-reach to threaded-under.
 
-## 12. Plank hold — 60s, 4s cycle (micro-adjust breathing rhythm), symmetric
+## 13. Plank hold — 60s, 4s cycle (micro-adjust breathing rhythm), symmetric
 - **Setup:** forearm plank — elbows under shoulders (kinder to the right AC joint than
   straight-arm).
 - **Execution:** hold one straight line, breathing steadily.

@@ -145,12 +145,29 @@ MOVES.forEach(m=>m.fit=fitOf(m));
 // ---------- timer ----------
 const $=id=>document.getElementById(id);
 let idx=0,timeLeft=0,running=false,started=false,tick=null,voiceOn=true,actx=null,wl=null,swAt=false;
+// ---------- segments: movements plus derived setup gaps ----------
+// A gap is inserted wherever consecutive movements' pos tags differ. For a gap
+// segment, m is the UPCOMING movement (so the figure previews it). Gaps are never
+// bilateral, never multiplied by the 2x toggle, and invisible to dots/counts/nav.
+const POS_CUE={standing:'Stand up.',prone:'Lie face down.',supine:'Lie on your back.',
+  seated:'Sit on the floor.',quadruped:'Come to hands and knees.',downdog:'Push back into down dog.',
+  sidelying:'Lie on your side.',kneeling:'Come to kneeling.',chair:'Sit on your chair.',
+  ball:'Sit on your ball.',wall:'Stand at the wall.',doorway:'Stand in the doorway.'};
+const TRANS_DUR=8;
+const SEGS=[];
+MOVES.forEach((m,i)=>{
+  if(i>0&&m.pos&&MOVES[i-1].pos&&m.pos!==MOVES[i-1].pos)SEGS.push({trans:true,m,mi:i,dur:TRANS_DUR});
+  SEGS.push({m,mi:i,dur:m.dur});
+});
+const sdur=s=>s.trans?s.dur:s.dur*dm;
+const segOfMove=mi=>SEGS.findIndex(s=>!s.trans&&s.mi===mi);
+const posCue=m=>m.posCue||POS_CUE[m.pos]||'Get into position.';
 // optional session-length toggle (enabled per app at build time): dm multiplies every
 // movement duration. Locked once the session has started; Reset unlocks it.
 const X2OPT=false;
 let dm=1;
 if(X2OPT){
-  const tot=Math.round(MOVES.reduce((a,m)=>a+m.dur,0)/60);
+  const mvT=MOVES.reduce((a,m)=>a+m.dur,0), trT=SEGS.reduce((a,s)=>a+(s.trans?s.dur:0),0);
   $('mNum').insertAdjacentHTML('beforebegin',
     '<style>.x2row{display:flex;gap:7px;justify-content:center;margin:0 0 11px}'
     +'.x2b{font-family:inherit;cursor:pointer;font-size:0.66rem;letter-spacing:0.5px;'
@@ -158,7 +175,7 @@ if(X2OPT){
     +'background:transparent;color:inherit;opacity:0.5;transition:opacity 0.15s}'
     +'.x2b.on{opacity:1;font-weight:600;background:rgba(255,255,255,0.6)}</style>'
     +'<div class="x2row"><button class="x2b on" id="x1b"></button><button class="x2b" id="x2b"></button></div>');
-  $('x1b').textContent=tot+' min'; $('x2b').textContent=(tot*2)+' min';
+  $('x1b').textContent=Math.round((mvT+trT)/60)+' min'; $('x2b').textContent=Math.round((mvT*2+trT)/60)+' min';
   const setM=k=>{if(started)return; dm=k;
     $('x1b').classList.toggle('on',k===1); $('x2b').classList.toggle('on',k===2);
     timeLeft=MOVES[0].dur*dm; clock();};
@@ -227,48 +244,49 @@ function say(t){if(!voiceOn)return;try{
   speechSynthesis.speak(u);}catch(e){}}
 
 function paint(){
-  const m=MOVES[idx];
-  $('mNum').textContent='MOVEMENT '+(idx+1)+' OF '+MOVES.length;
-  $('mName').textContent=m.n; $('mTarget').textContent=m.cue;
+  const g=SEGS[idx], m=g.m;
+  $('mNum').textContent=g.trans?'GET SET UP':'MOVEMENT '+(g.mi+1)+' OF '+MOVES.length;
+  $('mName').textContent=m.n; $('mTarget').textContent=g.trans?posCue(m):m.cue;
   $('cue').innerHTML=m.long;
-  $('count').textContent=(idx+1)+'/'+MOVES.length;
-  $('badge').classList.toggle('visible',!!m.bil);
+  $('count').textContent=(g.mi+1)+'/'+MOVES.length;
+  $('badge').classList.toggle('visible',!g.trans&&!!m.bil);
   $('badge').textContent=m.orb?'REVERSES · CHANGE DIRECTION AT HALFWAY':'BOTH SIDES · SWITCH AT HALFWAY';
   $('vid').href='https://www.youtube.com/results?search_query='+m.q;
-  $('bPrev').disabled=idx<=0; $('bNext').disabled=idx>=MOVES.length-1;
-  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<idx?' done':i===idx?' active':'');});
+  $('bPrev').disabled=!g.trans&&g.mi<=0; $('bNext').disabled=!g.trans&&g.mi>=MOVES.length-1;
+  MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<g.mi?' done':i===g.mi?' active':'');});
   clock();
 }
 function clock(){
-  const m=MOVES[idx];
   $('tm').textContent=Math.floor(timeLeft/60)+':'+String(timeLeft%60).padStart(2,'0');
-  $('fill').style.width=(100*(1-timeLeft/(m.dur*dm))).toFixed(1)+'%';
+  $('fill').style.width=(100*(1-timeLeft/sdur(SEGS[idx]))).toFixed(1)+'%';
 }
 let segEnd=0,pausedRem=0;
 function go(i){
-  idx=i; const m=MOVES[idx]; timeLeft=m.dur*dm; swAt=false;
-  segEnd=Date.now()+m.dur*dm*1000; pausedRem=m.dur*dm*1000;
-  paint(); cTrans();
-  setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
+  idx=i; const g=SEGS[idx]; timeLeft=sdur(g); swAt=false;
+  segEnd=Date.now()+timeLeft*1000; pausedRem=timeLeft*1000;
+  paint(); announce(g);
+}
+// gap start: soft double chime + the position instruction; movement start keeps the
+// full transition chime + name, so nothing is announced twice
+function announce(g){
+  if(g.trans){cSwitch();setTimeout(()=>say(posCue(g.m)),300);}
+  else{cTrans();setTimeout(()=>say(g.m.n+(g.m.bil&&!g.m.orb?'. Start with your right side.':'')),420);}
 }
 function sync(){
   if(!running)return;
   let rem=Math.ceil((segEnd-Date.now())/1000);
   let jumped=false;
   while(rem<=0){
-    if(idx>=MOVES.length-1){finish();return;}
-    idx++; const m=MOVES[idx]; segEnd+=m.dur*dm*1000; swAt=false; jumped=true;
+    if(idx>=SEGS.length-1){finish();return;}
+    idx++; segEnd+=sdur(SEGS[idx])*1000; swAt=false; jumped=true;
     rem=Math.ceil((segEnd-Date.now())/1000);
   }
-  if(jumped){
-    const m=MOVES[idx]; paint(); cTrans();
-    setTimeout(()=>say(m.n+(m.bil&&!m.orb?'. Start with your right side.':'')),420);
-  }
+  if(jumped){paint(); announce(SEGS[idx]);}
   if(rem!==timeLeft){
     timeLeft=rem; clock();
-    const m=MOVES[idx];
-    if(m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
-    if(timeLeft===3)chime(380,.05,.3);
+    const g=SEGS[idx], m=g.m;
+    if(!g.trans&&m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
+    if(timeLeft===3)chime(380,.05,.3); // also inside gaps: 3s warning before the movement starts
   }
 }
 function finish(){
@@ -294,8 +312,8 @@ $('bMain').onclick=()=>{
 };
 $('bVoice').onclick=()=>{voiceOn=!voiceOn;$('bVoice').classList.toggle('on',voiceOn);
   if(voiceOn){pickVoice();say('Voice on. Using '+(voicePick?voicePick.name:'the default voice'));}};
-$('bPrev').onclick=()=>{if(idx>0){started=true;go(idx-1);}};
-$('bNext').onclick=()=>{if(idx<MOVES.length-1){started=true;go(idx+1);}};
+$('bPrev').onclick=()=>{const t=SEGS[idx].mi-1;if(t>=0){started=true;go(segOfMove(t));}};
+$('bNext').onclick=()=>{const g=SEGS[idx],t=g.trans?g.mi:g.mi+1;if(t<=MOVES.length-1){started=true;go(segOfMove(t));}};
 $('bReset').onclick=()=>{
   clearInterval(tick);tick=null;running=false;started=false;unlockScreen();
   idx=0;timeLeft=MOVES[0].dur*dm;swAt=false;
@@ -330,12 +348,12 @@ if(window.addEventListener){
 // figure animates continuously, whatever the timer is doing
 let t0=performance.now(),last=0,curFit=null,brPh=0;
 (function loop(now){
-  if(now-last>30){last=now;const m=MOVES[idx];
+  if(now-last>30){last=now;const m=SEGS[idx].m;
     if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);buildProps(m,m.fit);applyMirror(false);}
     const ph=((now-t0)/1000%m.cyc)/m.cyc;
     // breath-tempo audio on flagged movements: cycle wrap = inhale start (rising),
     // halfway = exhale start (falling). Only while the timer runs and audio exists.
-    if(running&&m.br&&actx){
+    if(running&&m.br&&!SEGS[idx].trans&&actx){
       if(ph<brPh)breathTone(196,294,m.cyc*0.42);
       else if(brPh<0.5&&ph>=0.5)breathTone(294,196,m.cyc*0.48);
     }

@@ -27,7 +27,7 @@ ROSE=dict(n=10,accent='#a8546b',
  ('#6d4f1c','#7d3f53'),('#c2a473','#cfa8b3'),('#7d5a1e','#a8546b'),('#caac79','#dcbcc4')])
 A11=dict(n=12,accent='#a5762a',warnText='#8d5326',warnBg='rgba(214,140,70,0.12)',
  warnBorder='rgba(214,140,70,0.32)',warnStrong='#7a441c',css=[])
-A12=dict(n=12,accent='#a5762a',css=[])
+A12=dict(n=13,accent='#a5762a',css=[])
 BAN=("<strong>Listen to your body.</strong> Ease off anything that feels sharp or wrong, "
      "and mention it to your provider. Breathe continuously — never hold your breath "
      "or bear down.")
@@ -37,16 +37,16 @@ build(os.path.join(OUT,'morning-flow.html'),'d_flow.js',open('x_flow.js',encodin
  '<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, posterior chain warm, calves primed. Go get it.')
 build(os.path.join(OUT,'morning-movement.html'),'data2.js',open('mm_extra.js',encoding='utf-8').read(),
  'Morning Movement','Mobility · Control · Stability','icon-app.png','#fdf7e9',A12,
- '<strong>Morning Movement</strong> runs 9 minutes: standing mobility, then floor work, then core. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.',
- '<strong>Done.</strong> Hips and ankles mobile, spine articulated, hip rotation opened, core switched on. Nothing loaded the peroneal tendon.')
+ '<strong>Morning Movement</strong> runs about 10 minutes: standing mobility, then floor work, then core. Short setup pauses appear before position changes. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.',
+ '<strong>Done.</strong> Needle threaded, cobra charmed, plank held. Prone to greatness.')
 build(os.path.join(OUT,'prenatal-stretch.html'),'d_stretch.js',open('x_stretch.js',encoding='utf-8').read(),
  'Prenatal Stretch','Gentle · Stretch & Release','icon-app.png','#fdf4f1',ROSE,
  '<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.',
- '<strong>Done.</strong> Drink water. If anything felt sharp, pulling, or made you dizzy, mention it at your next appointment.',banner=BAN)
+ '<strong>Done.</strong> Stretch goals: met. Butterflies earned. Sip some water.',banner=BAN)
 build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',encoding='utf-8').read(),
  'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
- '<strong>Done.</strong> Drink water. If anything caused cramping, bleeding or sharp pain, stop this routine and call your provider before repeating it.',banner=BAN,x2=True)
+ '<strong>Done.</strong> Clamshells opened, hips rocked and rolled. You’re on the ball.',banner=BAN,x2=True)
 # stamp index.html too (hand-edited, so the stamp is refreshed here; deterministic:
 # hash of the content with an emptied stamp, idempotent across rebuilds)
 import hashlib, re as _re

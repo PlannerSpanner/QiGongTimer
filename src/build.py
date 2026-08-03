@@ -21,8 +21,13 @@ def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_ms
     head = head.replace('<div class="sub">Mobility · Control · Stability</div>',
                         f'<div class="sub">{sub}</div>')
     head = re.sub(r'<div class="cue" id="cue">.*?</div>\n', f'<div class="cue" id="cue">{intro}</div>\n', head, flags=re.S)
-    head = head.replace('<div class="count" id="count">–/12</div>',
-                        '<div class="count" id="count">–/%d</div>' % colors['n'])
+    # regex (not a literal-value replace): HEAD is read from the already-built
+    # morning-movement.html on disk (see top of file), so whatever count is currently
+    # baked into it must be matched dynamically, not against a hardcoded old value —
+    # otherwise every app's badge silently keeps a stale count once the template's own
+    # baked value drifts from the hardcoded literal.
+    head = re.sub(r'<div class="count" id="count">–/\d+</div>',
+                  '<div class="count" id="count">–/%d</div>' % colors['n'], head)
     # banner CSS must be injected BEFORE the color swaps: the swap tables rewrite
     # #c8862e, so replacing the .state-done selector after them silently misses (ROSE bug)
     if banner:
@@ -43,11 +48,14 @@ def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_ms
         body = body.replace(a, b)
     if x2:
         body = body.replace('const X2OPT=false;', 'const X2OPT=true;')
-    body = body.replace("'\u2013/12'", "'\u2013/%d'" % colors['n'])
+    # app_tpl.js contains the LITERAL 6-character JS escape text \u2013 (not a real
+    # en-dash character), so match that literal text directly rather than a Python
+    # string with a decoded unicode escape (which would never match the source bytes).
+    body = re.sub(r"'\\u2013/\d+'", "'\\\\u2013/%d'" % colors['n'], body)
     body = re.sub(r"\$\('cue'\)\.innerHTML='<strong>Done\.</strong>[^;]*;",
-                  "$('cue').innerHTML=%s;" % json.dumps(done_msg), body)
+                  "$('cue').innerHTML=%s;" % json.dumps(done_msg, ensure_ascii=False), body)
     body = re.sub(r"(\$\('bReset'\)\.onclick[\s\S]*?)\$\('cue'\)\.innerHTML='<strong>Morning Movement</strong>[^;]*;",
-                  lambda m: m.group(1) + "$('cue').innerHTML=%s;" % json.dumps(intro), body)
+                  lambda m: m.group(1) + "$('cue').innerHTML=%s;" % json.dumps(intro, ensure_ascii=False), body)
     html = head + '<script>\n' + open(data_file, encoding='utf-8').read() + '\n' + ENG + '\n' + extra + '\n' + body + '</script>\n</body>\n</html>\n'
     # build stamp for the launch-time freshness check (deterministic: hash of the
     # unstamped content, so unchanged sources still rebuild byte-identical)
