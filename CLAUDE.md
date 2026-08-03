@@ -27,7 +27,13 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
   (flat when planted, trails shin when kneeling).
 - `app_tpl.js` — shared app body: renderer, timers, audio. Key facts:
   - Timer is wall-clock anchored (`segEnd`); survives backgrounding, catches up on return.
-  - Movements: `{n, cue, dur, bil, cyc, pin, belly, cam, prop, orb, A, B, M?}`.
+  - The timer walks `SEGS`, derived from MOVES at load: an 8s `{trans:true}` "GET SET UP"
+    segment is inserted wherever consecutive movements' `pos` tags differ (a gap's `m` is
+    the UPCOMING movement, so the figure previews it). Voice speaks the position phrase
+    (`POS_CUE` map; per-movement `posCue` overrides). Gaps are never bilateral, never 2×-
+    multiplied (`sdur`), and invisible to dots/counts/prev-next (`segOfMove`). qa/trans.js
+    guards all of this.
+  - Movements: `{n, pos, posCue?, cue, dur, bil, cyc, pin, belly, cam, prop, orb, A, B, M?}`.
     `M` = optional mid-keyframe (path A→M→B→M→A). `pin:'LR'` nails feet at their frame-A spots.
     `orb` = orbital pose (hip circles). `cam` = per-movement camera yaw (default 40).
     `prop` = array of `{l:[[xyz],[xyz]]}` lines / `{c:[[xyz],r]}` circles, drawn behind the figure.
