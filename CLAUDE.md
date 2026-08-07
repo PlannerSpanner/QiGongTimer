@@ -25,6 +25,14 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
   Coordinates: y DOWN, floor at y=93, canvas 0–100. Limb segments 19 (leg) / 13 (arm/spine),
   foot 6.4. `sl` = lateral spine bend. Feet: sagittal-plane perpendicular + floor clamp
   (flat when planted, trails shin when kneeling).
+  - Arm IK with a joint key (`{k:"shL"}`) can't blend — `lerpT` returns it unchanged
+    for an entire blend segment, so the hand stays pinned for the whole half and pops
+    at the crossover. Any movement with an `M` keyframe must use world-point targets
+    (`{w:[x,y,z]}`) at the solved joint positions instead.
+  - Limb abduction is body-frame, applied before yaw. A cross-midline movement's
+    screen-space read depends on both abd and the movement's yaw — at some yaws they
+    cancel exactly. Always verify crossing movements at their actual yaw rather than
+    assuming abd alone puts the limb across.
 - `app_tpl.js` — shared app body: renderer, timers, audio. Key facts:
   - Timer is wall-clock anchored (`segEnd`); survives backgrounding, catches up on return.
   - The timer walks `SEGS`, derived from MOVES at load: an 8s `{trans:true}` "GET SET UP"
