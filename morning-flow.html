@@ -102,50 +102,53 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='6906da6cfb';
+const BUILDV='acbc546868';
 const MOVES=[
 {n:"Bouncing in place",pos:'standing',cue:"Light bounces, everything loose",dur:50,bil:false,cyc:1.0,
  A:{p:[0,57,0],yaw:22,tw:0,s:[4,4],hf:0,aL:[8,-11,14,-9],aR:[8,11,14,9],ikFL:[-5,93,1],ikFR:[5,93,1]},
  B:{p:[0,61,0],yaw:22,tw:0,s:[5,5],hf:0,aL:[16,-12,26,-10],aR:[16,12,26,10],ikFL:[-5,93,1],ikFR:[5,93,1]}},
 
-{n:"Rotations with shoulder slaps",pos:'standing',cue:"Twist from the waist, arms swing free",dur:50,bil:false,cyc:1.8,
- A:{p:[0,58,0],yaw:-6,tw:44,s:[4,4],hf:34,aL:[62,-56,84,-30],aR:[70,34,96,58],ikFL:[-6,93,1],ikFR:[6,93,1]},
- B:{p:[0,58,0],yaw:-6,tw:-44,s:[4,4],hf:-34,aL:[70,-34,96,-58],aR:[62,56,84,30],ikFL:[-6,93,1],ikFR:[6,93,1]}},
+{n:"Rotations with shoulder slaps",pos:'standing',cue:"Twist from the waist — slap the shoulder, tap the low back",dur:50,bil:false,cyc:1.8,
+ A:{p:[0,58,0],yaw:-6,tw:-44,s:[4,4],hf:-12,ikR:{w:[-7.7,32,-1.3]},ikL:{w:[6,65,-7]},ikFL:[-6,93,1],ikFR:[6,93,1]},
+ M:{p:[0,58,0],yaw:-6,tw:0,s:[4,4],hf:0,ikL:{w:[-29,29,8]},ikR:{w:[29,29,8]},ikFL:[-6,93,1],ikFR:[6,93,1]},
+ B:{p:[0,58,0],yaw:-6,tw:44,s:[4,4],hf:12,ikL:{w:[7.8,32,0.3]},ikR:{w:[-6,65,-7]},ikFL:[-6,93,1],ikFR:[6,93,1]}},
 
 {n:"Arm sweeps with knee dip",pos:'standing',cue:"Arms sweep, knees dip in rhythm",dur:50,bil:false,cyc:2.0,
  A:{p:[0,58,0],yaw:24,tw:0,s:[4,4],hf:-6,aL:[62,-10,72,-8],aR:[58,10,68,8],ikFL:[-5,93,1],ikFR:[5,93,1]},
  B:{p:[0,70,-3],yaw:24,tw:0,s:[16,12],hf:8,aL:[-46,-10,-54,-8],aR:[-50,10,-58,8],ikFL:[-5,93,1],ikFR:[5,93,1]}},
 
-{n:"Punching rotations",pos:'standing',cue:"Horse stance — punch out, push the shoulder blade forward",dur:50,bil:true,cyc:1.6,
- A:{p:[0,69,0],yaw:-16,tw:26,s:[4,4],hf:22,aL:[80,-64,86,-70],aR:[86,20,90,6],ikFL:[-14,93,1],ikFR:[14,93,1],swL:-20,swR:55},
- B:{p:[0,69,0],yaw:-16,tw:-26,s:[4,4],hf:-22,aL:[86,-20,90,-6],aR:[80,64,86,70],ikFL:[-14,93,1],ikFR:[14,93,1],swL:-20,swR:55}},
+{n:"Punching rotations",pos:'standing',cue:"Stand tall, knees soft — punch out, push the shoulder blade forward",dur:50,bil:false,cyc:1.6,
+ A:{p:[0,61,0],yaw:-16,tw:26,s:[4,4],hf:22,aL:[80,-64,86,-70],aR:[86,20,90,6],ikFL:[-12,93,1],ikFR:[12,93,1],swL:-10,swR:28},
+ B:{p:[0,61,0],yaw:-16,tw:-26,s:[4,4],hf:-22,aL:[86,-20,90,-6],aR:[80,64,86,70],ikFL:[-12,93,1],ikFR:[12,93,1],swL:-10,swR:28}},
 
-{n:"Dynamic lateral reaches",pos:'standing',cue:"Reach long overhead, lean to the far side",dur:50,bil:true,cyc:2.2,
- A:{p:[0,60,0],yaw:-18,tw:0,s:[4,-16],hf:-14,aL:[6,-40,4,-30],aR:[-8,44,-4,26],ikFL:[-12,93,1],ikFR:[12,93,1]},
- B:{p:[0,60,0],yaw:-18,tw:0,s:[4,16],hf:14,aL:[-8,-44,-4,-26],aR:[6,40,4,30],ikFL:[-12,93,1],ikFR:[12,93,1]}},
+{n:"Dynamic lateral reaches",pos:'standing',cue:"Reach long overhead, lean to the far side",dur:50,bil:false,cyc:2.2,pin:'LR',
+ A:{p:[0,60,0],yaw:-18,tw:0,sl:-16,s:[4,6],hf:-4,ikR:{w:[-8,12,2]},ikL:{w:[-11,64,3]},ikFL:[-12,93,1],ikFR:[12,93,1]},
+ B:{p:[0,60,0],yaw:-18,tw:0,sl:16,s:[4,6],hf:-4,ikL:{w:[8,12,2]},ikR:{w:[11,64,3]},ikFL:[-12,93,1],ikFR:[12,93,1]}},
 
-{n:"Cross-body knee drives",pos:'standing',cue:"Knee up, opposite elbow to meet it",dur:50,bil:true,cyc:1.4,
- A:{p:[0,58,0],yaw:-20,tw:18,s:[6,8],hf:12,aL:[68,-30,102,10],aR:[-34,26,-46,18],
-    lL:[86,-8,-38,-6],ikFR:[6,93,1]},
- B:{p:[0,58,0],yaw:-20,tw:-18,s:[6,8],hf:-12,aL:[-34,-26,-46,-18],aR:[68,30,102,-10],
-    ikFL:[-6,93,1],lR:[86,8,-38,6]}},
+{n:"Cross-body knee drives",pos:'standing',cue:"Knee up, opposite elbow to meet it",dur:50,bil:false,cyc:1.4,
+ A:{p:[0,58,0],yaw:0,tw:14,s:[6,8],hf:12,aL:[-26,-12,-42,-8],aR:[26,-22,58,-30],
+    lL:[100,20,-38,6],swL:25,ikFR:[6,93,1]},
+ M:{p:[0,55.8,0],yaw:0,tw:0,s:[4,5],hf:0,aL:[8,-9,10,-7],aR:[8,9,10,7],
+    ikFL:[-6,93,1],ikFR:[6,93,1]},
+ B:{p:[0,58,0],yaw:0,tw:-14,s:[6,8],hf:-12,aL:[26,22,58,30],aR:[-26,12,-42,8],
+    ikFL:[-6,93,1],lR:[100,-20,-38,-6],swR:-25}},
 
 {n:"Chest opener swings",pos:'standing',cue:"Swing wide open, then cross in front",dur:50,bil:false,cyc:1.8,
  A:{p:[0,58,0],yaw:-14,tw:0,s:[3,3],hf:-6,aL:[80,-78,84,-84],aR:[80,78,84,84],ikFL:[-7,93,1],ikFR:[7,93,1]},
  B:{p:[0,58,0],yaw:-14,tw:0,s:[6,6],hf:6,aL:[86,26,88,44],aR:[86,-26,88,-44],ikFL:[-7,93,1],ikFR:[7,93,1]}},
 
-{n:"Hip circles",pos:'standing',cue:"Hands on hips, big slow circles",dur:50,bil:true,cyc:2.6,
+{n:"Hip circles",pos:'standing',cue:"Hands on hips, big slow circles",dur:60,bil:true,cyc:2.6,
  orb:{hips:true,rx:9,rz:8,ry:2},
  A:{p:[0,60,0],yaw:20,tw:0,s:[4,4],hf:0,ikL:{k:"hpL"},ikR:{k:"hpR"},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-8,93,1],ikFR:[8,93,1]},
  B:{p:[0,60,0],yaw:20,tw:0,s:[4,4],hf:0,ikL:{k:"hpL"},ikR:{k:"hpR"},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-8,93,1],ikFR:[8,93,1]}},
 
-{n:"Bent rotation sweeps",pos:'standing',cue:"Hinged forward, let the arms wrap around",dur:50,bil:false,cyc:2.0,
- A:{p:[0,62,-4],yaw:6,tw:40,s:[54,58],hf:26,aL:[60,-58,72,-40],aR:[66,30,80,50],ikFL:[-7,93,1],ikFR:[7,93,1]},
- B:{p:[0,62,-4],yaw:6,tw:-40,s:[54,58],hf:-26,aL:[66,-30,80,-50],aR:[60,58,72,40],ikFL:[-7,93,1],ikFR:[7,93,1]}},
+{n:"Bent rotation sweeps",pos:'standing',cue:"Hinged forward, sweep the arms floor to sky",dur:50,bil:false,cyc:2.0,
+ A:{p:[0,62,-4],yaw:6,tw:40,s:[54,58],hf:26,aL:[2,-4,2,-3],aR:[176,8,174,6],ikFL:[-7,93,1],ikFR:[7,93,1]},
+ B:{p:[0,62,-4],yaw:6,tw:-40,s:[54,58],hf:-26,aL:[176,16,174,14],aR:[2,-17,2,-15],ikFL:[-7,93,1],ikFR:[7,93,1]}},
 
-{n:"Lateral weight shifts",pos:'standing',cue:"Sink into one hip, press the outside edge of that foot",dur:50,bil:true,cyc:2.2,
+{n:"Lateral weight shifts",pos:'standing',cue:"Sink into one hip, press the outside edge of that foot",dur:50,bil:false,cyc:2.2,
  A:{p:[-7,66,0],yaw:-18,tw:0,s:[4,-10],hf:-12,aL:[74,-52,80,-64],aR:[64,30,70,20],
     ikFL:[-14,93,1],ikFR:[14,93,1]},
  B:{p:[7,66,0],yaw:-18,tw:0,s:[4,10],hf:12,aL:[64,-30,70,-20],aR:[74,52,80,64],
@@ -249,14 +252,14 @@ function orbitPose(base,o,ph){
 
 const EXTRA={
 "Bouncing in place":["<strong>Form:</strong> Light, quick bounces on the balls of the feet. Knees soft, shoulders relaxed, arms loose. Let everything jiggle. <strong>Ankle note:</strong> if the right peroneal tendon objects, swap this for heel-to-toe rocks with the feet never leaving the floor.","qi+gong+bouncing+shaking+warmup"],
-"Rotations with shoulder slaps":["<strong>Form:</strong> Rotate the upper body side to side. Arms stay completely loose — let them swing and slap the shoulders and back. Drive from the waist, not the arms. <strong>Targets:</strong> T4–T8 rotation, where your chronic mid-back pain lives.","qi+gong+twisting+body+slapping+shoulders"],
+"Rotations with shoulder slaps":["<strong>Form:</strong> Rotate the upper body side to side, arms completely loose. At each end of the twist the front hand folds up and slaps the opposite shoulder while the back hand wraps behind and taps the opposite low back. Drive from the waist, not the arms. <strong>Targets:</strong> T4–T8 rotation, where your chronic mid-back pain lives.","qi+gong+twisting+body+slapping+shoulders"],
 "Arm sweeps with knee dip":["<strong>Form:</strong> Both arms sweep forward and up, then back behind you as the knees dip. Continuous and pendulum-like — arms and knees move together. <strong>Targets:</strong> dynamic hip hinge, glutes and hamstrings, chest opening on the forward sweep.","qi+gong+arm+swings+front+back+knee+bend"],
-"Punching rotations":["<strong>Form:</strong> Sink into a wide horse stance — feet well outside the shoulders, knees bent and pressing outward. Rotate from the waist and punch slowly, pushing the shoulder blade forward at the end of each punch","qi+gong+punching+horse+stance+exercise"],
-"Dynamic lateral reaches":["<strong>Form:</strong> Feet wide, reach one arm overhead and lean to the opposite side. Reach long through the fingertips — hip to hand. <strong>Targets:</strong> the lateral fascial line connecting IT band, obliques and lats. Addresses your right-side asymmetry.","dynamic+lateral+reach+side+bend+flow"],
-"Cross-body knee drives":["<strong>Form:</strong> Drive one knee up, bring the opposite elbow to meet it. Stay tall, pump the arms. <strong>Targets:</strong> hip flexors plus rotational core — obliques and glute medius together, your two biggest IT band protectors.","standing+cross+body+knee+drive+exercise"],
+"Punching rotations":["<strong>Form:</strong> Stand tall, feet a bit wider than the shoulders, knees soft. Rotate from the waist and punch slowly, pushing the shoulder blade forward at the end of each punch","qi+gong+punching+rotation+exercise"],
+"Dynamic lateral reaches":["<strong>Form:</strong> Feet wide, one hand resting on the hip. Reach the other arm straight up and over the top as you bend sideways — a standing crescent, hip to fingertips. Alternate sides in one continuous arc. <strong>Targets:</strong> the lateral fascial line connecting IT band, obliques and lats. Addresses your right-side asymmetry.","dynamic+lateral+reach+side+bend+flow"],
+"Cross-body knee drives":["<strong>Form:</strong> Drive one knee up and across the midline while the opposite elbow pulls down to meet it, then plant both feet before the next drive — plant, drive, plant, drive. Stay tall between reps. <strong>Targets:</strong> hip flexors plus rotational core — obliques and glute medius together, your two biggest IT band protectors.","standing+cross+body+knee+drive+exercise"],
 "Chest opener swings":["<strong>Form:</strong> Arms swing wide open, then cross in front. Alternate which arm crosses on top. <strong>Targets:</strong> opening fires rhomboids and lower trap; closing fires serratus. Both sides of your mid-back equation, in a range that's safe for the right AC joint.","dynamic+chest+opener+arm+swings+exercise"],
 "Hip circles":["<strong>Form:</strong> Hands on hips, feet planted. Push the hips forward, to the side, back and around. Half the time each direction. Make the circles big. <strong>Targets:</strong> hip capsule in every plane, IT band fascial connections, hip flexors.","standing+hip+circles+mobility+exercise"],
-"Bent rotation sweeps":["<strong>Form:</strong> Hinge forward about 45°, arms hanging loose. Rotate side to side and let the arms wrap around you. Hips stay facing forward — rotation comes from the spine. <strong>Targets:</strong> thoracic rotation under a gravity load, more effective than the upright version.","bent+over+spinal+rotation+loose+arms+qi+gong"],
+"Bent rotation sweeps":["<strong>Form:</strong> Hinge forward about 45° and rotate side to side, sweeping the arms until they stack into one vertical line — bottom hand pointing at the floor, top hand at the sky. Hips stay facing forward — rotation comes from the spine. <strong>Targets:</strong> thoracic rotation under a gravity load, more effective than the upright version.","bent+over+spinal+rotation+windmill+qi+gong"],
 "Lateral weight shifts":["<strong>Form:</strong> Wide stance, shift fully into one hip and sink. Press through the <em>outside</em> edge of the planted foot. Arms sweep across in the direction of travel. <strong>Targets:</strong> pressing the outside edge is active eversion — dynamic peroneal work, plus glute medius loading. Zero impact.","standing+lateral+weight+shift+exercise+hip"]};
 MOVES.forEach(m=>{m.long=EXTRA[m.n][0];m.q=EXTRA[m.n][1];});
 
