@@ -151,6 +151,11 @@ stamping bugs. Design docs/plans from past features live in docs/superpowers/.
 1. Session logging to localStorage (date/completions) + streaks.
 2. PWA: manifest + service worker for full offline.
 3. Polish: figure-4 knee flare, cobra asymmetric tempo, knee-circles readability.
+4. Joint-attached props + arm IK swivels (swAL/swAR) are now available to the four
+   timer apps too (props: port wk_tpl's resPt/propShapes into app_tpl; swivels: add
+   swAL/swAR to app_tpl's blend). Existing movement data still uses fixed
+   world-coordinate props; candidates that would read better joint-attached: doorway
+   chest opener, kneeling lunge chair hand, supported deep squat counter.
 
 Done: Playwright QA (qa/, `npm run gauntlet`), breath-tempo audio (br flag, qa/breath.js),
 setup transitions (pos tags → derived 8s GET SET UP gaps, qa/trans.js), prone Y raises
