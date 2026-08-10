@@ -6,7 +6,9 @@ deployed to GitHub Pages at https://plannerspanner.github.io/MovementApp/
 Built for iPhone Safari (wake lock + Add to Home Screen require Safari, not Chrome).
 
 Apps: `morning-flow` (qi gong warmup), `morning-movement` (mobility/strength),
-`prenatal-stretch` (Prenatal Stretch, 10 moves), `prenatal-movement` (Birth Prep, 11 moves).
+`prenatal-stretch` (Prenatal Stretch, 10 moves), `prenatal-movement` (Birth Prep, 11 moves),
+`strength` (two-workout gym REFERENCE — no timer/audio; scrollable cards, tabs A/B +
+set checks persisted in localStorage, own template `wk_head.html`+`wk_tpl.js`, green theme).
 Also `hip-activation.html` — older layout, no figures, timer already timestamp-patched. Leave unless asked.
 
 ## Build
@@ -33,6 +35,11 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     screen-space read depends on both abd and the movement's yaw — at some yaws they
     cancel exactly. Always verify crossing movements at their actual yaw rather than
     assuming abd alone puts the limb across.
+  - Arms have optional IK swivels `swAL`/`swAR` (added for strength; same semantics as
+    leg swL/swR, undefined = legacy behavior). Only wk_tpl.js blends them — add them to
+    app_tpl.js's blend() before using in a timer app. Like the legs, the cones are
+    asymmetric: fit each side numerically (row uses swAR 80 with swAL untouched;
+    chest row needed −100/+80).
 - `app_tpl.js` — shared app body: renderer, timers, audio. Key facts:
   - Timer is wall-clock anchored (`segEnd`); survives backgrounding, catches up on return.
   - The timer walks `SEGS`, derived from MOVES at load: an 8s `{trans:true}` "GET SET UP"
@@ -56,11 +63,22 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
   - Depth sorting = painter's algorithm on projected d (larger d = nearer = drawn later).
 - `data2.js` / `d_flow.js` / `d_stretch.js` / `d_birth.js` — pose data per app.
 - `mm_extra.js` / `x_*.js` — expandable cue text per movement (keys = movement names).
+- `wk_head.html` + `wk_tpl.js` + `d_wka.js`/`d_wkb.js` — the strength reference app.
+  wk_tpl's pure section (everything above the `// ---- DOM ----` marker) is what
+  qa/wk.js evals — keep computation above that line. Its prop system extends the
+  timer apps': points may be joint names (`'haL'`), `{j:'haR',o:[body-frame offset,
+  rotated by pose yaw]}`, or `{m:['haL','haR'],o:...}` midpoints — joint-referenced
+  props re-resolve every frame so implements can't drift out of the hands (qa/wk.js
+  asserts it). New `{db:[P,P,r]}` primitive = handle line + filled end plates
+  (dumbbell/barbell); `{c:[P,r],f:1}` = filled circle (plate). All cards share one
+  rAF loop; only IntersectionObserver-visible cards redraw, but every card is
+  painted once at load (blank-below-the-fold bug otherwise).
 
 ## Non-negotiable QA gauntlet (run before every commit)
 
-    npm run gauntlet   # smoke + lint + geo + Playwright: shots (incl. index), catchup,
-                       # breath tones, 2x toggle, auto-update freshness
+    npm run gauntlet   # smoke + lint + geo + wk (strength invariants) + Playwright:
+                       # shots (incl. index), wkshots (strength cards + set checks),
+                       # catchup, breath tones, 2x toggle, auto-update freshness
     node tools/dump.js && python3 tools/strips.py   # fallback PIL contact sheets (needs Pillow)
     python3 tools/ascii.py <app> "<movement>" 0,3    # text-mode pose render
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Movement">
+<meta name="theme-color" content="#f3f6e8">
+<link rel="apple-touch-icon" href="icon-app.png">
+<title>Strength</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;
+  background:linear-gradient(160deg,#f3f6e8 0%,#ecf2da 45%,#e8efe0 100%);
+  color:#46493a;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right))
+          max(34px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+.wrap{width:100%;max-width:420px;margin:0 auto}
+h1{font-size:0.92rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#5c7d34;
+  margin-bottom:1px;text-align:center}
+.sub{font-size:0.55rem;letter-spacing:2px;color:#98a17e;margin-bottom:10px;text-transform:uppercase;text-align:center}
+
+.tabs{display:flex;gap:7px;margin-bottom:9px}
+.tab{flex:1;border:1px solid rgba(92,125,52,0.28);border-radius:50px;background:rgba(255,255,255,0.55);
+  color:#5c7d34;font-family:inherit;font-size:0.8rem;font-weight:600;letter-spacing:0.5px;
+  padding:9px 0;cursor:pointer;transition:all 0.15s}
+.tab.on{background:#7fa04a;border-color:#7fa04a;color:#fff;box-shadow:0 2px 6px rgba(107,138,60,0.3)}
+
+.rules{padding:9px 12px;background:rgba(255,255,255,0.62);border-radius:11px;
+  border:1px solid rgba(120,130,90,0.18);font-size:0.66rem;color:#565c44;
+  line-height:1.5;text-align:left;margin-bottom:10px}
+.rules strong{color:#5c7d34}
+.rules li{margin-left:14px;margin-top:2px}
+
+.mcard{background:rgba(255,255,255,0.62);border:1px solid rgba(120,130,90,0.16);
+  border-radius:14px;padding:11px 12px;margin-bottom:10px;
+  box-shadow:0 1px 2px rgba(90,100,70,0.05)}
+.mhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+.mname{font-size:0.9rem;font-weight:600;color:#4d6428;line-height:1.25}
+.mnum{display:inline-block;font-size:0.6rem;font-weight:400;letter-spacing:1px;color:#98a17e;
+  margin-right:6px;font-variant-numeric:tabular-nums}
+.mreps{font-size:0.64rem;color:#5c7d34;letter-spacing:0.4px;white-space:nowrap;
+  font-variant-numeric:tabular-nums;background:rgba(255,255,255,0.75);
+  border:1px solid rgba(92,125,52,0.25);border-radius:20px;padding:2px 9px}
+.mrow{display:flex;gap:10px;align-items:center}
+.mfig{flex:0 0 45%;min-width:0}
+.mfig svg{width:100%;height:auto;display:block}
+.mhow{flex:1;font-size:0.67rem;color:#565c44;line-height:1.5}
+.mcues{list-style:none;margin-top:6px;border-top:1px solid rgba(120,130,90,0.14);padding-top:6px}
+.mcues li{font-size:0.64rem;color:#6a7052;line-height:1.55;padding-left:13px;position:relative}
+.mcues li::before{content:'—';position:absolute;left:0;color:#a9bd85}
+.msets{display:flex;align-items:center;gap:7px;margin-top:8px}
+.setbox{width:27px;height:27px;border-radius:50%;border:1.5px solid rgba(92,125,52,0.4);
+  background:transparent;color:#8a9470;font-family:inherit;font-size:0.66rem;cursor:pointer;
+  transition:all 0.15s;font-variant-numeric:tabular-nums}
+.setbox.on{background:#7fa04a;border-color:#7fa04a;color:#fff}
+.setlbl{font-size:0.56rem;letter-spacing:1.2px;text-transform:uppercase;color:#a0a78a}
+.wreset{display:block;margin:2px auto 8px;background:rgba(255,255,255,0.78);color:#5c7d34;
+  font-family:inherit;font-size:0.7rem;padding:8px 18px;border:1px solid rgba(92,125,52,0.25);
+  border-radius:50px;cursor:pointer}
+.wreset:active{background:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Strength</h1>
+  <div class="sub">Two-day reference · A / B</div>
+
+  <div class="tabs">
+    <button class="tab" id="tabA">Workout A</button>
+    <button class="tab" id="tabB">Workout B</button>
+  </div>
+
+  <div class="rules">
+    <strong>Every session:</strong>
+    <li>Stop <strong>3–4 reps short of failure</strong> — if the last rep slowed down, the set ended one rep ago.</li>
+    <li>Move submaximal weight with intent. <strong>Never grind.</strong></li>
+    <li>Rest <strong>90 sec–2 min</strong> between sets.</li>
+    <li>Add load only when a session feels genuinely easy — roughly every 2–3 weeks.</li>
+    <li>All pressing <strong>neutral-grip and floor-limited</strong> (AC joint).</li>
+    <li>All pulling <strong>neutral or pronated grip</strong> — supinated loads the healing bicep tendon.</li>
+  </div>
+
+  <div id="listA"></div>
+  <div id="listB"></div>
+</div>
+</body>
+</html>

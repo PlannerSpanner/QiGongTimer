@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Movement">
+<meta name="theme-color" content="#f3f6e8">
+<link rel="apple-touch-icon" href="icon-app.png">
+<title>Strength</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;
+  background:linear-gradient(160deg,#f3f6e8 0%,#ecf2da 45%,#e8efe0 100%);
+  color:#46493a;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+  padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right))
+          max(34px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+.wrap{width:100%;max-width:420px;margin:0 auto}
+h1{font-size:0.92rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#5c7d34;
+  margin-bottom:1px;text-align:center}
+.sub{font-size:0.55rem;letter-spacing:2px;color:#98a17e;margin-bottom:10px;text-transform:uppercase;text-align:center}
+
+.tabs{display:flex;gap:7px;margin-bottom:9px}
+.tab{flex:1;border:1px solid rgba(92,125,52,0.28);border-radius:50px;background:rgba(255,255,255,0.55);
+  color:#5c7d34;font-family:inherit;font-size:0.8rem;font-weight:600;letter-spacing:0.5px;
+  padding:9px 0;cursor:pointer;transition:all 0.15s}
+.tab.on{background:#7fa04a;border-color:#7fa04a;color:#fff;box-shadow:0 2px 6px rgba(107,138,60,0.3)}
+
+.rules{padding:9px 12px;background:rgba(255,255,255,0.62);border-radius:11px;
+  border:1px solid rgba(120,130,90,0.18);font-size:0.66rem;color:#565c44;
+  line-height:1.5;text-align:left;margin-bottom:10px}
+.rules strong{color:#5c7d34}
+.rules li{margin-left:14px;margin-top:2px}
+
+.mcard{background:rgba(255,255,255,0.62);border:1px solid rgba(120,130,90,0.16);
+  border-radius:14px;padding:11px 12px;margin-bottom:10px;
+  box-shadow:0 1px 2px rgba(90,100,70,0.05)}
+.mhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+.mname{font-size:0.9rem;font-weight:600;color:#4d6428;line-height:1.25}
+.mnum{display:inline-block;font-size:0.6rem;font-weight:400;letter-spacing:1px;color:#98a17e;
+  margin-right:6px;font-variant-numeric:tabular-nums}
+.mreps{font-size:0.64rem;color:#5c7d34;letter-spacing:0.4px;white-space:nowrap;
+  font-variant-numeric:tabular-nums;background:rgba(255,255,255,0.75);
+  border:1px solid rgba(92,125,52,0.25);border-radius:20px;padding:2px 9px}
+.mrow{display:flex;gap:10px;align-items:center}
+.mfig{flex:0 0 45%;min-width:0}
+.mfig svg{width:100%;height:auto;display:block}
+.mhow{flex:1;font-size:0.67rem;color:#565c44;line-height:1.5}
+.mcues{list-style:none;margin-top:6px;border-top:1px solid rgba(120,130,90,0.14);padding-top:6px}
+.mcues li{font-size:0.64rem;color:#6a7052;line-height:1.55;padding-left:13px;position:relative}
+.mcues li::before{content:'—';position:absolute;left:0;color:#a9bd85}
+.msets{display:flex;align-items:center;gap:7px;margin-top:8px}
+.setbox{width:27px;height:27px;border-radius:50%;border:1.5px solid rgba(92,125,52,0.4);
+  background:transparent;color:#8a9470;font-family:inherit;font-size:0.66rem;cursor:pointer;
+  transition:all 0.15s;font-variant-numeric:tabular-nums}
+.setbox.on{background:#7fa04a;border-color:#7fa04a;color:#fff}
+.setlbl{font-size:0.56rem;letter-spacing:1.2px;text-transform:uppercase;color:#a0a78a}
+.wreset{display:block;margin:2px auto 8px;background:rgba(255,255,255,0.78);color:#5c7d34;
+  font-family:inherit;font-size:0.7rem;padding:8px 18px;border:1px solid rgba(92,125,52,0.25);
+  border-radius:50px;cursor:pointer}
+.wreset:active{background:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Strength</h1>
+  <div class="sub">Two-day reference · A / B</div>
+
+  <div class="tabs">
+    <button class="tab" id="tabA">Workout A</button>
+    <button class="tab" id="tabB">Workout B</button>
+  </div>
+
+  <div class="rules">
+    <strong>Every session:</strong>
+    <li>Stop <strong>3–4 reps short of failure</strong> — if the last rep slowed down, the set ended one rep ago.</li>
+    <li>Move submaximal weight with intent. <strong>Never grind.</strong></li>
+    <li>Rest <strong>90 sec–2 min</strong> between sets.</li>
+    <li>Add load only when a session feels genuinely easy — roughly every 2–3 weeks.</li>
+    <li>All pressing <strong>neutral-grip and floor-limited</strong> (AC joint).</li>
+    <li>All pulling <strong>neutral or pronated grip</strong> — supinated loads the healing bicep tendon.</li>
+  </div>
+
+  <div id="listA"></div>
+  <div id="listB"></div>
+</div>
+<script>
+const BUILDV='91330f9faf';
+const WK_A=[
+{n:"Goblet squat",sets:3,reps:"8",cyc:3.0,pin:"LR",
+ how:"Hold one dumbbell vertically against your chest, elbows tucked under it. Sit down and back until your elbows brush the insides of your knees, then drive back up through the whole foot.",
+ cues:["Chest tall — the bell pulls you forward, fight it","Knees track over the toes","Elbows inside the knees at the bottom"],
+ prop:[{db:[{m:['haL','haR'],o:[0,-4,0]},{m:['haL','haR'],o:[0,3.2,0]},2.6]}],
+ A:{p:[0,55.2,0],yaw:22,tw:0,s:[4,4],hf:0,ikL:{w:[0.4,44.2,6.7]},ikR:{w:[4.4,44.2,5.1]},
+    lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
+ B:{p:[0,74,-9],yaw:22,tw:0,s:[26,20],hf:-8,ikL:{w:[2.2,64.3,11.2]},ikR:{w:[6.2,64.3,9.6]},
+    lL:[0,0,0,0],lR:[0,0,0,0],swL:-45,swR:10}},
+
+{n:"Neutral-grip DB floor press",sets:3,reps:"8–10",cyc:2.7,cam:60,
+ how:"Lie on the floor, knees bent, a dumbbell in each hand over the chest, palms facing each other. Lower until the upper arms rest on the floor, pause a beat, press back up.",
+ cues:["Elbows about 45° from your sides","Touch down soft — no bounce","Wrists stacked over the elbows","Ribs down, no big arch"],
+ prop:[{db:[{j:'haL',o:[0,0,-2.4]},{j:'haL',o:[0,0,2.4]},1.7]},
+       {db:[{j:'haR',o:[0,0,-2.4]},{j:'haR',o:[0,0,2.4]},1.7]}],
+ A:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,ikL:{w:[-19.8,78,-9.3]},ikR:{w:[11.6,78,-17.1]},
+    ikFL:[-5.5,93,27],ikFR:[5.5,93,27]},
+ B:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,ikL:{w:[-13,62.4,-19.5]},ikR:{w:[0.5,62.4,-22.5]},
+    ikFL:[-5.5,93,27],ikFR:[5.5,93,27]}},
+
+{n:"Single-arm DB row",sets:3,reps:"10",each:true,cyc:2.5,cam:66,
+ how:"Left hand and knee on the bench, back flat and level. Let the dumbbell hang, then drive the elbow up and back toward your hip. Lower with control.",
+ cues:["Pull the elbow, not the hand","Hips square — no torso twist","Shoulder blade to the back pocket"],
+ prop:[{l:[[-4.5,75.5,-8],[-4.5,75.5,31]]},{l:[[-4.5,75.5,-5],[-4.5,93,-5]]},{l:[[-4.5,75.5,28],[-4.5,93,28]]},
+       {db:[{j:'haR',o:[0,0,-2.4]},{j:'haR',o:[0,0,2.4]},1.7]}],
+ A:{p:[0,55,-8],yaw:14,tw:0,s:[86,84],hf:-8,ikL:{w:[-2.5,75,28.5]},ikR:{w:[13,78,14]},swL:160,
+    ikFL:[-4.5,75.5,14],ikFR:[6.5,93,-11]},
+ B:{p:[0,55,-8],yaw:14,tw:0,s:[86,84],hf:-8,ikL:{w:[-2.5,75,28.5]},ikR:{w:[10.5,60,1]},swAR:80,swL:160,
+    ikFL:[-4.5,75.5,14],ikFR:[6.5,93,-11]}},
+
+{n:"Romanian deadlift",sets:2,reps:"8",cyc:3.2,cam:64,pin:"LR",
+ how:"Soft knees, bar at the thighs. Push your hips straight back and slide the bar down your legs to just below the knee, back flat, then stand tall by squeezing the glutes.",
+ cues:["Hips back, not chest down","Bar shaved against the legs","Shins stay vertical","Stop before the low back rounds"],
+ prop:[{l:[{j:'haL',o:[-6.5,0,0]},{j:'haR',o:[6.5,0,0]}]},
+       {c:[{j:'haL',o:[-2.8,0,0]},6.5],f:1},{c:[{j:'haR',o:[2.8,0,0]},6.5],f:1}],
+ A:{p:[0,55.2,0],yaw:24,tw:0,s:[3,3],hf:0,ikL:{w:[-5.5,55,3.5]},ikR:{w:[6.6,55,-2.1]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[-4.1,60,-9.1],yaw:24,tw:0,s:[62,66],hf:-16,ikL:{w:[-3.1,75.5,5.9]},ikR:{w:[8.7,75.5,0.7]},
+    lL:[0,0,0,0],lR:[0,0,0,0]}},
+
+{n:"Face pull",sets:2,reps:"15",cyc:2.7,cam:45,
+ how:"Cable at face height, one hand on each end of the rope. Pull toward your eyes, letting the elbows travel high and wide, and finish with knuckles pointing at the ceiling.",
+ cues:["Elbows lead, hands follow","Elbows at shoulder height","Pull the ends apart as they reach your face","No lean-back momentum"],
+ prop:[{l:[[6.4,10,37],[6.4,93,37]]},{c:[[6.4,21,36.4],1.5]},
+       {l:[[6.3,21,35.8],'haL']},{l:[[6.3,21,35.8],'haR']}],
+ A:{p:[0,55.4,0],yaw:10,tw:0,s:[2,0],hf:0,ikL:{w:[2.9,22.6,24.2]},ikR:{w:[5.5,22.5,24]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[0,55.4,0],yaw:10,tw:0,s:[-4,-4],hf:2,ikL:{w:[-7,19.5,6]},ikR:{w:[8.8,19.5,3]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]}}
+];
+
+const WK_B=[
+{n:"Trap-bar deadlift",sets:3,reps:"6",cyc:3.2,cam:64,pin:"LR",
+ how:"Stand centered in the bar, hips back until the hamstrings load, shoulders over the handles, back flat. Push the floor away and stand tall — every rep fast and clean.",
+ cues:["Flat back before you pull","Push the floor, don't yank the bar","Hips and shoulders rise together","Finish tall, glutes squeezed"],
+ prop:[{l:[{j:'haL',o:[-5,0,0]},{j:'haR',o:[5,0,0]}]},
+       {c:[{j:'haL',o:[-2.6,0,0]},9.2],f:1},{c:[{j:'haR',o:[2.6,0,0]},9.2],f:1}],
+ A:{p:[0,55.2,9],yaw:20,tw:0,s:[3,3],hf:0,ikL:{w:[-6.8,57,10.5]},ikR:{w:[6.4,57,7.5]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[0,70.5,-9.5],yaw:20,tw:0,s:[63,65],hf:-18,ikL:{w:[-7,83.8,10.8]},ikR:{w:[7,83.8,7.8]},
+    lL:[0,0,0,0],lR:[0,0,0,0]}},
+
+{n:"Split squat",sets:3,reps:"8",each:true,cyc:3.0,cam:72,
+ how:"Long staggered stance, back heel up. Drop the hips straight down until the back knee hovers just off the floor, then press through the whole front foot to stand.",
+ cues:["Front shin near vertical","Back knee hovers — never rests","A slight forward lean is fine","Back foot stays light"],
+ A:{p:[0,60,-2],yaw:20,tw:0,s:[6,6],hf:0,aL:[4,-8,4,-6],aR:[-4,8,-4,6],
+    ikFL:[-5,89.5,-24],ikFR:[5,93,12]},
+ M:{p:[0,65.5,-3.5],yaw:20,tw:0,s:[12,10],hf:-3,aL:[8,-8,8,-6],aR:[-8,8,-8,6],
+    ikFL:[-5,89.5,-24],ikFR:[5,93,12],swL:-30},
+ B:{p:[0,71,-7],yaw:20,tw:0,s:[16,14],hf:-4,aL:[12,-8,12,-6],aR:[-12,8,-12,6],
+    ikFL:[-5,89.5,-24],ikFR:[5,93,12],swL:-30}},
+
+{n:"Chest-supported row",sets:3,reps:"10",cyc:2.5,cam:66,
+ how:"Chest on an incline bench, arms hanging, palms facing each other. Row both dumbbells by driving the elbows back, squeeze between the shoulder blades, then lower slowly.",
+ cues:["Chest glued to the pad","Elbows back, not straight up","One-beat pause at the top","No neck craning"],
+ prop:[{l:[[0,74.5,-8],[5.6,58,15.9]]},{l:[[0,74.5,-8],[0,93,-8]]},{l:[[5.6,58,15.9],[5.6,93,15.9]]},
+       {db:[{j:'haL',o:[0,0,-2.4]},{j:'haL',o:[0,0,2.4]},1.7]},
+       {db:[{j:'haR',o:[0,0,-2.4]},{j:'haR',o:[0,0,2.4]},1.7]}],
+ A:{p:[0,72,-6],yaw:16,tw:0,s:[52,50],hf:-16,ikL:{w:[-7.5,81,13.5]},ikR:{w:[12,81,10]},
+    ikFL:[-5.5,93,-33],ikFR:[5.5,93,-33],swL:-30,swR:-30},
+ B:{p:[0,72,-6],yaw:16,tw:0,s:[52,50],hf:-16,ikL:{w:[-7.5,68,6]},ikR:{w:[12,68,3]},swAL:-100,swAR:80,
+    ikFL:[-5.5,93,-33],ikFR:[5.5,93,-33],swL:-30,swR:-30}},
+
+{n:"Neutral-grip lat pulldown",sets:3,reps:"8",cyc:2.9,cam:55,
+ how:"Sit tall, hands on the neutral handles overhead, lean back a touch. Drive the elbows down and back to bring the handles to your upper chest, then control the way back up.",
+ cues:["Elbows down to your sides","Slight lean — no rocking","Chest up to meet the bar","Control the way up"],
+ prop:[{l:[[-4.8,76.5,-1.4],[4.8,76.5,1.4]]},{l:[[-4,76.5,-1.2],[-4,93,-1.2]]},{l:[[4,76.5,1.2],[4,93,1.2]]},
+       {l:[[-3,4,12],{m:['haL','haR']}]},{l:[{j:'haL',o:[-1.2,0,0]},{j:'haR',o:[1.2,0,0]}]}],
+ A:{p:[0,72.5,0],yaw:-16,tw:0,s:[4,2],hf:-2,ikL:{w:[-4.6,22.7,6]},ikR:{w:[4.2,22.7,3]},
+    lL:[86,-8,4,-6],lR:[86,8,4,6]},
+ B:{p:[0,72.5,0],yaw:-16,tw:0,s:[-14,-10],hf:2,ikL:{w:[-5,56,6]},ikR:{w:[5,56,4]},swAL:-50,swAR:80,
+    lL:[86,-8,4,-6],lR:[86,8,4,6]}},
+
+{n:"Band pull-apart",sets:2,reps:"15",cyc:2.7,cam:40,
+ how:"Arms straight out in front at shoulder height, band taut between your hands. Pull it apart until it touches your chest, arms wide, then return without letting it go slack.",
+ cues:["Shoulder blades slide back first","Arms dead straight","Keep tension both directions","Ribs down"],
+ prop:[{l:['haL','haR']}],
+ A:{p:[0,55.4,0],yaw:35,tw:0,s:[2,0],hf:0,ikL:{w:[9.2,29.4,25.4]},ikR:{w:[20.7,29.4,17.4]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[0,55.4,0],yaw:35,tw:0,s:[0,-2],hf:0,ikL:{w:[-26.5,29.5,19]},ikR:{w:[27,29.5,-18.3]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]}},
+
+{n:"Side plank",sets:2,reps:"30 sec",each:true,cyc:4.2,
+ how:"On your forearm, elbow under the shoulder, feet stacked. Lift the hips until head to heels is one straight line, and hold — keep breathing.",
+ cues:["One straight line, head to heels","Elbow under the shoulder","Push the floor away","Hips high — don't let them sag"],
+ A:{p:[0,85.5,0],yaw:70,tw:0,s:[80,81],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]},
+ B:{p:[0,83.6,0],yaw:70,tw:0,s:[86,88],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]}}
+];
+
+// ================= 3D skeleton =================
+const L={s1:13,s2:13,nh:9,hr:6.2,up:13,fo:13,th:19,sh:19,shW:7.0,hpW:5.0,ft:6.4};
+const R=d=>d*Math.PI/180;
+const rotY=(v,deg)=>{const c=Math.cos(R(deg)),s=Math.sin(R(deg));
+  return [v[0]*c+v[2]*s,v[1],-v[0]*s+v[2]*c];};
+const add=(a,b,k)=>[a[0]+b[0]*k,a[1]+b[1]*k,a[2]+b[2]*k];
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+const len=v=>Math.hypot(v[0],v[1],v[2]);
+const nrm=v=>{const n=len(v)||1;return [v[0]/n,v[1]/n,v[2]/n];};
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+function rotAxis(v,k,th){const c=Math.cos(th),s=Math.sin(th),kv=cross(k,v),
+  kd=k[0]*v[0]+k[1]*v[1]+k[2]*v[2];
+  return [v[0]*c+kv[0]*s+k[0]*kd*(1-c),v[1]*c+kv[1]*s+k[1]*kd*(1-c),v[2]*c+kv[2]*s+k[2]*kd*(1-c)];}
+function dir(flex,abd){const cb=Math.cos(R(abd));
+  return [Math.sin(R(abd)),Math.cos(R(flex))*cb,Math.sin(R(flex))*cb];}
+function spineDir(flex){return [0,-Math.cos(R(flex)),Math.sin(R(flex))];}
+const rotZb=(v,deg)=>{const c=Math.cos(R(deg)),s=Math.sin(R(deg));
+  return [v[0]*c-v[1]*s, v[0]*s+v[1]*c, v[2]];};
+
+// two-link IK: end effector lands on target, bones keep their length
+function ik(S,T,l1,l2,ref,sign,swivel){
+  let d=sub(T,S); let D=len(d); if(D<1e-6){d=[0,1,0];D=1;}
+  const u=nrm(d), Dc=Math.max(Math.abs(l1-l2)+0.01,Math.min(l1+l2-0.01,D));
+  const cf=(l1*l1+Dc*Dc-l2*l2)/(2*l1*Dc), f=Math.acos(Math.max(-1,Math.min(1,cf)));
+  let ax=cross(u,ref); if(len(ax)<1e-6) ax=cross(u,[0,0,1]); ax=nrm(ax);
+  if(swivel) ax=nrm(rotAxis(ax,u,R(swivel)));   // spin the bend plane about the limb axis
+  return [add(S,rotAxis(u,ax,sign*f),l1), add(S,u,Dc)];
+}
+
+function solve(p){
+  const pelvis=p.p, yawP=p.yaw, yawC=p.yaw+p.tw*0.45, yawN=p.yaw+p.tw;
+  const sl=p.sl||0;
+  const chest=add(pelvis,rotY(rotZb(spineDir(p.s[0]),sl),yawP),L.s1);
+  const neck =add(chest, rotY(rotZb(spineDir(p.s[1]),sl),yawC),L.s2);
+  const head =add(neck,  rotY(rotZb(spineDir(p.s[1]+(p.hf||0)),sl),yawN),L.nh);
+  const axS=rotY([1,0,0],yawN), axH=rotY([1,0,0],yawP);
+  const shL=add(neck,axS,-L.shW), shR=add(neck,axS,L.shW);
+  const hpL=add(pelvis,axH,-L.hpW), hpR=add(pelvis,axH,L.hpW);
+  const J={pelvis,chest,neck,head,shL,shR,hpL,hpR};
+  const fk=(o,a,l1,l2,yaw)=>{const j1=add(o,rotY(dir(a[0],a[1]),yaw),l1);
+    return [j1,add(j1,rotY(dir(a[2],a[3]),yaw),l2)];};
+  // legs: IK to a world foot target if given, else forward kinematics
+  const legRef=rotY([0,0,1],yawP);
+  let knL,ftL,knR,ftR;
+  if(p.ikFL){[knL,ftL]=ik(hpL,p.ikFL,L.th,L.sh,legRef,1,p.swL);} else {[knL,ftL]=fk(hpL,p.lL,L.th,L.sh,yawP);}
+  if(p.ikFR){[knR,ftR]=ik(hpR,p.ikFR,L.th,L.sh,legRef,1,p.swR);} else {[knR,ftR]=fk(hpR,p.lR,L.th,L.sh,yawP);}
+  Object.assign(J,{knL,ftL,knR,ftR});
+  const footOf=(kn,ft)=>{
+    const u=nrm(sub(ft,kn));
+    const perp=(r)=>{const d=r[0]*u[0]+r[1]*u[1]+r[2]*u[2];
+      return [r[0]-u[0]*d, r[1]-u[1]*d, r[2]-u[2]*d];};
+    const a=perp(rotY([0,0,1],yawP)), b=perp([0,1,0]);
+    let d=nrm(len(a)>=len(b)?a:b);
+    if(!isFinite(d[0])||len(d)<1e-3) d=rotY([0,0,1],yawP);
+    // a foot may not pass through the floor: if it would, lay it along the floor instead
+    const FL=93;
+    if(ft[1]+d[1]*L.ft > FL){
+      const dy=Math.max(-1,Math.min(1,(FL-ft[1])/L.ft));
+      const h=Math.sqrt(Math.max(0,1-dy*dy));
+      let hsrc=[d[0],0,d[2]];
+      if(len(hsrc)<1e-3) hsrc=[u[0],0,u[2]];
+      if(len(hsrc)<1e-3) hsrc=rotY([0,0,1],yawP);
+      const hz=nrm(hsrc);
+      d=[hz[0]*h, dy, hz[2]*h];
+    }
+    return add(ft,d,L.ft);
+  };
+  J.toeL=footOf(knL,ftL); J.toeR=footOf(knR,ftR);
+  const tgt=s=>!s?null:(s.k?J[s.k]:s.w);
+  const tL=tgt(p.ikL), tR=tgt(p.ikR);
+  let elL,haL,elR,haR;
+  // optional arm swivel (swAL/swAR): spins the elbow's bend plane about the
+  // shoulder->hand axis, same as the leg swivels — undefined means unchanged
+  if(tL){[elL,haL]=ik(shL,tL,L.up,L.fo,axS,-1,p.swAL);} else {[elL,haL]=fk(shL,p.aL,L.up,L.fo,yawN);}
+  if(tR){[elR,haR]=ik(shR,tR,L.up,L.fo,axS, 1,p.swAR);} else {[elR,haR]=fk(shR,p.aR,L.up,L.fo,yawN);}
+  return Object.assign(J,{elL,haL,elR,haR});
+}
+
+// circular-path helper: knees or hips orbit while feet stay pinned
+function orbitPose(base,o,ph){
+  const p=Object.assign({},base);
+  if(o.swivel){ // knees orbit around a fixed hip-to-ankle axis; feet never move
+    p.swL=o.amp*Math.sin(ph); p.swR=o.amp*Math.sin(ph);
+    return p;
+  }
+  if(o.hips){ // pelvis traces a circle, feet stay planted via leg IK
+    p.p=[base.p[0]+o.rx*Math.sin(ph), base.p[1]+(o.ry||0)*Math.cos(ph)*0.3, base.p[2]+o.rz*Math.cos(ph)];
+    return p;
+  }
+  const drop=(o.floorY-base.p[1])/L.th;
+  const mk=side=>{const f1=o.fB+o.fA*Math.sin(ph), a1=side*6+o.aA*Math.cos(ph);
+    let c2=Math.max(-1,Math.min(1,drop-Math.cos(R(f1))));
+    return [f1,a1,-Math.acos(c2)*180/Math.PI,-a1];};
+  p.lL=mk(-1); p.lR=mk(1);
+  return p;
+}
+
+// ---------- projection / pose blending (pure — qa/wk.js slices at the DOM marker) ----------
+const lerp=(a,b,t)=>a+(b-a)*t;
+const lerpA=(a,b,t)=>(a&&b)?a.map((v,i)=>lerp(v,b[i],t)):(a||b||null);
+function lerpT(A,B,t){if(!A&&!B)return null; if(A&&A.k)return A;
+  if(A&&B&&A.w&&B.w)return {w:lerpA(A.w,B.w,t)}; return A||B;}
+function normalise(m){
+  if(m._norm) return; m._norm=true;
+  const KF=[m.A,m.B,m.M].filter(Boolean);
+  if(m.pin){
+    const j=solve(m.A);
+    if(m.pin.indexOf('L')>=0){const t=j.ftL.slice(); KF.forEach(k=>k.ikFL=t.slice());}
+    if(m.pin.indexOf('R')>=0){const t=j.ftR.slice(); KF.forEach(k=>k.ikFR=t.slice());}
+  }
+  [['ikFL','ftL'],['ikFR','ftR']].forEach(([ikf,joint])=>{
+    const n=KF.filter(k=>k[ikf]).length;
+    if(n>0&&n<KF.length) KF.forEach(k=>{ if(!k[ikf]) k[ikf]=solve(k)[joint].slice(); });
+  });
+}
+function blend(A,B,t){const o={swL:lerp(A.swL||0,B.swL||0,t),swR:lerp(A.swR||0,B.swR||0,t),
+  swAL:lerp(A.swAL||0,B.swAL||0,t),swAR:lerp(A.swAR||0,B.swAR||0,t),sl:lerp(A.sl||0,B.sl||0,t),
+  p:lerpA(A.p,B.p,t),yaw:lerp(A.yaw,B.yaw,t),tw:lerp(A.tw,B.tw,t),
+  s:lerpA(A.s,B.s,t),hf:lerp(A.hf||0,B.hf||0,t),aL:lerpA(A.aL,B.aL,t),aR:lerpA(A.aR,B.aR,t),
+  ikL:lerpT(A.ikL,B.ikL,t),ikR:lerpT(A.ikR,B.ikR,t)};
+  if(A.ikFL&&B.ikFL) o.ikFL=lerpA(A.ikFL,B.ikFL,t); else o.lL=lerpA(A.lL,B.lL,t);
+  if(A.ikFR&&B.ikFR) o.ikFR=lerpA(A.ikFR,B.ikFR,t); else o.lR=lerpA(A.lR,B.lR,t);
+  if(!o.lL) o.lL=A.lL||B.lL||[0,0,0,0];
+  if(!o.lR) o.lR=A.lR||B.lR||[0,0,0,0];
+  return o;}
+const easeQ=t=>t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+function poseAt(m,ph){
+  normalise(m);
+  const tri=ph<0.5?ph*2:(1-ph)*2;
+  if(m.M) return tri<0.5 ? blend(m.A,m.M,easeQ(tri*2)) : blend(m.M,m.B,easeQ((tri-0.5)*2));
+  return blend(m.A,m.B,easeQ(tri));}
+let CAM=40; const PITCH=13;
+function project(v){const c=Math.cos(R(CAM)),s=Math.sin(R(CAM));
+  const x=v[0]*c+v[2]*s, z=-v[0]*s+v[2]*c;
+  return {x,y:v[1]*Math.cos(R(PITCH))+z*Math.sin(R(PITCH)),d:z};}
+const LIMBS=[['shL','elL'],['elL','haL'],['shR','elR'],['elR','haR'],
+             ['hpL','knL'],['knL','ftL'],['hpR','knR'],['knR','ftR']];
+const INK='#42591f',LIMB_L='#a8bc85',TORSO='#5c7d34',PROP='#b9a98b';
+// A prop point may be a world [x,y,z], a joint name ('haL'), a joint plus a
+// body-frame offset ({j:'haR',o:[x,y,z]} — o is rotated by the pose yaw), or the
+// midpoint of two joints plus an offset ({m:['haL','haR'],o:[x,y,z]}). Joint-referenced
+// points are re-resolved every frame, so an implement authored against the hands can
+// never drift out of them.
+function resPt(P,j,yaw){
+  if(Array.isArray(P))return P;
+  if(typeof P==='string')return j[P];
+  let b;
+  if(P.m){const a=j[P.m[0]],c=j[P.m[1]];b=[(a[0]+c[0])/2,(a[1]+c[1])/2,(a[2]+c[2])/2];}
+  else b=j[P.j];
+  const o=P.o?rotY(P.o,yaw||0):[0,0,0];
+  return [b[0]+o[0],b[1]+o[1],b[2]+o[2]];
+}
+// resolved prop geometry for one frame; qa/wk.js asserts implement↔hand attachment on this
+function propShapes(m,j,pose){
+  if(!m.prop)return [];
+  return m.prop.map(p=>{
+    if(p.l)return {t:'l',a:resPt(p.l[0],j,pose.yaw),b:resPt(p.l[1],j,pose.yaw),w:p.w||1};
+    if(p.db)return {t:'db',a:resPt(p.db[0],j,pose.yaw),b:resPt(p.db[1],j,pose.yaw),r:p.db[2]};
+    return {t:'c',c:resPt(p.c[0],j,pose.yaw),r:p.c[1],f:p.f};
+  });
+}
+function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
+  for(let i=0;i<=24;i++){const pose=poseAt(m,i/24),jn=solve(pose);
+    const pts=[];
+    for(const k in jn)pts.push([jn[k],0]);
+    propShapes(m,jn,pose).forEach(s=>{
+      if(s.t==='c')pts.push([s.c,s.r]);
+      else if(s.t==='db'){pts.push([s.a,s.r]);pts.push([s.b,s.r]);}
+      else{pts.push([s.a,0]);pts.push([s.b,0]);}
+    });
+    for(const [v,r] of pts){const q=project(v);
+      a=Math.min(a,q.x-r);b=Math.max(b,q.x+r);c=Math.min(c,q.y-r);d=Math.max(d,q.y+r);}}
+  a-=8;b+=8;c-=9;d+=8;
+  const sc=Math.min(100/(b-a),100/(d-c));
+  return {sc,ox:(100-(b-a)*sc)/2-a*sc,oy:(100-(d-c)*sc)/2-c*sc};}
+function figMarkup(m,fit,ph){
+  CAM=m.cam||40;
+  const pose=poseAt(m,ph);
+  const j=solve(pose), P={};
+  for(const k in j){const q=project(j[k]);P[k]={x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy,d:q.d};}
+  const S=v=>{const q=project(v);return {x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy};};
+  const pw=(1.6*fit.sc).toFixed(2);
+  const propMk=propShapes(m,j,pose).map(s=>{
+    if(s.t==='l'){const a=S(s.a),b=S(s.b);
+      return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${(1.6*s.w*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;}
+    if(s.t==='db'){const a=S(s.a),b=S(s.b),r=(s.r*fit.sc).toFixed(1);
+      return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${pw}" stroke-linecap="round"/>`
+        +`<circle cx="${a.x.toFixed(1)}" cy="${a.y.toFixed(1)}" r="${r}" fill="${PROP}"/>`
+        +`<circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${r}" fill="${PROP}"/>`;}
+    const c=S(s.c);
+    return `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${(s.r*fit.sc).toFixed(1)}" fill="${s.f?PROP:'none'}" stroke="${PROP}" stroke-width="${pw}"/>`;
+  }).join('');
+  const side=n=>n.endsWith('L')?LIMB_L:INK;
+  const parts=LIMBS.map(([x,y])=>({t:'l',a:P[x],b:P[y],d:(P[x].d+P[y].d)/2,col:side(y),w:1}));
+  parts.push({t:'l',a:P.ftL,b:P.toeL,d:(P.ftL.d+P.toeL.d)/2,col:LIMB_L,w:0.8});
+  parts.push({t:'l',a:P.ftR,b:P.toeR,d:(P.ftR.d+P.toeR.d)/2,col:INK,w:0.8});
+  parts.push({t:'q',pts:[P.shL,P.shR,P.hpR,P.hpL],d:(P.shL.d+P.shR.d+P.hpL.d+P.hpR.d)/4});
+  {
+    const dx=P.head.x-P.neck.x, dy=P.head.y-P.neck.y, dl=Math.hypot(dx,dy)||1;
+    const r=L.hr*fit.sc*0.8;
+    parts.push({t:'l',a:P.neck,b:{x:P.head.x-dx/dl*r,y:P.head.y-dy/dl*r},d:(P.neck.d+P.head.d)/2,col:INK,w:0.82});
+  }
+  parts.push({t:'h',c:P.head,d:P.head.d+0.02});
+  parts.sort((x,y)=>x.d-y.d);
+  return propMk+parts.map(p=>{
+    if(p.t==='l')return `<line x1="${p.a.x.toFixed(2)}" y1="${p.a.y.toFixed(2)}" x2="${p.b.x.toFixed(2)}" y2="${p.b.y.toFixed(2)}" stroke="${p.col}" stroke-width="${(3.0*(p.w||1)*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;
+    if(p.t==='q')return `<polygon points="${p.pts.map(q=>q.x.toFixed(2)+','+q.y.toFixed(2)).join(' ')}" fill="${TORSO}" stroke="${TORSO}" stroke-width="${(2.6*fit.sc).toFixed(2)}" stroke-linejoin="round"/>`;
+    return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${(L.hr*fit.sc).toFixed(2)}" fill="${INK}"/>`;}).join('');
+}
+function groundOf(m,fit){
+  CAM=m.cam||40;
+  const j=solve(poseAt(m,0));
+  const pts=['ftL','ftR','toeL','toeR','haL','haR','knL','knR'].map(k=>j[k]).filter(p=>p[1]>89.5);
+  let gx=0,gz=0;
+  if(pts.length){pts.forEach(p=>{gx+=p[0];gz+=p[2];});gx/=pts.length;gz/=pts.length;}
+  const g=project([gx,93,gz]);
+  return {cx:g.x*fit.sc+fit.ox,cy:g.y*fit.sc+fit.oy,ry:40*Math.sin(R(PITCH))};
+}
+// ---- DOM ----
+const $=id=>document.getElementById(id);
+const WORKOUTS=[{id:'A',moves:WK_A},{id:'B',moves:WK_B}];
+WORKOUTS.forEach(w=>w.moves.forEach(m=>{m.fit=fitOf(m);}));
+const store={
+  get(k,d){try{if(typeof localStorage==='undefined')return d;const v=localStorage.getItem(k);
+    return v==null?d:JSON.parse(v);}catch(e){return d;}},
+  set(k,v){try{if(typeof localStorage!=='undefined')localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+let tab=store.get('wkTab','A'); if(tab!=='A'&&tab!=='B')tab='A';
+let checks=store.get('wkChk',null); if(!checks||!checks.A||!checks.B)checks={A:{},B:{}};
+const setsTxt=m=>m.sets+' × '+m.reps+(m.each?' <span class="each">each side</span>':'');
+WORKOUTS.forEach(w=>{
+  $('list'+w.id).innerHTML=w.moves.map((m,i)=>
+    `<div class="mcard" id="card-${w.id}-${i}">`
+    +`<div class="mhead"><div class="mname"><span class="mnum">${i+1}</span>${m.n}</div>`
+    +`<div class="mreps">${setsTxt(m)}</div></div>`
+    +`<div class="mrow"><div class="mfig"><svg viewBox="0 0 100 100">`
+    +`<ellipse id="sh-${w.id}-${i}" fill="#dde3c8" opacity="0.55"/><g id="ly-${w.id}-${i}"></g>`
+    +`</svg></div><div class="mhow">${m.how}</div></div>`
+    +`<ul class="mcues">${m.cues.map(c=>`<li>${c}</li>`).join('')}</ul>`
+    +`<div class="msets" id="sets-${w.id}-${i}">${Array.from({length:m.sets},(_,s)=>
+        `<button class="setbox" id="ck-${w.id}-${i}-${s}">${s+1}</button>`).join('')}`
+    +`<span class="setlbl">sets done</span></div></div>`).join('')
+  +`<button class="wreset" id="reset-${w.id}">Reset set checks</button>`;
+});
+function paintChecks(){
+  WORKOUTS.forEach(w=>w.moves.forEach((m,i)=>{
+    for(let s=0;s<m.sets;s++){
+      const on=!!(checks[w.id][i]&&checks[w.id][i][s]);
+      $('ck-'+w.id+'-'+i+'-'+s).classList.toggle('on',on);
+    }}));
+}
+WORKOUTS.forEach(w=>{
+  w.moves.forEach((m,i)=>{
+    const g=groundOf(m,m.fit), sh=$('sh-'+w.id+'-'+i);
+    sh.setAttribute('cx',g.cx.toFixed(2));
+    sh.setAttribute('cy',g.cy.toFixed(2));
+    sh.setAttribute('rx','40');
+    sh.setAttribute('ry',g.ry.toFixed(2));
+    for(let s=0;s<m.sets;s++){
+      $('ck-'+w.id+'-'+i+'-'+s).onclick=()=>{
+        const arr=checks[w.id][i]||(checks[w.id][i]=[]);
+        arr[s]=!arr[s]; store.set('wkChk',checks); paintChecks();
+      };
+    }
+  });
+  $('reset-'+w.id).onclick=()=>{checks[w.id]={};store.set('wkChk',checks);paintChecks();};
+});
+paintChecks();
+function setTab(t){
+  tab=t; store.set('wkTab',t);
+  $('listA').style.display=t==='A'?'':'none';
+  $('listB').style.display=t==='B'?'':'none';
+  $('tabA').classList.toggle('on',t==='A');
+  $('tabB').classList.toggle('on',t==='B');
+}
+$('tabA').onclick=()=>setTab('A');
+$('tabB').onclick=()=>setTab('B');
+setTab(tab);
+// only figures near the viewport animate; without IntersectionObserver (QA fake DOM),
+// every card of the active tab animates
+let obs=null; const vis={};
+if(typeof IntersectionObserver!=='undefined'){
+  obs=new IntersectionObserver(es=>es.forEach(e=>{vis[e.target.id]=e.isIntersecting;}),{rootMargin:'90px'});
+  WORKOUTS.forEach(w=>w.moves.forEach((m,i)=>{
+    const c=$('card-'+w.id+'-'+i); if(c)obs.observe(c);
+  }));
+}
+// paint every card once so nothing is blank before it first scrolls into view
+WORKOUTS.forEach(w=>w.moves.forEach((m,i)=>{
+  $('ly-'+w.id+'-'+i).innerHTML=figMarkup(m,m.fit,0.33);
+}));
+let t0=performance.now(),last=0;
+(function loop(now){
+  if(now-last>30){last=now;
+    WORKOUTS.forEach(w=>{
+      if(w.id!==tab)return;
+      w.moves.forEach((m,i)=>{
+        if(obs&&!vis['card-'+w.id+'-'+i])return;
+        const ph=((now-t0)/1000%m.cyc)/m.cyc;
+        $('ly-'+w.id+'-'+i).innerHTML=figMarkup(m,m.fit,ph);
+      });
+    });
+  }
+  requestAnimationFrame(loop);
+})(performance.now());
+// auto-update: same launch/foreground freshness swap as the timer apps
+async function freshCheck(){try{
+  if(typeof BUILDV==='undefined')return;
+  const r=await fetch(location.href,{cache:'no-store'});
+  const m=(await r.text()).match(/BUILDV='([0-9a-f]+)'/);
+  if(!m||m[1]===BUILDV)return;
+  const n=Date.now(),l=+(sessionStorage.getItem('bvr')||0);
+  if(n-l<15000)return;
+  sessionStorage.setItem('bvr',String(n));
+  try{await fetch(location.href,{cache:'reload'});}catch(e){}
+  location.reload();
+}catch(e){}}
+if(window.addEventListener){
+  window.addEventListener('pageshow',freshCheck);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')freshCheck();});
+}
+</script>
+</body>
+</html>

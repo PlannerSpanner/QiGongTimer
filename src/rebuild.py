@@ -47,9 +47,19 @@ build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',
  'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
  '<strong>Done.</strong> Clamshells opened, hips rocked and rolled. You’re on the ball.',banner=BAN,x2=True)
+# strength.html — scrollable two-workout strength reference. Separate template
+# (wk_head.html + wk_tpl.js): no timer, no audio; same engine, same BUILDV scheme.
+import hashlib, re as _re
+_wk_head = open('wk_head.html', encoding='utf-8').read()
+_wk_js = '\n'.join(open(f, encoding='utf-8').read() for f in
+                   ('d_wka.js', 'd_wkb.js', 'eng2.js', 'wk_tpl.js'))
+_wk = _wk_head.replace('</body>', '<script>\n' + _wk_js + '</script>\n</body>', 1)
+_wv = hashlib.sha1(_wk.encode('utf-8')).hexdigest()[:10]
+_wk = _wk.replace('<script>\n', "<script>\nconst BUILDV='%s';\n" % _wv, 1)
+open(os.path.join(OUT, 'strength.html'), 'w', encoding='utf-8', newline='\n').write(_wk)
+
 # stamp index.html too (hand-edited, so the stamp is refreshed here; deterministic:
 # hash of the content with an emptied stamp, idempotent across rebuilds)
-import hashlib, re as _re
 _ip = os.path.join(OUT, 'index.html')
 _s = open(_ip, encoding='utf-8').read()
 _z = _re.sub(r"BUILDV='[0-9a-f]*'", "BUILDV=''", _s, count=1)

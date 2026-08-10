@@ -104,7 +104,7 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='f21ef313c9';
+const BUILDV='1885a22c3a';
 const MOVES=[
 {n:"Seated breathing",pos:'chair',cue:"Sit tall, breathe wide into the ribs",dur:60,bil:false,cyc:4.0,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
  A:{p:[0,74,0],yaw:-18,tw:0,s:[6,2],hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
@@ -238,8 +238,10 @@ function solve(p){
   const tgt=s=>!s?null:(s.k?J[s.k]:s.w);
   const tL=tgt(p.ikL), tR=tgt(p.ikR);
   let elL,haL,elR,haR;
-  if(tL){[elL,haL]=ik(shL,tL,L.up,L.fo,axS,-1);} else {[elL,haL]=fk(shL,p.aL,L.up,L.fo,yawN);}
-  if(tR){[elR,haR]=ik(shR,tR,L.up,L.fo,axS, 1);} else {[elR,haR]=fk(shR,p.aR,L.up,L.fo,yawN);}
+  // optional arm swivel (swAL/swAR): spins the elbow's bend plane about the
+  // shoulder->hand axis, same as the leg swivels — undefined means unchanged
+  if(tL){[elL,haL]=ik(shL,tL,L.up,L.fo,axS,-1,p.swAL);} else {[elL,haL]=fk(shL,p.aL,L.up,L.fo,yawN);}
+  if(tR){[elR,haR]=ik(shR,tR,L.up,L.fo,axS, 1,p.swAR);} else {[elR,haR]=fk(shR,p.aR,L.up,L.fo,yawN);}
   return Object.assign(J,{elL,haL,elR,haR});
 }
 

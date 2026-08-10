@@ -514,3 +514,149 @@ movement's duration before starting; locked mid-session, unlocked by Reset.
 - **Faults:** "balancing" it with a right side (defeats the purpose); pillowless knees
   letting the pelvis twist.
 - **Figure:** left-side-lying with visible knee pillow prop, fully settled.
+
+---
+
+# Strength — two-workout gym reference (strength.html), no timer, looping demos
+
+Sourced 2026-08-10 from coaching references (StrengthLog, BarBend, Breaking Muscle,
+E3 Rehab, NASM, PureGym et al.). Session-wide constraints baked into the on-page rules
+card: every set stops 3–4 reps short of failure (a slowing rep means the set ended one
+rep ago); submaximal weight moved with intent, never a grind; 90 s–2 min rests; add load
+only when a session is genuinely easy (~every 2–3 weeks); **all pressing neutral-grip and
+floor-limited** (AC joint separation); **all pulling neutral or pronated** — a supinated
+grip loads the distal bicep tendon at the radial tuberosity (in rehab).
+
+## Workout A
+
+### A1. Goblet squat — 3×8, feet pinned
+- **Setup:** one dumbbell held vertically against the chest, both palms under the top
+  head, elbows tucked beneath it. Feet just outside shoulder width.
+- **Execution:** sit down and back; at the bottom the elbows brush the insides of the
+  knees; drive up through the whole foot.
+- **Anchors:** torso stays tall (the anterior load is the counterbalance — pitch ≤ ~25°);
+  depth to thighs at/below parallel (knee angle ~65–70°); knees track over the toes.
+- **Faults:** knees caving in; heels lifting; bell drifting away from the chest.
+- **Figure:** bell (db prop, midpoint of both hands) glued to the chest through the whole
+  rep; knees flare via fitted swivels (swL −45 / swR 10 — NOT sign-mirrored); elbows
+  inside knees at the bottom.
+
+### A2. Neutral-grip DB floor press — 3×8–10, supine
+- **Setup:** lying on the floor, knees bent, feet flat; a dumbbell in each hand over the
+  chest, palms facing each other (handles along the body axis).
+- **Execution:** lower until the upper arms rest on the floor, pause a beat, press up.
+- **Anchors:** upper arms ~45° from the sides; wrists over elbows; the floor ends the
+  range (that is the point — AC-safe); ribs down.
+- **Faults:** bouncing the triceps; elbows flared to 90°; arching into a bridge.
+- **Figure:** whole torso on the floor (pelvis y≥87 QA), elbows landing on the floor at
+  the bottom, both dumbbells riding the hands (per-hand db props).
+
+### A3. Single-arm DB row — 3×10 each side, bench prop
+- **Setup:** left hand and left knee on the bench, right foot on the floor, back flat
+  and level (torso pitch ~85°).
+- **Execution:** dumbbell hangs, then the elbow drives up and back toward the hip.
+- **Anchors:** elbow finishes above the back line (swAR 80); no torso rotation; the
+  hand ends at the lower ribs/hip, not the armpit.
+- **Faults:** twisting open; curling the weight; shrugging.
+- **Figure:** kneeling support leg on the bench (swL 160 folds the knee down), dumbbell
+  in the working hand throughout, elbow visibly rising past the back at the top.
+
+### A4. Romanian deadlift — 2×8, feet pinned, barbell
+- **Setup:** standing, barbell at the thighs, arms hanging, soft knees.
+- **Execution:** hips push straight back, bar slides down the legs to just below the
+  knee, then stand tall by squeezing the glutes.
+- **Anchors:** a hinge, NOT a squat — knee angle stays ≥ ~130° while torso pitch reaches
+  ~64°; hips travel back ~9 units; bar close enough to shave the legs; back flat.
+- **Faults:** bending the knees to get depth (squatting); bar drifting forward; lumbar
+  rounding at the bottom.
+- **Figure:** bar (line + filled plate circles, joint-attached) tracking the hands, hip
+  z-travel visible, shins staying near vertical. QA enforces knees ≥125°, pitch ≥45°,
+  hip travel ≥6.
+
+### A5. Face pull — 2×15, cable prop
+- **Setup:** cable column at face height, one hand on each end of the rope, arms
+  extended toward the anchor.
+- **Execution:** pull toward the eyes; elbows travel high and wide; hands finish beside
+  the face, knuckles up (external rotation).
+- **Anchors:** elbows at/above shoulder height at the finish; rope ends pulled apart as
+  they approach the face; no lean-back.
+- **Faults:** elbows dropping (turns it into a row); pulling to the chin with momentum.
+- **Figure:** vertical cable column + pulley; two rope lines anchored at the pulley and
+  joint-attached to the hands (taut both ends, every frame); elbows above shoulders at
+  the finish.
+
+## Workout B
+
+### B1. Trap-bar deadlift — 3×6, feet pinned
+- **Setup:** standing centered "inside the bar": neutral-grip handles at the sides
+  (which is why the figure holds plates at its sides, not a bar out front).
+- **Execution:** hips back until the hamstrings load, shoulders over the handles, flat
+  back — push the floor away and stand tall.
+- **Anchors:** at the bottom: torso pitch ~64°, knee angle ~100–105° (squattier than an
+  RDL — correct for a trap bar), plates touch the floor (plate r 9.2 ≈ a standard
+  plate at this scale, bottom rim at y≈93), arms dead straight (177°) both frames.
+- **Faults:** yanking with the back; hips shooting up first; grinding reps (the
+  programming is 6 fast clean pulls).
+- **Figure:** filled plate circles + handle line joint-attached to the hands; plates
+  visibly grounded at the bottom, lifted at lockout.
+
+### B2. Split squat — 3×8 each side, both feet pinned
+- **Setup:** long staggered stance (right foot forward), back heel up (back ankle
+  authored at y 89.5 — ball-of-foot read), arms hanging.
+- **Execution:** hips drop straight down (M keyframe carries the path) until the back
+  knee hovers just off the floor; press through the front foot.
+- **Anchors:** front shin near vertical on screen at the bottom; back knee directly
+  under the hip, hover ~3 units (~7 cm) — QA enforces 88 < knee-y ≤ 91.6 (never
+  planted); slight forward lean (~15°) is correct.
+- **Faults:** knee slamming the floor; front knee shooting past the toes; pushing off
+  the back foot (it stays light).
+- **Figure:** back-knee hover gap visible at the bottom; back foot stays put (pinned;
+  drift allowance 2.2 for the heel-pivot); front shin vertical. Back-knee swivel −30.
+
+### B3. Chest-supported row — 3×10, incline bench prop
+- **Setup:** chest down on a ~38° incline pad (prop line + legs), arms hanging with
+  dumbbells, palms facing each other, legs braced back with knees just off the floor.
+- **Execution:** both elbows drive back (not straight up), shoulder blades squeeze,
+  one-beat pause, slow lower.
+- **Anchors:** torso stays glued to the pad (no heave — the pose torso never moves);
+  elbows finish above the torso plane (swAL −100 / swAR 80); dumbbells start just off
+  the floor at full hang.
+- **Faults:** ripping the torso off the pad; shrugging; craning the neck.
+- **Figure:** incline pad under the torso, both dumbbells riding the hands, elbows
+  breaking the torso line at the top.
+
+### B4. Neutral-grip lat pulldown — 3×8, seated, cable prop
+- **Setup:** seated on the bench (prop), neutral handles overhead (short bar between
+  the hands + cable line to the overhead anchor), slight lean back.
+- **Execution:** elbows drive down and back; the handles come to the upper chest;
+  control the way up.
+- **Anchors:** lean-back ~12–15° and fixed (no rocking); elbows tuck to the sides at
+  the bottom (swAL −50 / swAR 80); chest up to meet the bar.
+- **Faults:** 45° lean-back rowing; pulling behind the neck; half-range reps.
+- **Figure:** cable stays anchored overhead and attached to the handle midpoint every
+  frame; handles finish at the upper chest, elbows down.
+
+### B5. Band pull-apart — 2×15, band prop
+- **Setup:** arms straight ahead at shoulder height, band taut between the hands.
+- **Execution:** shoulder blades slide back first, then the arms open to a T until the
+  band touches the chest; return without letting it go slack.
+- **Anchors:** elbows stay straight (~177° at the T — targets sit at 25.7/26 reach);
+  hands stay at shoulder height the whole way; the band is a single line joint-attached
+  to both hands, so tension reads at both ends by construction (QA: ends within 0.5 of
+  each hand at every phase).
+- **Faults:** bending the elbows; dropping the hands; shrugging.
+- **Figure:** the band line visibly stretching ~14 → ~58 units across the pull.
+
+### B6. Side plank — 2×30 sec each side
+- **Setup:** on the right forearm, elbow under the shoulder, feet stacked, top arm
+  resting along the body.
+- **Execution:** a hold; the loop animates the honest failure mode — hips sagging
+  toward the floor and lifting back to the line.
+- **Anchors:** the lift frame is one straight line head-to-heels; the sag frame drops
+  ONLY the pelvis (spine s flattens 86/88 → 80/81 so the supported shoulder stays
+  fixed — the body pivots at the planted forearm, which is how a real sag works);
+  elbow planted at the same floor spot in both frames (swAR 150).
+- **Faults:** elbow drifting ahead of the shoulder; hips piking up instead of lifting
+  to neutral; holding the breath.
+- **Figure:** forearm flat on the floor under the shoulder, feet stacked, visible
+  hip sag ↔ straight line cycle.

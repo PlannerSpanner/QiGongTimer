@@ -57,3 +57,33 @@ function run(app){
 for(const app of ['morning-flow','morning-movement','prenatal-stretch','prenatal-movement']){
   try{run(app);}catch(e){console.log(app,'RUNTIME ERROR:',e.message);process.exitCode=1;}
 }
+// strength.html has no timer/buttons: execute top-level, run frames, click a tab
+// and a set-check, and confirm every movement's layer got real figure markup
+function runWk(){
+  const h=fs.readFileSync(path.join(ROOT,'strength.html'),'utf8');
+  const js=h.split('<script>')[1].split('</script>')[0];
+  const els={};
+  const doc={getElementById(id){return els[id]||(els[id]=makeEl());},
+    createElement(){return makeEl();},querySelector(){return makeEl();},
+    addEventListener(){},visibilityState:'visible'};
+  let frameCb=null; let pnow=0;
+  const env={document:doc,window:{addEventListener(){}},
+    performance:{now:()=>pnow},
+    requestAnimationFrame:cb=>{frameCb=cb;},
+    setTimeout:()=>1,Date,Math,JSON,String,Object,Array,console};
+  const fn=new Function(...Object.keys(env),js);
+  fn(...Object.values(env));
+  for(let i=0;i<6;i++){pnow+=40;if(frameCb){const cb=frameCb;frameCb=null;cb(pnow);}}
+  if(els['tabB']&&els['tabB'].onclick)els['tabB'].onclick();
+  if(els['ck-A-0-0']&&els['ck-A-0-0'].onclick)els['ck-A-0-0'].onclick();
+  for(let i=0;i<6;i++){pnow+=40;if(frameCb){const cb=frameCb;frameCb=null;cb(pnow);}}
+  let drawn=0,empty=[];
+  for(const id of Object.keys(els))if(id.startsWith('ly-')){
+    if(els[id]._html&&els[id]._html.includes('<line')&&els[id]._html.includes('<circle'))drawn++;
+    else empty.push(id);
+  }
+  const ok=drawn===11&&!empty.length;
+  console.log(`strength             top-level ok | figures drawn: ${drawn}/11${empty.length?' EMPTY: '+empty.join(','):''}`);
+  if(!ok)process.exitCode=1;
+}
+try{runWk();}catch(e){console.log('strength','RUNTIME ERROR:',e.message);process.exitCode=1;}
