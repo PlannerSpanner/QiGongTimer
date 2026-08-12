@@ -21,16 +21,36 @@ const MOVES=[
  B:{p:[0,79.6,3],yaw:14,tw:0,s:[-110,-110],hf:8,ikFL:[-5.5,93,22],ikFR:[5.5,93,22],
     aL:[88,-8,88,-6],aR:[88,8,88,6]}},
 
-// A tall -> M tuck (no forward travel) -> B small shift with the tuck held. The rear
-// thigh angle change in B offsets the pelvis travel so the planted knee stays put.
-{n:"Half-kneeling hip flexor stretch",pos:'kneeling',cue:"Tuck the tail first — then a small shift forward",dur:60,bil:true,cyc:4.6,cam:66,tdur:10,pin:"LR",
- setup:"Come to half kneeling. One knee under your hip, other foot forward, shin vertical, hands on your hips.",
- A:{p:[0,74.2,-2],yaw:24,tw:0,s:[6,6],hf:0,ikL:{w:[-7,72,1]},ikR:{w:[7,72,-5]},
-    lL:[-8,-8,-89,-6],ikFR:[6,93,17]},
- M:{p:[0,74.7,-2],yaw:24,tw:0,s:[-6,-6],hf:-6,ikL:{w:[-7,72,1]},ikR:{w:[7,72,-5]},
-    lL:[-8,-8,-89,-6],ikFR:[6,93,17]},
- B:{p:[0,74.7,1.5],yaw:24,tw:0,s:[-6,-6],hf:-6,ikL:{w:[-7,72,4.5]},ikR:{w:[7,72,-1.5]},
-    lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
+// Ported from the Birth Prep clamshell (proven read): bottom leg static, top foot
+// pinned at the heels, and the top knee opens by swiveling about the hip→ankle axis —
+// so the heels stay welded by construction. Pelvis never rolls (p/yaw identical).
+{n:"Side-lying clamshell",pos:'sidelying',cue:"Heels glued together — only the top knee opens",dur:60,bil:true,cyc:2.6,cam:40,tdur:10,
+ setup:"Roll onto your side. Knees bent, heels together, head resting on your lower arm.",
+ A:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:6},
+ B:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:48}},
+
+// Full side plank (strength B's fitted pose): A is the straight head-to-heels line,
+// B drops ONLY the pelvis — spine s flattens so the supported shoulder stays fixed
+// and the body pivots at the planted forearm. Hand target and feet identical in both.
+{n:"Side plank",pos:'sidelying',cue:"One straight line — push the floor away, hips high",dur:40,bil:true,cyc:4.2,cam:40,tdur:10,
+ setup:"Stay on your side. Prop up on your forearm, elbow under your shoulder, feet stacked.",
+ A:{p:[0,83.6,0],yaw:70,tw:0,s:[86,88],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]},
+ B:{p:[0,85.5,0],yaw:70,tw:0,s:[80,81],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]}},
+
+// Contralateral reach on all fours (cat-cow's quadruped base): right arm and LEFT leg
+// extend to horizontal while the planted hand and kneeling leg never move; the mirror
+// at halfway swaps the pair (dead-bug precedent). Spine is one neutral slab in both
+// frames — the exercise is the rib-pelvis lock against gravity, not reach height.
+{n:"Bird dog",pos:'quadruped',cue:"Flat back — reach long, not high",dur:50,bil:true,cyc:4.0,cam:70,tdur:15,
+ setup:"Come to hands and knees. Hands under shoulders, knees under hips, back flat.",
+ A:{p:[0,74.5,0],yaw:20,tw:0,s:[88,88],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    lL:[7,-6,-90,-5],lR:[7,6,-90,5]},
+ B:{p:[0,74.5,0],yaw:20,tw:0,s:[88,88],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[24,73.5,46]},
+    lL:[-88,-8,-88,-6],lR:[7,6,-90,5]}},
 
 // Hinge held constant; elbows drive up and back toward the hips. Neutral grip:
 // dumbbell handles run front-to-back. Arm world targets in both frames (blendable).
@@ -85,25 +105,6 @@ const MOVES=[
     lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
  B:{p:[0,55.4,0],yaw:24,tw:0,s:[1,0],hf:0,ikL:{w:[-8.5,54,0.5]},ikR:{w:[8.5,54,-2]},
     lL:[-2,-6,2,-5],lR:[2,6,-2,5]}},
-
-// Same tuck logic as the half-kneel, standing: glute squeeze + posterior tilt IS the
-// stretch; the knee drifts back only after the tuck. Hand stays pinned to the ankle.
-// folded leg is the LEFT (near side at cam 66) so the heel-to-glute read isn't
-// hidden behind the torso; the halfway mirror shows the other side
-{n:"Standing quad + hip flexor stretch",pos:'standing',cue:"Heel to glute, tuck the tail — don't arch",dur:60,bil:true,cyc:4.4,cam:66,tdur:10,pin:"R",
- setup:"Dumbbells down, stand tall. Grab your ankle behind you, knees together.",
- A:{p:[0,55.4,0],yaw:18,tw:0,s:[4,2],hf:0,ikL:{k:'ftL'},aR:[10,16,8,12],
-    lR:[-2,6,2,5],lL:[-4,-6,-170,-3]},
- B:{p:[0,55.6,-0.5],yaw:18,tw:0,s:[-4,-2],hf:-4,ikL:{k:'ftL'},aR:[10,16,8,12],
-    lR:[-2,6,2,5],lL:[-11,-6,-174,-3]}},
-
-// Segmental wave: cow (belly drops, gaze forward) <-> cat (dome up, chin drops).
-{n:"Cat-cow",pos:'quadruped',cue:"Move one vertebra at a time with the breath",dur:30,bil:false,cyc:3.8,cam:70,tdur:15,
- setup:"Down to hands and knees. Hands under shoulders, knees under hips.",
- A:{p:[0,74.5,0],yaw:20,tw:0,s:[92,64],hf:30,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
-    lL:[7,-6,-90,-5],lR:[7,6,-90,5]},
- B:{p:[0,73.5,0],yaw:20,tw:0,s:[64,95],hf:-22,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
-    lL:[7,-6,-90,-5],lR:[7,6,-90,5]}},
 
 // The exhale reset: ribs settle down and in, pelvis neutral, breath into the low
 // back. br pairs the tone with the figure's breathing sway.

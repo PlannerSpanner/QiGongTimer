@@ -6,7 +6,7 @@ const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..')
 const h=fs.readFileSync(path.join(ROOT,'strength.html'),'utf8');
 const js=h.split('<script>')[1].split('</script>')[0];
 const core=js.slice(0,js.indexOf('// ---- DOM ----'));
-const ctx=new Function(core+'\nreturn {WK_A,WK_B,solve,poseAt,propShapes,fitOf,figMarkup};')();
+const ctx=new Function(core+'\nreturn {WK_A,WK_B,solve,poseAt,propShapes,fitOf,figMarkup,TORSO,PROP};')();
 const {WK_A,WK_B,solve,poseAt,propShapes}=ctx;
 const SEGS=[['pelvis','chest',13],['chest','neck',13],['neck','head',9],
  ['hpL','knL',19],['knL','ftL',19],['hpR','knR',19],['knR','ftR',19],
@@ -98,6 +98,23 @@ const OKCOL=new Set(['#42591f','#a8bc85','#5c7d34','#b9a98b']);
     [...mk.matchAll(/(?:stroke|fill)="(#[0-9a-f]{6})"/g)].forEach(x=>{
       if(!OKCOL.has(x[1]))issues.push(`${m.n}: rogue color ${x[1]}`);});
     if(!mk.includes('<line')||!mk.includes('<circle'))issues.push(`${m.n}: figure not drawn at ph ${ph}`);
+  }
+});
+// held implements paint in front of the torso: every joint-attached shape's markup
+// must land AFTER the torso polygon in the paint order (world props keep the
+// behind-everything prefix). Counted by expected PROP-colored elements per shape.
+[...WK_A,...WK_B].forEach(m=>{
+  if(!m.prop)return;
+  const fit=ctx.fitOf(m);
+  for(const ph of [0,0.25,0.5,0.75]){
+    const pose=ctx.poseAt(m,ph),j=ctx.solve(pose);
+    const nAtt=ctx.propShapes(m,j,pose).filter(s=>s.att)
+      .reduce((a,s)=>a+(s.t==='db'?3:s.t==='c'?(s.f?2:1):1),0);
+    if(!nAtt)continue;
+    const mk=ctx.figMarkup(m,fit,ph);
+    const t=mk.indexOf(`fill="${ctx.TORSO}"`);
+    const after=mk.slice(t).split(ctx.PROP).length-1;
+    if(t<0||after!==nAtt)issues.push(`${m.n}: held implement behind the torso at ph ${ph} (${after}/${nAtt} PROP elements after torso)`);
   }
 });
 const u=[...new Set(issues)];

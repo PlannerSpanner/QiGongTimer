@@ -24,7 +24,7 @@ const OUT=path.join(__dirname,'screenshots');
     const svg=await page.innerHTML('#layer');
     check(`m${i+1} ${name}: figure drawn`,svg.includes('<line')&&svg.includes('<circle'));
   }
-  // transition segment: gap before the row (movement 4) — authored script + static hold
+  // transition segment: gap before movement 4 (side plank) — authored script + static hold
   await page.evaluate(()=>{started=true;go(SEGS.findIndex(s=>s.trans&&s.mi===3));});
   await page.waitForTimeout(400);
   const num=await page.textContent('#mNum');

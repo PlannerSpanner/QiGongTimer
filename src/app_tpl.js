@@ -67,10 +67,11 @@ function resPt(P,j,yaw){
 }
 function propShapes(m,j,pose){
   if(!m.prop)return [];
+  const att=P=>!Array.isArray(P);   // any joint-referenced point = a held/attached implement
   return m.prop.map(p=>{
-    if(p.l)return {t:'l',a:resPt(p.l[0],j,pose.yaw),b:resPt(p.l[1],j,pose.yaw),w:p.w||1};
-    if(p.db)return {t:'db',a:resPt(p.db[0],j,pose.yaw),b:resPt(p.db[1],j,pose.yaw),r:p.db[2]};
-    return {t:'c',c:resPt(p.c[0],j,pose.yaw),r:p.c[1],f:p.f};
+    if(p.l)return {t:'l',a:resPt(p.l[0],j,pose.yaw),b:resPt(p.l[1],j,pose.yaw),w:p.w||1,att:att(p.l[0])||att(p.l[1])};
+    if(p.db)return {t:'db',a:resPt(p.db[0],j,pose.yaw),b:resPt(p.db[1],j,pose.yaw),r:p.db[2],att:att(p.db[0])||att(p.db[1])};
+    return {t:'c',c:resPt(p.c[0],j,pose.yaw),r:p.c[1],f:p.f,att:att(p.c[0])};
   });
 }
 // PROPFIT: include prop extent in the camera fit — needed when implements/furniture
@@ -91,8 +92,12 @@ function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
   a-=8;b+=8;c-=9;d+=8;
   const sc=Math.min(100/(b-a),100/(d-c));
   return {sc,ox:(100-(b-a)*sc)/2-a*sc,oy:(100-(d-c)*sc)/2-c*sc};}
-const layer=document.getElementById('layer'), shadowEl=document.getElementById('shadow');
-function drawFig(m,fit,ph){
+// Pure renderer (no DOM) so QA can assert on the real paint order. World-fixed props
+// (bench, wall, floor lines) paint first, behind everything — legacy behavior. A held
+// (joint-attached) implement instead joins the painter's sort with its own depth,
+// floored just in front of the torso quad: it sits in a hand on the near side of the
+// body, so it may never vanish behind the torso (qa/daily.js hard invariant).
+function figMarkup(m,fit,ph){
   CAM=m.cam||40;
   const pose=poseAt(m,ph);
   const j=solve(pose), P={};
@@ -100,7 +105,8 @@ function drawFig(m,fit,ph){
   // props rebuild every frame: joint-referenced points track the moving figure
   const S=v=>{const q=project(v);return {x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy};};
   const pw=(1.6*fit.sc).toFixed(2);
-  const propMk=propShapes(m,j,pose).map(s=>{
+  const shapes=propShapes(m,j,pose);
+  const mkProp=s=>{
     if(s.t==='l'){const a=S(s.a),b=S(s.b);
       return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${(1.6*s.w*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;}
     if(s.t==='db'){const a=S(s.a),b=S(s.b),r=(s.r*fit.sc).toFixed(1);
@@ -109,7 +115,8 @@ function drawFig(m,fit,ph){
         +`<circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${r}" fill="${PROP}"/>`;}
     const c=S(s.c);
     return `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${(s.r*fit.sc).toFixed(1)}" fill="${s.f?PROP:'none'}" stroke="${PROP}" stroke-width="${pw}"/>`;
-  }).join('');
+  };
+  const propMk=shapes.filter(s=>!s.att).map(mkProp).join('');
   const side=n=>n.endsWith('L')?LIMB_L:INK;
   const parts=LIMBS.map(([x,y])=>({t:'l',a:P[x],b:P[y],d:(P[x].d+P[y].d)/2,col:side(y),w:1}));
   parts.push({t:'l',a:P.ftL,b:P.toeL,d:(P.ftL.d+P.toeL.d)/2,col:LIMB_L,w:0.8});
@@ -144,14 +151,24 @@ function drawFig(m,fit,ph){
     parts.push({t:'l',a:P.neck,b:{x:P.head.x-dx/dl*r,y:P.head.y-dy/dl*r},d:(P.neck.d+P.head.d)/2,col:INK,w:0.82});
   }
   parts.push({t:'h',c:P.head,d:P.head.d+0.02});
+  // held props: keep their own depth when already nearer, else floor to just in
+  // front of the torso quad — nearer limbs still paint over them
+  const qd=(P.shL.d+P.shR.d+P.hpL.d+P.hpR.d)/4;
+  shapes.filter(s=>s.att).forEach(s=>{
+    const own=s.t==='c'?project(s.c).d:Math.max(project(s.a).d,project(s.b).d);
+    parts.push({t:'p',mk:mkProp(s),d:Math.max(own,qd+0.06)});
+  });
   parts.sort((x,y)=>x.d-y.d);
-  layer.innerHTML=propMk+parts.map(p=>{
+  return propMk+parts.map(p=>{
+    if(p.t==='p')return p.mk;
     if(p.t==='l')return `<line x1="${p.a.x.toFixed(2)}" y1="${p.a.y.toFixed(2)}" x2="${p.b.x.toFixed(2)}" y2="${p.b.y.toFixed(2)}" stroke="${p.col}" stroke-width="${(3.0*(p.w||1)*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;
     if(p.t==='q')return `<polygon points="${p.pts.map(q=>q.x.toFixed(2)+','+q.y.toFixed(2)).join(' ')}" fill="${TORSO}" stroke="${TORSO}" stroke-width="${(2.6*fit.sc).toFixed(2)}" stroke-linejoin="round"/>`;
     if(p.t==='bp')return `<polygon points="${p.pts.join(' ')}" fill="${BELLY}"/>`;
     if(p.t==='bc')return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${p.r.toFixed(2)}" fill="${BELLY}"/>`;
     return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${(L.hr*fit.sc).toFixed(2)}" fill="${INK}"/>`;}).join('');
 }
+const layer=document.getElementById('layer'), shadowEl=document.getElementById('shadow');
+function drawFig(m,fit,ph){layer.innerHTML=figMarkup(m,fit,ph);}
 // the floor is a fixed plane: its ellipse is placed once per movement and never moves
 let mirrorOn=false;
 function applyMirror(on){

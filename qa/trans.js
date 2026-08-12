@@ -59,7 +59,7 @@ const {serve}=require('./serve');
   const dsegs=await p3.evaluate(()=>SEGS.map(s=>({dur:s.dur,trans:!!s.trans,mi:s.mi})));
   check('daily-10 has a gap before every movement (10)', dsegs.filter(s=>s.trans).length===10);
   const dur=dsegs.filter(s=>s.trans).map(s=>s.dur).join(',');
-  check(`daily-10 gap lengths authored (${dur})`, dur==='10,10,15,15,15,15,15,10,15,15');
+  check(`daily-10 gap lengths authored (${dur})`, dur==='10,10,10,15,15,15,15,15,15,15');
   check('daily-10 session is 600s', dsegs.reduce((a,s)=>a+s.dur,0)===600);
   await p3.click('#bMain');
   await p3.clock.runFor(45*1000+1500);          // into the first gap (after dead bug)

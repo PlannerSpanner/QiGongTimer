@@ -54,7 +54,9 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     their frame-A spots. `orb` = orbital pose (hip circles). `cam` = per-movement camera yaw
     (default 40). Props use the same system as wk_tpl (ported 2026-08-12): points may be
     world `[xyz]`, joint names, `{j,o}`, `{m:[..],o}`; shapes `{l}`, `{c}` (+`f:1`),
-    `{db:[P,P,r]}` dumbbell — joint-referenced props re-resolve every frame in drawFig.
+    `{db:[P,P,r]}` dumbbell — joint-referenced props re-resolve every frame. Rendering
+    is a pure `figMarkup` (above the `const layer=` slice line, so qa/geo/lint can eval
+    it); `drawFig` is a thin DOM writer over it.
   - Build-time consts (flipped together by build.py's `trall=True`, daily-10 only):
     `TR_ALL` — a GET SET UP gap precedes EVERY movement (dur `m.tdur||10`), voiced
     "Next: <name>. <m.setup>", figure holds the upcoming A keyframe statically, wrap gets
@@ -70,6 +72,10 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     it pops mid-animation.
   - Bilateral moves mirror the figure at the halfway "switch sides" chime (layer transform).
   - Depth sorting = painter's algorithm on projected d (larger d = nearer = drawn later).
+    World-fixed props paint first (behind everything — legacy framing); joint-ATTACHED
+    props (held implements) join the sort floored just in front of the torso quad, so a
+    dumbbell can never vanish behind the body (fixed 2026-08-12; qa/daily.js + qa/wk.js
+    hard invariants, same rule in wk_tpl.js).
 - `data2.js` / `d_flow.js` / `d_stretch.js` / `d_birth.js` / `d_daily.js` — pose data per app.
 - `mm_extra.js` / `x_*.js` — expandable cue text per movement (keys = movement names).
 - `wk_head.html` + `wk_tpl.js` + `d_wka.js`/`d_wkb.js` — the strength reference app.
@@ -87,7 +93,9 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
 
     npm run gauntlet   # smoke + lint + geo + wk (strength invariants) + daily (Daily 10
                        # form invariants: dips parallel stop, dead-bug flat back, bridge
-                       # line, tuck-before-shift, 600s) + Playwright: shots (incl. index),
+                       # line, clamshell heels welded, side-plank line, bird-dog flat
+                       # back, held dumbbells in front of torso, 600s) + Playwright:
+                       # shots (incl. index),
                        # wkshots (strength cards + set checks), dailyshots (every Daily 10
                        # movement + transition), catchup, trans (incl. TR_ALL block),
                        # breath tones, 2x toggle, auto-update freshness

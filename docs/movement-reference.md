@@ -706,20 +706,52 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** lumbar hyperextension for extra height; driving through toes.
 - **Figure:** hips rise to a visible straight diagonal; shoulders never leave floor.
 
-## 3. Half-kneeling hip flexor stretch — 60s, 4.6s cycle, bilateral
-- **Setup:** rear (left in data) knee under hip, shin back along the floor; front
-  foot forward, shin vertical; hands on hips. Adapted from the prenatal kneeling
-  lunge (pin "LR").
-- **Execution:** A tall → M posterior tuck with NO forward travel (s 6→−6, hf −6,
-  pelvis z unchanged) → B small forward shift with the tuck held (z +3.5; rear thigh
-  −8→−18 offsets the travel so the planted knee stays put).
-- **Anchors:** tuck strictly before shift (A→M no travel, M→B travel only); rear
-  knee travel <2.5; front shin vertical. qa/daily.js asserts the ordering.
-- **Faults:** lunging deep instead of tucking; arching the low back (slackens the
-  psoas and turns the stretch into lumbar extension).
-- **Figure:** tall kneel, visible pelvis tuck (torso stacks back), then a small shift.
+## 3. Side-lying clamshell — 60s, 2.6s cycle, bilateral
+- **Setup:** side-lying, hips stacked, knees bent, heels glued together, head on the
+  lower arm. Pose ported from the Birth Prep clamshell (proven read).
+- **Execution:** only the top knee opens — swR 6→48, a swivel about the hip→ankle
+  axis, so the top ankle never leaves the heel spot; small lift, slow lower; switch
+  at the chime.
+- **Anchors:** heels welded (both ankles static — qa/daily.js drift <0.3); pelvis
+  never rolls back or lifts (p/yaw identical in both frames); top knee travels >4 so
+  the shell visibly opens.
+- **Faults:** pelvis rolling back to fake range; heels separating; hip flexing to
+  cheat the lift.
+- **Figure:** stacked side-lying, top knee hinging open like a shell, heels touching
+  at all times.
 
-## 4. Dumbbell bent-over row — 45s, 2.6s cycle
+## 4. Side plank — 40s, 4.2s cycle, bilateral
+- **Setup:** on the right forearm, elbow under the shoulder, feet stacked, top arm
+  along the body — strength Workout B's fitted pose reused verbatim, with A/B
+  swapped so the GET SET UP preview holds the straight line, not the sag.
+- **Execution:** A = one straight head-to-heels line; B drops ONLY the pelvis (spine
+  s flattens 86/88 → 80/81 so the supported shoulder stays fixed — the body pivots
+  at the planted forearm). Daily dose is deliberately submaximal next to strength
+  B's 2×30s.
+- **Anchors:** top-frame neck–pelvis–feet line >168°; the sag drops the pelvis >1.2
+  while the planted hand target never moves (identical in both frames). qa/daily.js
+  asserts all three.
+- **Faults:** elbow drifting ahead of the shoulder; hips piking up instead of
+  lifting to neutral; breath holding.
+- **Figure:** forearm flat under the shoulder, feet stacked, visible line ↔ sag.
+
+## 5. Bird dog — 50s, 4.0s cycle, bilateral (mirror swaps the pair), cam 70
+- **Setup:** quadruped on cat-cow's proven base — hands ik-pinned at [±7,93,25],
+  knees under hips — but the spine is one NEUTRAL slab (s 88/88, both frames).
+- **Execution:** right arm reaches forward to shoulder height while the LEFT leg
+  extends back to hip height (contralateral); return; the halfway mirror swaps the
+  pair (dead-bug precedent). Reach target [24,73.5,46] sits at 25.5 of 26 arm
+  length — a nearly straight arm.
+- **Anchors:** spine constant at every phase (the rib-pelvis lock IS the exercise);
+  at full reach the hand is within 3 of shoulder height and the foot within 3 of
+  hip height — long, not high; the planted hand and kneeling foot never move.
+  qa/daily.js asserts all three.
+- **Faults:** lifting the leg past hip height by arching the low back; hips tipping
+  toward the reaching side; craning the neck up.
+- **Figure:** table position with one arm and the opposite leg extending into a
+  long horizontal line.
+
+## 6. Dumbbell bent-over row — 45s, 2.6s cycle
 - **Setup:** hinge ~45–60° (RDL-pattern base), soft knees, feet planted via explicit
   ikF (NOT pin — pinning from an already-hinged A frame drove the feet through the
   floor); neutral-grip dumbbells (db props joint-attached at both hands, handles
@@ -732,7 +764,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** torso heave; pulling with hands; flared elbows.
 - **Figure:** held hinge, dumbbells rising to the ribs, elbows leading up-back.
 
-## 5. Bench dips (STRICT PARTIAL) — 40s, 3.0s cycle
+## 7. Bench dips (STRICT PARTIAL) — 40s, 3.0s cycle
 - **Setup:** hands fixed on the bench edge beside the hips ([±7.5,74,1], constant in
   both frames), feet out front on the floor, torso upright. Bench drawn as a real
   box (two edges + four legs) — a single edge line collapses side-on.
@@ -743,7 +775,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** sinking below parallel; flaring elbows; shoulders rolling forward.
 - **Figure:** seated dip beside a recognizable bench, shallow controlled range.
 
-## 6. Prone Y-T-W raise — 45s, 4.2s cycle, cam 72
+## 8. Prone Y-T-W raise — 45s, 4.2s cycle, cam 72
 - **Setup:** prone (Y-raise base), forehead down, arms overhead in a Y, thumbs up.
 - **Execution:** A=Y → M=T → B=W, so the cycle sweeps Y→T→W→T→Y. Hands hover at
   y 89.5 (blades-down floats). T swivels swAL 100/swAR −100, W swAL 60/swAR −120
@@ -755,7 +787,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** shrugging; arching the low back to fake height; big lifts.
 - **Figure:** prone, arms sweeping between long overhead Y and bent-elbow W.
 
-## 7. Wall slide — 30s, 3.4s cycle, cam 74
+## 9. Wall slide — 30s, 3.4s cycle, cam 74
 - **Setup:** facing the wall (vertical prop line at z 13), standing close (pelvis
   z 1 — any farther and the elbows can't reach the wall: shoulder-to-wall gap must
   stay under upper-arm length), forearms on the wall, elbows ~shoulder height.
@@ -766,7 +798,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** rib flare/lumbar arch for extra height; forearms peeling off.
 - **Figure:** profile at the wall line, forearms tracking up-down the wall.
 
-## 8. Farmer hold — 35s, 4.6s cycle
+## 10. Farmer hold — 35s, 4.6s cycle
 - **Setup:** standing tall, a dumbbell in each hand at the sides (db props, r 1.9),
   hands [±8.5,54.5] — arm length exactly reaches thigh height, no lower.
 - **Execution:** static hold; barely-visible sway/breath (A≈B) — the fight is grip,
@@ -774,30 +806,6 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Anchors:** ribs stacked over pelvis; shoulders packed; motionless read.
 - **Faults:** shrugging; leaning back (rib flare); side lean.
 - **Figure:** tall stand, dumbbells hanging at the sides.
-
-## 9. Standing quad + hip flexor stretch — 60s, 4.4s cycle, bilateral, cam 66
-- **Setup:** standing on the right leg (pin "R"), LEFT heel folded to the glute —
-  the fold is on the LEFT because that's the NEAR side at cam 66; a right-side fold
-  hides behind the torso (occlusion, not geometry, was the readability bug). Left
-  hand pinned to the ankle via ikL {k:'ftL'} — same key in both frames, so it never
-  blends (safe); the hand lands ~0.8 short at A = gripping the lower shin/ankle.
-- **Execution:** knees together, glute squeeze + posterior tuck (s 4→−4, hf −4),
-  THEN the knee drifts slightly back (thigh −4→−11).
-- **Anchors:** heel within ~5.5 of the glute; tuck before knee drift; torso never
-  arches back. Arm reach is the binding constraint: the foot must stay high
-  (y≈55.5) and close (dz≤5) or the hand visibly misses.
-- **Faults:** arching/leaning back; knee winging out; yanking the heel.
-- **Figure:** profile, folded near-side leg with hand on ankle, visible tuck.
-
-## 10. Cat-cow — 30s, 3.8s cycle, cam 70
-- **Setup:** quadruped (hands-and-knees rocking base): hands ik-pinned at
-  [±7,93,25], knees under hips, shins back.
-- **Execution:** cow (s 92/64, hf 30 — chest sags, gaze forward) ↔ cat (s 64/95,
-  hf −22 — mid-back domes, chin drops). Chest y sweeps ~7 units.
-- **Anchors:** hands never leave their floor spots; shoulder-to-hand distance stays
-  inside arm reach at every phase (25.4–25.6 of 26 — tight by design).
-- **Faults:** hinging only at the low back; craning the neck in cow.
-- **Figure:** kneeling table, spine visibly waving between sag and dome.
 
 ## 11. Posture reset — 30s, 5.0s cycle, br (breath tones)
 - **Setup:** standing tall, feet hip-width, arms easy at the sides.

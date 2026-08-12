@@ -102,7 +102,7 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='1b7b03fb24';
+const BUILDV='d9270d1ff6';
 // Daily 10 — postural maintenance. tdur = length of the GET SET UP gap BEFORE the
 // movement (TR_ALL builds); setup = authored transition script, spoken as
 // "Next: <name>. <setup>". Work 465s + gaps 135s = 600s exactly.
@@ -126,16 +126,36 @@ const MOVES=[
  B:{p:[0,79.6,3],yaw:14,tw:0,s:[-110,-110],hf:8,ikFL:[-5.5,93,22],ikFR:[5.5,93,22],
     aL:[88,-8,88,-6],aR:[88,8,88,6]}},
 
-// A tall -> M tuck (no forward travel) -> B small shift with the tuck held. The rear
-// thigh angle change in B offsets the pelvis travel so the planted knee stays put.
-{n:"Half-kneeling hip flexor stretch",pos:'kneeling',cue:"Tuck the tail first — then a small shift forward",dur:60,bil:true,cyc:4.6,cam:66,tdur:10,pin:"LR",
- setup:"Come to half kneeling. One knee under your hip, other foot forward, shin vertical, hands on your hips.",
- A:{p:[0,74.2,-2],yaw:24,tw:0,s:[6,6],hf:0,ikL:{w:[-7,72,1]},ikR:{w:[7,72,-5]},
-    lL:[-8,-8,-89,-6],ikFR:[6,93,17]},
- M:{p:[0,74.7,-2],yaw:24,tw:0,s:[-6,-6],hf:-6,ikL:{w:[-7,72,1]},ikR:{w:[7,72,-5]},
-    lL:[-8,-8,-89,-6],ikFR:[6,93,17]},
- B:{p:[0,74.7,1.5],yaw:24,tw:0,s:[-6,-6],hf:-6,ikL:{w:[-7,72,4.5]},ikR:{w:[7,72,-1.5]},
-    lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
+// Ported from the Birth Prep clamshell (proven read): bottom leg static, top foot
+// pinned at the heels, and the top knee opens by swiveling about the hip→ankle axis —
+// so the heels stay welded by construction. Pelvis never rolls (p/yaw identical).
+{n:"Side-lying clamshell",pos:'sidelying',cue:"Heels glued together — only the top knee opens",dur:60,bil:true,cyc:2.6,cam:40,tdur:10,
+ setup:"Roll onto your side. Knees bent, heels together, head resting on your lower arm.",
+ A:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:6},
+ B:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
+    lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:48}},
+
+// Full side plank (strength B's fitted pose): A is the straight head-to-heels line,
+// B drops ONLY the pelvis — spine s flattens so the supported shoulder stays fixed
+// and the body pivots at the planted forearm. Hand target and feet identical in both.
+{n:"Side plank",pos:'sidelying',cue:"One straight line — push the floor away, hips high",dur:40,bil:true,cyc:4.2,cam:40,tdur:10,
+ setup:"Stay on your side. Prop up on your forearm, elbow under your shoulder, feet stacked.",
+ A:{p:[0,83.6,0],yaw:70,tw:0,s:[86,88],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]},
+ B:{p:[0,85.5,0],yaw:70,tw:0,s:[80,81],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]}},
+
+// Contralateral reach on all fours (cat-cow's quadruped base): right arm and LEFT leg
+// extend to horizontal while the planted hand and kneeling leg never move; the mirror
+// at halfway swaps the pair (dead-bug precedent). Spine is one neutral slab in both
+// frames — the exercise is the rib-pelvis lock against gravity, not reach height.
+{n:"Bird dog",pos:'quadruped',cue:"Flat back — reach long, not high",dur:50,bil:true,cyc:4.0,cam:70,tdur:15,
+ setup:"Come to hands and knees. Hands under shoulders, knees under hips, back flat.",
+ A:{p:[0,74.5,0],yaw:20,tw:0,s:[88,88],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    lL:[7,-6,-90,-5],lR:[7,6,-90,5]},
+ B:{p:[0,74.5,0],yaw:20,tw:0,s:[88,88],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[24,73.5,46]},
+    lL:[-88,-8,-88,-6],lR:[7,6,-90,5]}},
 
 // Hinge held constant; elbows drive up and back toward the hips. Neutral grip:
 // dumbbell handles run front-to-back. Arm world targets in both frames (blendable).
@@ -190,25 +210,6 @@ const MOVES=[
     lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
  B:{p:[0,55.4,0],yaw:24,tw:0,s:[1,0],hf:0,ikL:{w:[-8.5,54,0.5]},ikR:{w:[8.5,54,-2]},
     lL:[-2,-6,2,-5],lR:[2,6,-2,5]}},
-
-// Same tuck logic as the half-kneel, standing: glute squeeze + posterior tilt IS the
-// stretch; the knee drifts back only after the tuck. Hand stays pinned to the ankle.
-// folded leg is the LEFT (near side at cam 66) so the heel-to-glute read isn't
-// hidden behind the torso; the halfway mirror shows the other side
-{n:"Standing quad + hip flexor stretch",pos:'standing',cue:"Heel to glute, tuck the tail — don't arch",dur:60,bil:true,cyc:4.4,cam:66,tdur:10,pin:"R",
- setup:"Dumbbells down, stand tall. Grab your ankle behind you, knees together.",
- A:{p:[0,55.4,0],yaw:18,tw:0,s:[4,2],hf:0,ikL:{k:'ftL'},aR:[10,16,8,12],
-    lR:[-2,6,2,5],lL:[-4,-6,-170,-3]},
- B:{p:[0,55.6,-0.5],yaw:18,tw:0,s:[-4,-2],hf:-4,ikL:{k:'ftL'},aR:[10,16,8,12],
-    lR:[-2,6,2,5],lL:[-11,-6,-174,-3]}},
-
-// Segmental wave: cow (belly drops, gaze forward) <-> cat (dome up, chin drops).
-{n:"Cat-cow",pos:'quadruped',cue:"Move one vertebra at a time with the breath",dur:30,bil:false,cyc:3.8,cam:70,tdur:15,
- setup:"Down to hands and knees. Hands under shoulders, knees under hips.",
- A:{p:[0,74.5,0],yaw:20,tw:0,s:[92,64],hf:30,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
-    lL:[7,-6,-90,-5],lR:[7,6,-90,5]},
- B:{p:[0,73.5,0],yaw:20,tw:0,s:[64,95],hf:-22,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
-    lL:[7,-6,-90,-5],lR:[7,6,-90,5]}},
 
 // The exhale reset: ribs settle down and in, pelvis neutral, breath into the low
 // back. br pairs the tone with the figure's breathing sway.
@@ -324,14 +325,14 @@ function orbitPose(base,o,ph){
 const EXTRA={
 "Dead bug":["<strong>Form:</strong> Knees over hips, shins level, arms to the ceiling. Exhale, ribs down, low back pressed flat — then lower one arm overhead as the OPPOSITE leg reaches long, only as far as the back stays glued down. <strong>Why:</strong> anterior tilt means the deep abdominals are long and weak — this trains them to hold the pelvis while the limbs move. The exercise is the flat back, not the reach.","dead+bug+exercise+core+anti+extension"],
 "Glute bridge":["<strong>Form:</strong> Feet flat near the fingertips, gentle tuck first, then drive through the HEELS to a straight knee–hip–shoulder line. Squeeze at the top; don't arch higher. <strong>Why:</strong> the glutes are the inhibited half of anterior tilt — if they don't produce hip extension, the lumbar erectors will. The tuck keeps them switched off and the glutes on.","glute+bridge+proper+form+posterior+tilt"],
-"Half-kneeling hip flexor stretch":["<strong>Form:</strong> Front shin vertical. Squeeze the rear glute and tuck the tail FIRST — that alone is most of the stretch — then shift forward an inch or two. Feel it in the front of the rear hip, never the low back. <strong>Why:</strong> the iliopsoas and rectus femoris are the short, tight half of anterior tilt; they attach to the lumbar spine, so an arched back slackens the stretch and defeats it.","half+kneeling+hip+flexor+stretch+posterior+tilt"],
+"Side-lying clamshell":["<strong>Form:</strong> Hips stacked, knees bent, heels glued together. Open the top knee only as far as the pelvis stays perfectly still — small lift, slow lower. If the pelvis rolls back, the range was too big. <strong>Why:</strong> glute medius is the frontal-plane half of the inhibited glute pattern — it levels the pelvis on every single-leg moment, which is every running stride. The control is the exercise, not the height.","side+lying+clamshell+glute+medius+form"],
+"Side plank":["<strong>Form:</strong> Elbow directly under the shoulder, feet stacked. Lift until head to heels is one straight line, push the floor away, and breathe — no sag, no pike. <strong>Why:</strong> the obliques and QL are the lateral wall of the deep core that holds the pelvis level; this is the one trunk plane nothing else in the session loads. Daily dose stays easy — the harder 30s holds live in strength Workout B.","side+plank+form+straight+line"],
 "Dumbbell bent-over row":["<strong>Form:</strong> Hinge to ~45°, back flat, and hold that angle — no heaving. Drive the elbows up and back toward the hips, squeeze the blades, lower slow. <strong>Grip note:</strong> palms facing each other or facing back only — never underhand (distal bicep rehab). Pull with the elbows, not the hands.","dumbbell+bent+over+row+two+arm+form"],
 "Bench dips":["<strong>Form:</strong> Shoulders down and back before you bend. Elbows track straight back, body close to the bench, and STOP when the upper arms are parallel to the floor — treat parallel as the floor of every rep. <strong>Shoulder note:</strong> below parallel drives the humeral head forward into the separated right AC joint. If it pinches even at parallel, shorten the range further.","bench+dip+partial+range+shoulder+safe"],
 "Prone Y-T-W raise":["<strong>Form:</strong> Forehead down, blades drawn down away from the ears before each lift. Y overhead (lower traps) → T out to the sides (mid traps) → W elbows bent (rear delts + external rotators), thumbs up throughout. Tiny floats — the squeeze is the work, not the height. Zero load on the AC joint.","prone+y+t+w+raise+lower+trap"],
 "Wall slide":["<strong>Form:</strong> Ribs down, forearms glued to the wall, press lightly IN as you slide up — that press fires the serratus. Go only as high as the ribs stay down; an arched back is borrowed range, not shoulder motion.","wall+slide+serratus+scapular+upward+rotation"],
 "Farmer hold":["<strong>Form:</strong> Stand tall and motionless: ribs stacked over pelvis, shoulders packed down and back, crush grip, breathe behind the brace. The set ends when posture — not grip — starts to lose.","farmer+carry+static+hold+posture"],
-"Standing quad + hip flexor stretch":["<strong>Form:</strong> Knees together, squeeze the glute and tuck the pelvis — belt buckle to ribs — THEN let the knee drift slightly back. Never arch or lean back: that recreates the exact tilt pattern being corrected. <strong>Why:</strong> the tuck converts a plain quad stretch into a rectus femoris stretch, the two-joint muscle that tips the pelvis forward.","standing+quad+hip+flexor+stretch+pelvic+tilt"],
-"Cat-cow":["<strong>Form:</strong> Inhale into cow — tail tips up, belly drops, chest lifts, one vertebra at a time. Exhale into cat — tuck, round, push the floor away to dome the stiff mid-back. Let the wave travel; don't hinge it all at the low back.","cat+cow+segmental+spinal+mobility"],
+"Bird dog":["<strong>Form:</strong> Hands under shoulders, knees under hips. Brace first, then reach one arm forward and the OPPOSITE leg back to horizontal — long, not high; pause a beat, return without the hips tipping. <strong>Why:</strong> this is the dead bug turned over: the same rib–pelvis lock, now holding against gravity while the glute max produces hip extension — the exact long-and-inhibited pair in anterior tilt, trained as one pattern.","bird+dog+exercise+neutral+spine+form"],
 "Posture reset":["<strong>Form:</strong> One full audible exhale — feel the ribs come down and in and the pelvis settle neutral. Keep that stack and breathe quietly into the lower ribs and LOW BACK, 360°, exhale longer than the inhale. <strong>Why:</strong> this is the tilt correction in one drill — un-flared ribs over a neutral pelvis is the position everything else trained.","standing+posture+reset+rib+pelvis+stack+breathing"]};
 MOVES.forEach(m=>{m.long=EXTRA[m.n][0]; m.q=EXTRA[m.n][1];});
 
@@ -404,10 +405,11 @@ function resPt(P,j,yaw){
 }
 function propShapes(m,j,pose){
   if(!m.prop)return [];
+  const att=P=>!Array.isArray(P);   // any joint-referenced point = a held/attached implement
   return m.prop.map(p=>{
-    if(p.l)return {t:'l',a:resPt(p.l[0],j,pose.yaw),b:resPt(p.l[1],j,pose.yaw),w:p.w||1};
-    if(p.db)return {t:'db',a:resPt(p.db[0],j,pose.yaw),b:resPt(p.db[1],j,pose.yaw),r:p.db[2]};
-    return {t:'c',c:resPt(p.c[0],j,pose.yaw),r:p.c[1],f:p.f};
+    if(p.l)return {t:'l',a:resPt(p.l[0],j,pose.yaw),b:resPt(p.l[1],j,pose.yaw),w:p.w||1,att:att(p.l[0])||att(p.l[1])};
+    if(p.db)return {t:'db',a:resPt(p.db[0],j,pose.yaw),b:resPt(p.db[1],j,pose.yaw),r:p.db[2],att:att(p.db[0])||att(p.db[1])};
+    return {t:'c',c:resPt(p.c[0],j,pose.yaw),r:p.c[1],f:p.f,att:att(p.c[0])};
   });
 }
 // PROPFIT: include prop extent in the camera fit — needed when implements/furniture
@@ -428,8 +430,12 @@ function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
   a-=8;b+=8;c-=9;d+=8;
   const sc=Math.min(100/(b-a),100/(d-c));
   return {sc,ox:(100-(b-a)*sc)/2-a*sc,oy:(100-(d-c)*sc)/2-c*sc};}
-const layer=document.getElementById('layer'), shadowEl=document.getElementById('shadow');
-function drawFig(m,fit,ph){
+// Pure renderer (no DOM) so QA can assert on the real paint order. World-fixed props
+// (bench, wall, floor lines) paint first, behind everything — legacy behavior. A held
+// (joint-attached) implement instead joins the painter's sort with its own depth,
+// floored just in front of the torso quad: it sits in a hand on the near side of the
+// body, so it may never vanish behind the torso (qa/daily.js hard invariant).
+function figMarkup(m,fit,ph){
   CAM=m.cam||40;
   const pose=poseAt(m,ph);
   const j=solve(pose), P={};
@@ -437,7 +443,8 @@ function drawFig(m,fit,ph){
   // props rebuild every frame: joint-referenced points track the moving figure
   const S=v=>{const q=project(v);return {x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy};};
   const pw=(1.6*fit.sc).toFixed(2);
-  const propMk=propShapes(m,j,pose).map(s=>{
+  const shapes=propShapes(m,j,pose);
+  const mkProp=s=>{
     if(s.t==='l'){const a=S(s.a),b=S(s.b);
       return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${(1.6*s.w*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;}
     if(s.t==='db'){const a=S(s.a),b=S(s.b),r=(s.r*fit.sc).toFixed(1);
@@ -446,7 +453,8 @@ function drawFig(m,fit,ph){
         +`<circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${r}" fill="${PROP}"/>`;}
     const c=S(s.c);
     return `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${(s.r*fit.sc).toFixed(1)}" fill="${s.f?PROP:'none'}" stroke="${PROP}" stroke-width="${pw}"/>`;
-  }).join('');
+  };
+  const propMk=shapes.filter(s=>!s.att).map(mkProp).join('');
   const side=n=>n.endsWith('L')?LIMB_L:INK;
   const parts=LIMBS.map(([x,y])=>({t:'l',a:P[x],b:P[y],d:(P[x].d+P[y].d)/2,col:side(y),w:1}));
   parts.push({t:'l',a:P.ftL,b:P.toeL,d:(P.ftL.d+P.toeL.d)/2,col:LIMB_L,w:0.8});
@@ -481,14 +489,24 @@ function drawFig(m,fit,ph){
     parts.push({t:'l',a:P.neck,b:{x:P.head.x-dx/dl*r,y:P.head.y-dy/dl*r},d:(P.neck.d+P.head.d)/2,col:INK,w:0.82});
   }
   parts.push({t:'h',c:P.head,d:P.head.d+0.02});
+  // held props: keep their own depth when already nearer, else floor to just in
+  // front of the torso quad — nearer limbs still paint over them
+  const qd=(P.shL.d+P.shR.d+P.hpL.d+P.hpR.d)/4;
+  shapes.filter(s=>s.att).forEach(s=>{
+    const own=s.t==='c'?project(s.c).d:Math.max(project(s.a).d,project(s.b).d);
+    parts.push({t:'p',mk:mkProp(s),d:Math.max(own,qd+0.06)});
+  });
   parts.sort((x,y)=>x.d-y.d);
-  layer.innerHTML=propMk+parts.map(p=>{
+  return propMk+parts.map(p=>{
+    if(p.t==='p')return p.mk;
     if(p.t==='l')return `<line x1="${p.a.x.toFixed(2)}" y1="${p.a.y.toFixed(2)}" x2="${p.b.x.toFixed(2)}" y2="${p.b.y.toFixed(2)}" stroke="${p.col}" stroke-width="${(3.0*(p.w||1)*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;
     if(p.t==='q')return `<polygon points="${p.pts.map(q=>q.x.toFixed(2)+','+q.y.toFixed(2)).join(' ')}" fill="${TORSO}" stroke="${TORSO}" stroke-width="${(2.6*fit.sc).toFixed(2)}" stroke-linejoin="round"/>`;
     if(p.t==='bp')return `<polygon points="${p.pts.join(' ')}" fill="${BELLY}"/>`;
     if(p.t==='bc')return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${p.r.toFixed(2)}" fill="${BELLY}"/>`;
     return `<circle cx="${p.c.x.toFixed(2)}" cy="${p.c.y.toFixed(2)}" r="${(L.hr*fit.sc).toFixed(2)}" fill="${INK}"/>`;}).join('');
 }
+const layer=document.getElementById('layer'), shadowEl=document.getElementById('shadow');
+function drawFig(m,fit,ph){layer.innerHTML=figMarkup(m,fit,ph);}
 // the floor is a fixed plane: its ellipse is placed once per movement and never moves
 let mirrorOn=false;
 function applyMirror(on){

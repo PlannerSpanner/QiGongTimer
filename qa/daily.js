@@ -6,7 +6,8 @@ const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..')
 const h=fs.readFileSync(path.join(ROOT,'daily-10.html'),'utf8');
 const js=h.split('<script>')[1].split('</script>')[0];
 const core=js.slice(0,js.indexOf('const layer=document.getElementById'));
-const {MOVES,solve,poseAt}=new Function(core+'\nreturn {MOVES,solve,poseAt};')();
+const {MOVES,solve,poseAt,figMarkup,fitOf,TORSO,PROP}=
+  new Function(core+'\nreturn {MOVES,solve,poseAt,figMarkup,fitOf,TORSO,PROP};')();
 let fail=false;
 const check=(name,ok)=>{console.log(`${name.padEnd(58)} ${ok?'ok':'FAIL'}`);if(!ok)fail=true;};
 const get=n=>MOVES.find(m=>m.n===n);
@@ -14,6 +15,7 @@ const PH=[...Array(25)].map((_,i)=>i/24);
 const ang=(a,b,c)=>{const u=a.map((v,i)=>v-b[i]),w=c.map((v,i)=>v-b[i]);
   const d=(u[0]*w[0]+u[1]*w[1]+u[2]*w[2])/((Math.hypot(...u)*Math.hypot(...w))||1);
   return Math.acos(Math.max(-1,Math.min(1,d)))*180/Math.PI;};
+const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]);
 
 // dips: at EVERY animation phase the shoulder stays at or above the elbow (y-down:
 // shoulder y <= elbow y). Parallel is the hard floor of the rep — AC joint rule.
@@ -42,20 +44,56 @@ const ang=(a,b,c)=>{const u=a.map((v,i)=>v-b[i]),w=c.map((v,i)=>v-b[i]);
  const a=solve(poseAt(m,0));
  check('bridge shoulders stay down',Math.abs(a.neck[1]-j.neck[1])<2.5);}
 
-// half-kneel: tuck (M) happens with NO forward travel; the shift is only M->B, and
-// the planted rear knee never slides
-{const m=get('Half-kneeling hip flexor stretch');
- const pA=poseAt(m,0),pM=poseAt(m,0.25),pB=poseAt(m,0.5);
- check('half-kneel tuck first (M has no forward travel)',Math.abs(pM.p[2]-pA.p[2])<0.6);
- check('half-kneel tuck reads (spine change at M)',pA.s[0]-pM.s[0]>8);
- check('half-kneel then shifts (B forward of A)',pB.p[2]-pA.p[2]>2.5);
- const kA=solve(pA).knL,kB=solve(pB).knL;
- check('half-kneel rear knee stays put',Math.hypot(kA[0]-kB[0],kA[1]-kB[1],kA[2]-kB[2])<2.5);}
+// clamshell: heels stay welded (both ankles static — the top knee opens by hip
+// swivel only) and the pelvis never rolls back or lifts
+{const m=get('Side-lying clamshell');let ftMax=0,knMax=0,still=true;
+ const j0=solve(poseAt(m,0));
+ for(const ph of PH){const p=poseAt(m,ph),j=solve(p);
+   if(Math.abs(p.yaw-m.A.yaw)>0.01||Math.abs(p.p[1]-m.A.p[1])>0.01)still=false;
+   ftMax=Math.max(ftMax,dist(j.ftR,j0.ftR),dist(j.ftL,j0.ftL));
+   knMax=Math.max(knMax,dist(j.knR,j0.knR));}
+ check(`clamshell heels welded (foot drift ${ftMax.toFixed(2)})`,ftMax<0.3);
+ check(`clamshell top knee opens (travel ${knMax.toFixed(1)})`,knMax>4);
+ check('clamshell pelvis never rolls (yaw/height constant)',still);}
+
+// side plank: the top frame is one straight line head-to-heels; the sag drops ONLY
+// the pelvis — the planted forearm (hand) never moves
+{const m=get('Side plank');
+ const top=solve(poseAt(m,0)),sag=solve(poseAt(m,0.5));
+ const fm=[(top.ftL[0]+top.ftR[0])/2,(top.ftL[1]+top.ftR[1])/2,(top.ftL[2]+top.ftR[2])/2];
+ const line=ang(top.neck,top.pelvis,fm);
+ check(`side plank top line ${line.toFixed(0)}° (head to heels)`,line>168);
+ check(`side plank sag drops the pelvis (${(sag.pelvis[1]-top.pelvis[1]).toFixed(1)})`,sag.pelvis[1]-top.pelvis[1]>1.2);
+ check('side plank planted forearm never moves',dist(top.haR,sag.haR)<0.3);}
+
+// bird dog: spine one neutral slab at every phase (the rib-pelvis lock IS the
+// exercise); at full reach the hand and foot are near-level with shoulder and hip
+// (long, not high); the planted hand and kneeling foot never move
+{const m=get('Bird dog');let flat=true;
+ for(const ph of PH){const p=poseAt(m,ph);
+   if(Math.abs(p.s[0]-m.A.s[0])>0.01||Math.abs(p.s[1]-m.A.s[1])>0.01)flat=false;}
+ check('bird dog flat back (spine constant)',flat);
+ const t=solve(poseAt(m,0.5)),b=solve(poseAt(m,0));
+ check(`bird dog reach level (hand dy ${(t.haR[1]-t.shR[1]).toFixed(1)}, foot dy ${(t.ftL[1]-t.hpL[1]).toFixed(1)})`,
+   Math.abs(t.haR[1]-t.shR[1])<3&&Math.abs(t.ftL[1]-t.hpL[1])<3);
+ check('bird dog planted hand and kneeling foot stay put',
+   dist(t.haL,b.haL)<0.3&&dist(t.ftR,b.ftR)<0.3);}
 
 // row: hinge angle held — chest height constant through the pull
 {const m=get('Dumbbell bent-over row');let hv=0;const c0=solve(poseAt(m,0)).chest[1];
  for(const ph of PH)hv=Math.max(hv,Math.abs(solve(poseAt(m,ph)).chest[1]-c0));
  check(`row torso never heaves (chest sway ${hv.toFixed(1)})`,hv<1.5);}
+
+// held dumbbells paint IN FRONT of the torso at every phase. Both movements' props
+// are all joint-attached, so in the emitted markup (paint order) the first
+// PROP-colored element must come after the torso polygon — behind-the-body dumbbells
+// were a real bug (fixed 2026-08-12); this is the hard regression guard.
+for(const name of ['Dumbbell bent-over row','Farmer hold']){
+ const m=get(name),fit=fitOf(m);let worst=1;
+ for(const ph of PH){const mk=figMarkup(m,fit,ph);
+   const t=mk.indexOf(`fill="${TORSO}"`),p=mk.indexOf(PROP);
+   if(t<0||p<0||p<t)worst=0;}
+ check(`${name.toLowerCase()}: dumbbells never behind the torso`,worst===1);}
 
 // timing: work + authored gaps == 600s exactly; every movement past the first has
 // an authored setup script

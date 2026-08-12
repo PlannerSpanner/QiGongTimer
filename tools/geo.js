@@ -19,7 +19,7 @@ const MOVING=new Set([
  'Rotations with shoulder slaps','Dynamic lateral reaches','Chest opener swings',
  'Bent rotation sweeps','Hip hinges','Folded cat-cows',
  'Seated cat-cow','Seated side reach',
- 'Dead bug','Standing quad + hip flexor stretch']);  // daily-10: extending leg / heel-to-glute
+ 'Dead bug','Bird dog']);  // daily-10: extending leg / contralateral reach
 const SEGS=[['pelvis','chest',13],['chest','neck',13],['neck','head',9],
  ['hpL','knL',19],['knL','ftL',19],['hpR','knR',19],['knR','ftR',19],
  ['shL','elL',13],['elL','haL',13],['shR','elR',13],['elR','haR',13],
