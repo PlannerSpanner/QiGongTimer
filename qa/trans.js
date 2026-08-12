@@ -51,6 +51,28 @@ const {serve}=require('./serve');
     const n=await p.evaluate(()=>SEGS.filter(s=>s.trans).length);await p.close();return n;};
   check('prenatal-stretch has 6 gaps', await gapCount('prenatal-stretch')===6);
   check('prenatal-movement has 10 gaps', await gapCount('prenatal-movement')===10);
+  // daily-10 (TR_ALL): authored gaps before EVERY movement, per-movement lengths,
+  // "Next:" voice script shown as the instruction, distinct state-trans styling
+  const p3=await browser.newPage();
+  await p3.clock.install();
+  await p3.goto(`http://127.0.0.1:${srv.port}/daily-10.html`);
+  const dsegs=await p3.evaluate(()=>SEGS.map(s=>({dur:s.dur,trans:!!s.trans,mi:s.mi})));
+  check('daily-10 has a gap before every movement (10)', dsegs.filter(s=>s.trans).length===10);
+  const dur=dsegs.filter(s=>s.trans).map(s=>s.dur).join(',');
+  check(`daily-10 gap lengths authored (${dur})`, dur==='10,10,15,15,15,15,15,10,15,15');
+  check('daily-10 session is 600s', dsegs.reduce((a,s)=>a+s.dur,0)===600);
+  await p3.click('#bMain');
+  await p3.clock.runFor(45*1000+1500);          // into the first gap (after dead bug)
+  check('daily-10 gap header', await p3.textContent('#mNum')==='GET SET UP');
+  check('daily-10 gap previews next movement', await p3.textContent('#mName')==='Glute bridge');
+  const dtgt=await p3.textContent('#mTarget');
+  check('daily-10 gap shows the authored setup script', dtgt===await p3.evaluate(()=>MOVES[1].setup));
+  check('daily-10 gap styling (state-trans on wrap)',
+    ((await p3.getAttribute('.wrap','class'))||'').includes('state-trans'));
+  await p3.clock.runFor(10000);
+  check('daily-10 gap resolves into MOVEMENT 2', /MOVEMENT 2/.test(await p3.textContent('#mNum')));
+  check('daily-10 styling clears in work segment',
+    !((await p3.getAttribute('.wrap','class'))||'').includes('state-trans'));
   await browser.close(); srv.close();
   console.log(fail?'TRANS FAIL':'TRANS PASS');
   process.exit(fail?1:0);

@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
-const APPS={'morning-flow':'d_flow.js','morning-movement':null,'prenatal-stretch':'d_stretch.js','prenatal-movement':'d_birth.js'};
+const APPS={'morning-flow':'d_flow.js','morning-movement':null,'prenatal-stretch':'d_stretch.js','prenatal-movement':'d_birth.js','daily-10':'d_daily.js'};
 // movements where a foot is SUPPOSED to travel
 const MOVING={
  'Reverse lunges':'steps back','Cross-body knee drives':'knee lifts','Pedaling down dog':'heels alternate',
@@ -16,7 +16,8 @@ const MOVING={
  'Cobra press-ups':'chest lifts','Plank hold':'micro-adjusts','Punching rotations':'stance shifts',
  'Rotations with shoulder slaps':'torso rotates','Dynamic lateral reaches':'leans','Chest opener swings':'arms swing',
  'Bent rotation sweeps':'torso rotates','Hip hinges':'hips travel back','Folded cat-cows':'spine moves',
- 'Seated cat-cow':'spine moves','Seated side reach':'leans'};
+ 'Seated cat-cow':'spine moves','Seated side reach':'leans',
+ 'Dead bug':'opposite leg extends','Standing quad + hip flexor stretch':'heel drawn to glute'};
 for(const [app,df] of Object.entries(APPS)){
   const h=fs.readFileSync(path.join(ROOT,`${app}.html`),'utf8');
   const js=h.split('<script>')[1].split('</script>')[0];

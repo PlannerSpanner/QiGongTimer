@@ -7,6 +7,8 @@ Built for iPhone Safari (wake lock + Add to Home Screen require Safari, not Chro
 
 Apps: `morning-flow` (qi gong warmup), `morning-movement` (mobility/strength),
 `prenatal-stretch` (Prenatal Stretch, 10 moves), `prenatal-movement` (Birth Prep, 11 moves),
+`daily-10` (Daily 10 — 11-move postural maintenance timer, violet theme, dumbbells/bench/
+wall props, authored per-movement transitions via TR_ALL, exactly 600s),
 `strength` (two-workout gym REFERENCE — no timer/audio; scrollable cards, tabs A/B +
 set checks persisted in localStorage, own template `wk_head.html`+`wk_tpl.js`, green theme).
 Also `hip-activation.html` — older layout, no figures, timer already timestamp-patched. Leave unless asked.
@@ -35,11 +37,10 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     screen-space read depends on both abd and the movement's yaw — at some yaws they
     cancel exactly. Always verify crossing movements at their actual yaw rather than
     assuming abd alone puts the limb across.
-  - Arms have optional IK swivels `swAL`/`swAR` (added for strength; same semantics as
-    leg swL/swR, undefined = legacy behavior). Only wk_tpl.js blends them — add them to
-    app_tpl.js's blend() before using in a timer app. Like the legs, the cones are
-    asymmetric: fit each side numerically (row uses swAR 80 with swAL untouched;
-    chest row needed −100/+80).
+  - Arms have optional IK swivels `swAL`/`swAR` (same semantics as leg swL/swR,
+    undefined = legacy behavior). Both wk_tpl.js AND app_tpl.js blend them now. Like the
+    legs, the cones are asymmetric: fit each side numerically (row uses swAR 80 with
+    swAL untouched; chest row −100/+80; daily-10 wall slide −85/+100, dips ±150).
 - `app_tpl.js` — shared app body: renderer, timers, audio. Key facts:
   - Timer is wall-clock anchored (`segEnd`); survives backgrounding, catches up on return.
   - The timer walks `SEGS`, derived from MOVES at load: an 8s `{trans:true}` "GET SET UP"
@@ -48,10 +49,18 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     (`POS_CUE` map; per-movement `posCue` overrides). Gaps are never bilateral, never 2×-
     multiplied (`sdur`), and invisible to dots/counts/prev-next (`segOfMove`). qa/trans.js
     guards all of this.
-  - Movements: `{n, pos, posCue?, cue, dur, bil, cyc, pin, belly, cam, prop, orb, A, B, M?}`.
-    `M` = optional mid-keyframe (path A→M→B→M→A). `pin:'LR'` nails feet at their frame-A spots.
-    `orb` = orbital pose (hip circles). `cam` = per-movement camera yaw (default 40).
-    `prop` = array of `{l:[[xyz],[xyz]]}` lines / `{c:[[xyz],r]}` circles, drawn behind the figure.
+  - Movements: `{n, pos, posCue?, setup?, tdur?, cue, dur, bil, cyc, pin, belly, cam, prop,
+    orb, A, B, M?}`. `M` = optional mid-keyframe (path A→M→B→M→A). `pin:'LR'` nails feet at
+    their frame-A spots. `orb` = orbital pose (hip circles). `cam` = per-movement camera yaw
+    (default 40). Props use the same system as wk_tpl (ported 2026-08-12): points may be
+    world `[xyz]`, joint names, `{j,o}`, `{m:[..],o}`; shapes `{l}`, `{c}` (+`f:1`),
+    `{db:[P,P,r]}` dumbbell — joint-referenced props re-resolve every frame in drawFig.
+  - Build-time consts (flipped together by build.py's `trall=True`, daily-10 only):
+    `TR_ALL` — a GET SET UP gap precedes EVERY movement (dur `m.tdur||10`), voiced
+    "Next: <name>. <m.setup>", figure holds the upcoming A keyframe statically, wrap gets
+    `.state-trans` (tan countdown, dimmed figure), gaps end with a 520 Hz 3-2-1 triple tick
+    (work keeps the single 380 Hz tick at 3s). `PROPFIT` — fitOf includes prop extent in
+    the camera frame (off for legacy apps so their framing never shifts).
   - Colors are STATIC identity roles: INK (right limbs, head, neck), LIMB_L (left limbs, lighter),
     TORSO (quad + belly). Hues are themed per app by build.py's swap tables (blue flow, rose
     prenatal-stretch, amber elsewhere) but roles never change within an app. No depth-based
@@ -61,7 +70,7 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     it pops mid-animation.
   - Bilateral moves mirror the figure at the halfway "switch sides" chime (layer transform).
   - Depth sorting = painter's algorithm on projected d (larger d = nearer = drawn later).
-- `data2.js` / `d_flow.js` / `d_stretch.js` / `d_birth.js` — pose data per app.
+- `data2.js` / `d_flow.js` / `d_stretch.js` / `d_birth.js` / `d_daily.js` — pose data per app.
 - `mm_extra.js` / `x_*.js` — expandable cue text per movement (keys = movement names).
 - `wk_head.html` + `wk_tpl.js` + `d_wka.js`/`d_wkb.js` — the strength reference app.
   wk_tpl's pure section (everything above the `// ---- DOM ----` marker) is what
@@ -76,9 +85,12 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
 
 ## Non-negotiable QA gauntlet (run before every commit)
 
-    npm run gauntlet   # smoke + lint + geo + wk (strength invariants) + Playwright:
-                       # shots (incl. index), wkshots (strength cards + set checks),
-                       # catchup, breath tones, 2x toggle, auto-update freshness
+    npm run gauntlet   # smoke + lint + geo + wk (strength invariants) + daily (Daily 10
+                       # form invariants: dips parallel stop, dead-bug flat back, bridge
+                       # line, tuck-before-shift, 600s) + Playwright: shots (incl. index),
+                       # wkshots (strength cards + set checks), dailyshots (every Daily 10
+                       # movement + transition), catchup, trans (incl. TR_ALL block),
+                       # breath tones, 2x toggle, auto-update freshness
     node tools/dump.js && python3 tools/strips.py   # fallback PIL contact sheets (needs Pillow)
     python3 tools/ascii.py <app> "<movement>" 0,3    # text-mode pose render
 
@@ -151,11 +163,11 @@ stamping bugs. Design docs/plans from past features live in docs/superpowers/.
 1. Session logging to localStorage (date/completions) + streaks.
 2. PWA: manifest + service worker for full offline.
 3. Polish: figure-4 knee flare, cobra asymmetric tempo, knee-circles readability.
-4. Joint-attached props + arm IK swivels (swAL/swAR) are now available to the four
-   timer apps too (props: port wk_tpl's resPt/propShapes into app_tpl; swivels: add
-   swAL/swAR to app_tpl's blend). Existing movement data still uses fixed
-   world-coordinate props; candidates that would read better joint-attached: doorway
-   chest opener, kneeling lunge chair hand, supported deep squat counter.
+4. DONE 2026-08-12 (Daily 10 work): joint-attached props + db primitive + arm swivels
+   are ported into app_tpl.js and available to all timer apps. Existing movement data
+   still uses fixed world-coordinate props; candidates that would read better
+   joint-attached: doorway chest opener, kneeling lunge chair hand, supported deep
+   squat counter.
 
 Done: Playwright QA (qa/, `npm run gauntlet`), breath-tempo audio (br flag, qa/breath.js),
 setup transitions (pos tags → derived 8s GET SET UP gaps, qa/trans.js), prone Y raises

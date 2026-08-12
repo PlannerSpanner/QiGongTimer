@@ -102,7 +102,7 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='1c4fdb5cff';
+const BUILDV='818d4fb5c8';
 const MOVES=[
 {n:"Bouncing in place",pos:'standing',cue:"Light bounces, everything loose",dur:50,bil:false,cyc:1.0,
  A:{p:[0,57,0],yaw:22,tw:0,s:[4,4],hf:0,aL:[8,-11,14,-9],aR:[8,11,14,9],ikFL:[-5,93,1],ikFR:[5,93,1]},
@@ -293,7 +293,8 @@ function normalise(m){
     [m.A,m.B].forEach(p=>{ if(!p[ikf]) p[ikf]=solve(p)[joint].slice(); });
   });
 }
-function blend(A,B,t){const o={swL:lerp(A.swL||0,B.swL||0,t),swR:lerp(A.swR||0,B.swR||0,t),sl:lerp(A.sl||0,B.sl||0,t),
+function blend(A,B,t){const o={swL:lerp(A.swL||0,B.swL||0,t),swR:lerp(A.swR||0,B.swR||0,t),
+  swAL:lerp(A.swAL||0,B.swAL||0,t),swAR:lerp(A.swAR||0,B.swAR||0,t),sl:lerp(A.sl||0,B.sl||0,t),
   p:lerpA(A.p,B.p,t),yaw:lerp(A.yaw,B.yaw,t),tw:lerp(A.tw,B.tw,t),
   s:lerpA(A.s,B.s,t),hf:lerp(A.hf||0,B.hf||0,t),aL:lerpA(A.aL,B.aL,t),aR:lerpA(A.aR,B.aR,t),
   ikL:lerpT(A.ikL,B.ikL,t),ikR:lerpT(A.ikR,B.ikR,t)};
@@ -315,34 +316,67 @@ function project(v){const c=Math.cos(R(CAM)),s=Math.sin(R(CAM));
   return {x,y:v[1]*Math.cos(R(PITCH))+z*Math.sin(R(PITCH)),d:z};}
 const LIMBS=[['shL','elL'],['elL','haL'],['shR','elR'],['elR','haR'],
              ['hpL','knL'],['knL','ftL'],['hpR','knR'],['knR','ftR']];
-const INK='#245e70',LIMB_L='#93b8c4',TORSO='#2e7d94',BELLY='#2e7d94';
+const INK='#245e70',LIMB_L='#93b8c4',TORSO='#2e7d94',BELLY='#2e7d94',PROP='#b9a98b';
+// A prop point may be a world [x,y,z], a joint name ('haL'), a joint plus a
+// body-frame offset ({j:'haR',o:[x,y,z]} — o is rotated by the pose yaw), or the
+// midpoint of two joints plus an offset ({m:['haL','haR'],o:[x,y,z]}). Joint-referenced
+// points are re-resolved every frame, so an implement authored against the hands can
+// never drift out of them. Shapes: {l:[P,P]} line, {c:[P,r]} circle (+f:1 filled),
+// {db:[P,P,r]} dumbbell (handle line + filled end plates).
+function resPt(P,j,yaw){
+  if(Array.isArray(P))return P;
+  if(typeof P==='string')return j[P];
+  let b;
+  if(P.m){const a=j[P.m[0]],c=j[P.m[1]];b=[(a[0]+c[0])/2,(a[1]+c[1])/2,(a[2]+c[2])/2];}
+  else b=j[P.j];
+  const o=P.o?rotY(P.o,yaw||0):[0,0,0];
+  return [b[0]+o[0],b[1]+o[1],b[2]+o[2]];
+}
+function propShapes(m,j,pose){
+  if(!m.prop)return [];
+  return m.prop.map(p=>{
+    if(p.l)return {t:'l',a:resPt(p.l[0],j,pose.yaw),b:resPt(p.l[1],j,pose.yaw),w:p.w||1};
+    if(p.db)return {t:'db',a:resPt(p.db[0],j,pose.yaw),b:resPt(p.db[1],j,pose.yaw),r:p.db[2]};
+    return {t:'c',c:resPt(p.c[0],j,pose.yaw),r:p.c[1],f:p.f};
+  });
+}
+// PROPFIT: include prop extent in the camera fit — needed when implements/furniture
+// define the frame (dumbbells, a bench, a wall). Off for the legacy apps so their
+// framing never shifts.
+const PROPFIT=false;
 function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
-  for(let i=0;i<=24;i++){const j=solve(poseAt(m,i/24));
-    for(const k in j){const q=project(j[k]);
-      a=Math.min(a,q.x);b=Math.max(b,q.x);c=Math.min(c,q.y);d=Math.max(d,q.y);}}
+  for(let i=0;i<=24;i++){const pose=poseAt(m,i/24),jn=solve(pose);
+    const pts=[];
+    for(const k in jn)pts.push([jn[k],0]);
+    if(PROPFIT)propShapes(m,jn,pose).forEach(s=>{
+      if(s.t==='c')pts.push([s.c,s.r]);
+      else if(s.t==='db'){pts.push([s.a,s.r]);pts.push([s.b,s.r]);}
+      else{pts.push([s.a,0]);pts.push([s.b,0]);}
+    });
+    for(const [v,r] of pts){const q=project(v);
+      a=Math.min(a,q.x-r);b=Math.max(b,q.x+r);c=Math.min(c,q.y-r);d=Math.max(d,q.y+r);}}
   a-=8;b+=8;c-=9;d+=8;
   const sc=Math.min(100/(b-a),100/(d-c));
   return {sc,ox:(100-(b-a)*sc)/2-a*sc,oy:(100-(d-c)*sc)/2-c*sc};}
 const layer=document.getElementById('layer'), shadowEl=document.getElementById('shadow');
-const PROP='#b9a98b';
-let propMk='';
-function buildProps(m,fit){
-  CAM=m.cam||40;
-  if(!m.prop){propMk='';return;}
-  const S=v=>{const q=project(v);return {x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy};};
-  const w=(1.6*fit.sc).toFixed(2);
-  propMk=m.prop.map(p=>{
-    if(p.l){const a=S(p.l[0]),b=S(p.l[1]);
-      return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${w}" stroke-linecap="round"/>`;}
-    const c=S(p.c[0]);
-    return `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${(p.c[1]*fit.sc).toFixed(1)}" fill="none" stroke="${PROP}" stroke-width="${w}"/>`;
-  }).join('');
-}
 function drawFig(m,fit,ph){
   CAM=m.cam||40;
   const pose=poseAt(m,ph);
   const j=solve(pose), P={};
   for(const k in j){const q=project(j[k]);P[k]={x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy,d:q.d};}
+  // props rebuild every frame: joint-referenced points track the moving figure
+  const S=v=>{const q=project(v);return {x:q.x*fit.sc+fit.ox,y:q.y*fit.sc+fit.oy};};
+  const pw=(1.6*fit.sc).toFixed(2);
+  const propMk=propShapes(m,j,pose).map(s=>{
+    if(s.t==='l'){const a=S(s.a),b=S(s.b);
+      return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${(1.6*s.w*fit.sc).toFixed(2)}" stroke-linecap="round"/>`;}
+    if(s.t==='db'){const a=S(s.a),b=S(s.b),r=(s.r*fit.sc).toFixed(1);
+      return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${PROP}" stroke-width="${pw}" stroke-linecap="round"/>`
+        +`<circle cx="${a.x.toFixed(1)}" cy="${a.y.toFixed(1)}" r="${r}" fill="${PROP}"/>`
+        +`<circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${r}" fill="${PROP}"/>`;}
+    const c=S(s.c);
+    return `<circle cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${(s.r*fit.sc).toFixed(1)}" fill="${s.f?PROP:'none'}" stroke="${PROP}" stroke-width="${pw}"/>`;
+  }).join('');
   const side=n=>n.endsWith('L')?LIMB_L:INK;
   const parts=LIMBS.map(([x,y])=>({t:'l',a:P[x],b:P[y],d:(P[x].d+P[y].d)/2,col:side(y),w:1}));
   parts.push({t:'l',a:P.ftL,b:P.toeL,d:(P.ftL.d+P.toeL.d)/2,col:LIMB_L,w:0.8});
@@ -421,14 +455,19 @@ const POS_CUE={standing:'Stand up.',prone:'Lie face down.',supine:'Lie on your b
   sidelying:'Lie on your side.',kneeling:'Come to kneeling.',chair:'Sit on your chair.',
   ball:'Sit on your ball.',wall:'Stand at the wall.',doorway:'Stand in the doorway.'};
 const TRANS_DUR=8;
+// TR_ALL (build-time, Daily 10): a gap precedes EVERY movement, sized per movement
+// (m.tdur, default 10 — 15 where the setup change is bigger), voiced from the authored
+// m.setup script, and the figure holds the upcoming A keyframe instead of looping.
+const TR_ALL=false;
 const SEGS=[];
 MOVES.forEach((m,i)=>{
-  if(i>0&&m.pos&&MOVES[i-1].pos&&m.pos!==MOVES[i-1].pos)SEGS.push({trans:true,m,mi:i,dur:TRANS_DUR});
+  if(TR_ALL){if(i>0)SEGS.push({trans:true,m,mi:i,dur:m.tdur||10});}
+  else if(i>0&&m.pos&&MOVES[i-1].pos&&m.pos!==MOVES[i-1].pos)SEGS.push({trans:true,m,mi:i,dur:TRANS_DUR});
   SEGS.push({m,mi:i,dur:m.dur});
 });
 const sdur=s=>s.trans?s.dur:s.dur*dm;
 const segOfMove=mi=>SEGS.findIndex(s=>!s.trans&&s.mi===mi);
-const posCue=m=>m.posCue||POS_CUE[m.pos]||'Get into position.';
+const posCue=m=>m.setup||m.posCue||POS_CUE[m.pos]||'Get into position.';
 // optional session-length toggle (enabled per app at build time): dm multiplies every
 // movement duration. Locked once the session has started; Reset unlocks it.
 const X2OPT=false;
@@ -448,6 +487,12 @@ if(X2OPT){
     timeLeft=MOVES[0].dur*dm; clock();};
   $('x1b').onclick=()=>setM(1); $('x2b').onclick=()=>setM(2);
 }
+// TR_ALL: restyle gap segments — tan countdown/bar + dimmed static figure — so a
+// glance tells setup time from work time. Colors are neutral tans no theme swaps touch.
+if(TR_ALL)$('mNum').insertAdjacentHTML('beforebegin',
+  '<style>.state-trans .num,.state-trans .tm{color:#8a7f6a}'
+  +'.state-trans .fill{background:#b9a98b}'
+  +'.state-trans #layer{opacity:0.62}</style>');
 const dotsEl=$('dots');
 MOVES.forEach((_,i)=>{const d=document.createElement('div');d.className='dot';d.id='d'+i;dotsEl.appendChild(d);});
 
@@ -520,6 +565,7 @@ function paint(){
   $('badge').textContent=m.orb?'REVERSES · CHANGE DIRECTION AT HALFWAY':'BOTH SIDES · SWITCH AT HALFWAY';
   $('vid').href='https://www.youtube.com/results?search_query='+m.q;
   $('bPrev').disabled=!g.trans&&g.mi<=0; $('bNext').disabled=!g.trans&&g.mi>=MOVES.length-1;
+  if(TR_ALL)document.querySelector('.wrap').classList.toggle('state-trans',!!g.trans);
   MOVES.forEach((_,i)=>{$('d'+i).className='dot'+(i<g.mi?' done':i===g.mi?' active':'');});
   clock();
 }
@@ -536,7 +582,9 @@ function go(i){
 // gap start: soft double chime + the position instruction; movement start keeps the
 // full transition chime + name, so nothing is announced twice
 function announce(g){
-  if(g.trans){cSwitch();setTimeout(()=>say(posCue(g.m)),300);}
+  // authored setup scripts (TR_ALL) speak the full "Next: <name>. <equipment/position>"
+  // line; the display shows just the instruction (mName already carries the name)
+  if(g.trans){cSwitch();setTimeout(()=>say(TR_ALL&&g.m.setup?'Next: '+g.m.n+'. '+g.m.setup:posCue(g.m)),300);}
   else{cTrans();setTimeout(()=>say(g.m.n+(g.m.bil&&!g.m.orb?'. Start with your right side.':'')),420);}
 }
 function sync(){
@@ -553,7 +601,10 @@ function sync(){
     timeLeft=rem; clock();
     const g=SEGS[idx], m=g.m;
     if(!g.trans&&m.bil&&!swAt&&timeLeft<=Math.floor(m.dur*dm/2)){swAt=true;applyMirror(true);cSwitch();setTimeout(()=>say(m.orb?'Change direction':'Switch sides'),300);}
-    if(timeLeft===3)chime(380,.05,.3); // also inside gaps: 3s warning before the movement starts
+    // 3s warning: TR_ALL gaps get a distinct 3-2-1 triple tick so the start of work
+    // is unambiguous; work segments (and legacy gaps) keep the single soft tick
+    if(TR_ALL&&g.trans){if(timeLeft<=3&&timeLeft>=1)chime(520,.07,.18);}
+    else if(timeLeft===3)chime(380,.05,.3);
   }
 }
 function finish(){
@@ -561,6 +612,7 @@ function finish(){
   MOVES.forEach((_,i)=>$('d'+i).className='dot done');
   $('mNum').textContent='COMPLETE';$('mName').textContent='Movement complete';$('mTarget').textContent='';
   $('badge').classList.remove('visible');
+  document.querySelector('.wrap').classList.remove('state-trans');
   document.querySelector('.wrap').classList.add('state-done');
   $('cue').innerHTML="<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, posterior chain warm, calves primed. Go get it.";
   $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
@@ -584,7 +636,7 @@ $('bNext').onclick=()=>{const g=SEGS[idx],t=g.trans?g.mi:g.mi+1;if(t<=MOVES.leng
 $('bReset').onclick=()=>{
   clearInterval(tick);tick=null;running=false;started=false;unlockScreen();
   idx=0;timeLeft=MOVES[0].dur*dm;swAt=false;
-  document.querySelector('.wrap').classList.remove('state-done');
+  document.querySelector('.wrap').classList.remove('state-done','state-trans');
   $('bMain').style.display='';$('bMain').textContent='Start';
   $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
   $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
@@ -616,8 +668,9 @@ if(window.addEventListener){
 let t0=performance.now(),last=0,curFit=null,brPh=0;
 (function loop(now){
   if(now-last>30){last=now;const m=SEGS[idx].m;
-    if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);buildProps(m,m.fit);applyMirror(false);}
-    const ph=((now-t0)/1000%m.cyc)/m.cyc;
+    if(curFit!==m.fit){curFit=m.fit;placeGround(m,m.fit);applyMirror(false);}
+    // TR_ALL gaps hold the upcoming movement's A keyframe as a static preview
+    const ph=(TR_ALL&&SEGS[idx].trans)?0:((now-t0)/1000%m.cyc)/m.cyc;
     // breath-tempo audio on flagged movements: cycle wrap = inhale start (rising),
     // halfway = exhale start (falling). Only while the timer runs and audio exists.
     if(running&&m.br&&!SEGS[idx].trans&&actx){

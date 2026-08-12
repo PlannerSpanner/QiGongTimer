@@ -28,6 +28,17 @@ ROSE=dict(n=10,accent='#a8546b',
 A11=dict(n=12,accent='#a5762a',warnText='#8d5326',warnBg='rgba(214,140,70,0.12)',
  warnBorder='rgba(214,140,70,0.32)',warnStrong='#7a441c',css=[])
 A12=dict(n=13,accent='#a5762a',css=[])
+VIOLET=dict(n=11,accent='#6b5ca8',
+ fig=[('#6d4f1c','#453a70'),('#c2a473','#b0a6d4'),('#7d5a1e','#6b5ca8')],css=[
+ ('#fdf7e9 0%,#fdf0dc 45%,#f4f3e3 100%','#f4f2fb 0%,#ece9f8 45%,#efeef6 100%'),
+ ('#a5762a','#6b5ca8'),('#a4947a','#948aa8'),('#bd8629','#7d6bbd'),('#7d5a1e','#4a3f78'),
+ ('#9c8b6d','#8d84a0'),('#f0e5cd','#e6e2f2'),('#dd9a3c','#8a76cf'),('#ecca8e','#c3b8e8'),
+ ('#665c48','#55506b'),('#4a4237','#3d3852'),('#c8862e','#7a68c0'),
+ ('rgba(144,127,97,0.16)','rgba(122,110,160,0.16)'),('rgba(165,118,42,0.22)','rgba(107,92,168,0.22)'),
+ ('rgba(221,154,60,0.3)','rgba(138,118,207,0.3)'),('rgba(221,154,60,0.15)','rgba(138,118,207,0.15)'),
+ ('rgba(221,154,60,0.45)','rgba(138,118,207,0.45)'),('rgba(221,154,60,0.5)','rgba(138,118,207,0.5)'),
+ ('rgba(180,140,60,0.3)','rgba(138,118,207,0.3)'),('#e8dcc0','#ddd8ec'),
+ ('#6d4f1c','#453a70'),('#c2a473','#b0a6d4'),('#7d5a1e','#6b5ca8'),('#caac79','#b8addc')])
 BAN=("<strong>Listen to your body.</strong> Ease off anything that feels sharp or wrong, "
      "and mention it to your provider. Breathe continuously — never hold your breath "
      "or bear down.")
@@ -47,6 +58,10 @@ build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',
  'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
  '<strong>Done.</strong> Clamshells opened, hips rocked and rolled. You’re on the ball.',banner=BAN,x2=True)
+build(os.path.join(OUT,'daily-10.html'),'d_daily.js',open('x_daily.js',encoding='utf-8').read(),
+ 'Daily 10','Posture · Pull · Reset','icon-app.png','#f4f2fb',VIOLET,
+ '<strong>Daily 10</strong> runs 10 minutes: postural maintenance, not training — nothing near failure, no recovery cost next to the Wed/Sat strength block. The theme is anterior-tilt correction. Hard rules: no pressing below parallel and nothing behind the neck (right AC joint); all pulling neutral or overhand, never underhand (bicep tendon rehab); no jumping or lateral bounding (right peroneal tendon). Each movement gets its own set-up countdown. Start lying on your back, knees up.',
+ '<strong>Done.</strong> Bugs dead, bridges built, posture reset. Carry yourself accordingly.',trall=True)
 # strength.html — scrollable two-workout strength reference. Separate template
 # (wk_head.html + wk_tpl.js): no timer, no audio; same engine, same BUILDV scheme.
 import hashlib, re as _re

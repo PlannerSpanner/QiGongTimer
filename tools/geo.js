@@ -1,7 +1,7 @@
 // geometry invariants: limb lengths ±0.2, toe len 6.4, no joint through floor (y>95.5),
 // foot drift ≤1.8 for movements outside the allowed moving set (see CLAUDE.md gauntlet).
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
-const APPS=['morning-flow','morning-movement','prenatal-stretch','prenatal-movement'];
+const APPS=['morning-flow','morning-movement','prenatal-stretch','prenatal-movement','daily-10'];
 // movements where a foot is SUPPOSED to travel (kept in sync with drift.js)
 const MOVING=new Set([
  'Reverse lunges','Cross-body knee drives','Pedaling down dog',
@@ -18,7 +18,8 @@ const MOVING=new Set([
  'Cobra press-ups','Plank hold','Punching rotations',
  'Rotations with shoulder slaps','Dynamic lateral reaches','Chest opener swings',
  'Bent rotation sweeps','Hip hinges','Folded cat-cows',
- 'Seated cat-cow','Seated side reach']);
+ 'Seated cat-cow','Seated side reach',
+ 'Dead bug','Standing quad + hip flexor stretch']);  // daily-10: extending leg / heel-to-glute
 const SEGS=[['pelvis','chest',13],['chest','neck',13],['neck','head',9],
  ['hpL','knL',19],['knL','ftL',19],['hpR','knR',19],['knR','ftR',19],
  ['shL','elL',13],['elL','haL',13],['shR','elR',13],['elR','haR',13],

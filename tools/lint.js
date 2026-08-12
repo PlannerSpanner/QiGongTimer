@@ -1,9 +1,10 @@
 // visual linter: checks the actual emitted SVG markup per frame
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
-const APPS=process.argv.slice(2).length?process.argv.slice(2):['morning-flow','morning-movement','prenatal-stretch','prenatal-movement'];
+const APPS=process.argv.slice(2).length?process.argv.slice(2):['morning-flow','morning-movement','prenatal-stretch','prenatal-movement','daily-10'];
 const OKCOL=new Set(['#6d4f1c','#c2a473','#7d5a1e','#caac79','#b9a98b',
   '#245e70','#93b8c4','#2e7d94','#9dc2cd',        // blue theme
-  '#7d3f53','#cfa8b3','#a8546b','#dcbcc4']);      // rose theme
+  '#7d3f53','#cfa8b3','#a8546b','#dcbcc4',        // rose theme
+  '#453a70','#b0a6d4','#6b5ca8','#b8addc']);      // violet theme (daily-10)
 let fail=false;
 for(const app of APPS){
   const h=fs.readFileSync(path.join(ROOT,`${app}.html`),'utf8');
@@ -11,12 +12,12 @@ for(const app of APPS){
   const core=js.slice(0,js.indexOf("const $=id=>document.getElementById(id);"));
   const stub={_html:''}; Object.defineProperty(stub,'innerHTML',{get(){return stub._html;},set(v){stub._html=v;}});
   const shadow={attrs:{},setAttribute(k,v){this.attrs[k]=v;}};
-  const ctx=new Function('document',core+'\nreturn {MOVES,drawFig,placeGround,buildProps,fitOf,solve,poseAt,project};')(
+  const ctx=new Function('document',core+'\nreturn {MOVES,drawFig,placeGround,fitOf,solve,poseAt,project};')(
     {getElementById:id=>id==='layer'?stub:shadow});
   const issues=[];
   ctx.MOVES.forEach(m=>{
     const fit=ctx.fitOf(m);
-    ctx.placeGround(m,fit); ctx.buildProps(m,fit);
+    ctx.placeGround(m,fit);
     let prevColors=null;
     for(const ph of [0,0.1,0.25,0.4,0.5,0.65,0.8]){
       ctx.drawFig(m,fit,ph);

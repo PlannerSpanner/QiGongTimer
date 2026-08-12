@@ -5,7 +5,7 @@ HEAD = MM.split('<script>')[0]
 TPL  = open('app_tpl.js', encoding='utf-8').read()
 ENG  = open('eng2.js', encoding='utf-8').read()
 
-def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_msg, banner=None, x2=False):
+def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_msg, banner=None, x2=False, trall=False):
     head = HEAD
     # one home-screen app: every page shares the same icon and web-app title, so the
     # identity is identical no matter which page gets saved. Regex (not literal) targets
@@ -48,6 +48,11 @@ def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_ms
         body = body.replace(a, b)
     if x2:
         body = body.replace('const X2OPT=false;', 'const X2OPT=true;')
+    # authored-transition mode (Daily 10): gaps before every movement + prop-aware
+    # camera fit. Two consts flip together — the app that wants one wants both.
+    if trall:
+        body = body.replace('const TR_ALL=false;', 'const TR_ALL=true;')
+        body = body.replace('const PROPFIT=false;', 'const PROPFIT=true;')
     # app_tpl.js contains the LITERAL 6-character JS escape text \u2013 (not a real
     # en-dash character), so match that literal text directly rather than a Python
     # string with a decoded unicode escape (which would never match the source bytes).

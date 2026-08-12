@@ -6,71 +6,69 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Movement">
-<meta name="theme-color" content="#fdf4f1">
+<meta name="theme-color" content="#f4f2fb">
 <link rel="apple-touch-icon" href="icon-app.png">
-<title>Prenatal Stretch</title>
+<title>Daily 10</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;
   display:flex;flex-direction:column;align-items:center;
-  background:linear-gradient(160deg,#fdf4f1 0%,#fbecf1 42%,#f1eefa 100%);
-  color:#4c3d43;padding:12px 14px 20px;user-select:none;-webkit-user-select:none;
+  background:linear-gradient(160deg,#f4f2fb 0%,#ece9f8 45%,#efeef6 100%);
+  color:#3d3852;padding:12px 14px 20px;user-select:none;-webkit-user-select:none;
   -webkit-tap-highlight-color:transparent}
 .wrap{width:100%;max-width:400px;text-align:center}
-h1{font-size:0.92rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#a8546b;margin-bottom:1px}
-.sub{font-size:0.55rem;letter-spacing:2px;color:#a98b95;margin-bottom:9px;text-transform:uppercase}
+h1{font-size:0.92rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:#6b5ca8;margin-bottom:1px}
+.sub{font-size:0.55rem;letter-spacing:2px;color:#948aa8;margin-bottom:9px;text-transform:uppercase}
 
-.num{font-size:0.6rem;letter-spacing:3px;color:#c4657f;margin-bottom:1px}
-.nm{font-size:1.06rem;font-weight:600;color:#7d3f53;line-height:1.2;min-height:23px}
-.tg{font-size:0.66rem;color:#a1808b;font-style:italic;min-height:16px;margin-bottom:5px}
+.num{font-size:0.6rem;letter-spacing:3px;color:#7d6bbd;margin-bottom:1px}
+.nm{font-size:1.06rem;font-weight:600;color:#4a3f78;line-height:1.2;min-height:23px}
+.tg{font-size:0.66rem;color:#8d84a0;font-style:italic;min-height:16px;margin-bottom:5px}
 
 .stage{position:relative;width:100%;background:none;border:none;padding:0;margin-bottom:8px}
 .stage svg{width:100%;height:auto;display:block}
 .side-badge{display:none;position:absolute;top:8px;left:50%;transform:translateX(-50%);
-  font-size:0.55rem;letter-spacing:1.5px;color:#a8546b;background:rgba(255,255,255,0.9);
-  border:1px solid rgba(190,120,140,0.3);border-radius:20px;padding:2px 10px;white-space:nowrap}
+  font-size:0.55rem;letter-spacing:1.5px;color:#6b5ca8;background:rgba(255,255,255,0.9);
+  border:1px solid rgba(138,118,207,0.3);border-radius:20px;padding:2px 10px;white-space:nowrap}
 .side-badge.visible{display:block}
 
 .barrow{display:flex;align-items:center;gap:9px;margin-bottom:8px}
-.tm{font-size:1.5rem;font-weight:200;color:#4c3d43;font-variant-numeric:tabular-nums;
+.tm{font-size:1.5rem;font-weight:200;color:#3d3852;font-variant-numeric:tabular-nums;
   letter-spacing:1px;min-width:62px;text-align:left}
-.track{flex:1;height:7px;background:#f2dfe4;border-radius:6px;overflow:hidden}
-.fill{height:100%;width:0%;background:#d9788f;border-radius:6px;transition:width 0.25s linear}
-.count{font-size:0.62rem;letter-spacing:1px;color:#a98b95;min-width:34px;text-align:right}
+.track{flex:1;height:7px;background:#e6e2f2;border-radius:6px;overflow:hidden}
+.fill{height:100%;width:0%;background:#8a76cf;border-radius:6px;transition:width 0.25s linear}
+.count{font-size:0.62rem;letter-spacing:1px;color:#948aa8;min-width:34px;text-align:right}
 
 .dots{display:flex;justify-content:center;gap:5px;margin-bottom:9px}
-.dot{width:8px;height:8px;border-radius:50%;background:#f2dfe4;transition:all 0.35s}
-.dot.active{background:#d9788f;box-shadow:0 0 7px rgba(217,120,143,0.45)}
-.dot.done{background:#e8b6c4}
+.dot{width:8px;height:8px;border-radius:50%;background:#e6e2f2;transition:all 0.35s}
+.dot.active{background:#8a76cf;box-shadow:0 0 7px rgba(138,118,207,0.5)}
+.dot.done{background:#c3b8e8}
 
 .cue{padding:9px 12px;background:rgba(255,255,255,0.62);border-radius:11px;
-  border:1px solid rgba(150,115,127,0.16);font-size:0.7rem;color:#6b555d;
+  border:1px solid rgba(122,110,160,0.16);font-size:0.7rem;color:#55506b;
   line-height:1.5;text-align:left;margin-bottom:9px;min-height:52px}
-.cue strong{color:#a8546b}
+.cue strong{color:#6b5ca8}
 
 .row{display:flex;gap:9px;justify-content:center;margin-bottom:8px}
 button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transition:all 0.18s}
-.btn-primary{background:#d9788f;color:#fff;font-size:0.95rem;font-weight:600;
-  padding:11px 34px;letter-spacing:1px;box-shadow:0 2px 6px rgba(217,120,143,0.28)}
-.btn-primary:active{transform:scale(0.96);background:#c4657f}
-.btn-sec{background:rgba(255,255,255,0.78);color:#a8546b;font-size:0.74rem;
-  padding:8px 16px;border:1px solid rgba(168,84,107,0.2)}
+.btn-primary{background:#8a76cf;color:#fff;font-size:0.95rem;font-weight:600;
+  padding:11px 34px;letter-spacing:1px;box-shadow:0 2px 6px rgba(138,118,207,0.3)}
+.btn-primary:active{transform:scale(0.96);background:#7a68c0}
+.btn-sec{background:rgba(255,255,255,0.78);color:#6b5ca8;font-size:0.74rem;
+  padding:8px 16px;border:1px solid rgba(107,92,168,0.22)}
 .btn-sec:active{background:#fff}
-.btn-sec.on{background:rgba(217,120,143,0.14);border-color:rgba(217,120,143,0.45)}
+.btn-sec.on{background:rgba(138,118,207,0.15);border-color:rgba(138,118,207,0.45)}
 .btn-sec:disabled{opacity:0.28;pointer-events:none}
 .btn-sec svg{width:13px;height:13px;fill:currentColor;vertical-align:-2px}
-.vid{font-size:0.63rem;color:#a98b95;text-decoration:none;display:inline-block;margin-top:2px}
-.vid:active{color:#a8546b}
-.state-done .nm{color:#a8546b}
-.safety{font-size:0.62rem;line-height:1.5;color:#8f4550;background:rgba(214,110,120,0.11);border:1px solid rgba(214,110,120,0.3);border-radius:10px;padding:7px 11px;margin-bottom:9px;text-align:left}.safety strong{color:#7d353f}
+.vid{font-size:0.63rem;color:#948aa8;text-decoration:none;display:inline-block;margin-top:2px}
+.vid:active{color:#6b5ca8}
+.state-done .nm{color:#7a68c0}
 </style>
 </head>
 <body>
 <div class="wrap" id="app">
-  <h1>Prenatal Stretch</h1>
-  <div class="sub">Gentle · Stretch & Release</div>
+  <h1>Daily 10</h1>
+  <div class="sub">Posture · Pull · Reset</div>
 
-  <div class="safety"><strong>Listen to your body.</strong> Ease off anything that feels sharp or wrong, and mention it to your provider. Breathe continuously — never hold your breath or bear down.</div>
   <div class="num" id="mNum">READY</div>
   <div class="nm" id="mName">Tap Start to begin</div>
   <div class="tg" id="mTarget"></div>
@@ -78,7 +76,7 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <div class="stage">
     <div class="side-badge" id="badge">BOTH SIDES · SWITCH AT HALFWAY</div>
     <svg id="fig" viewBox="0 0 100 100">
-      <ellipse id="shadow" fill="#f0dde3" opacity="0.5"/>
+      <ellipse id="shadow" fill="#ddd8ec" opacity="0.5"/>
       <g id="layer"></g>
     </svg>
   </div>
@@ -86,11 +84,11 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <div class="barrow">
     <div class="tm" id="tm">0:00</div>
     <div class="track"><div class="fill" id="fill"></div></div>
-    <div class="count" id="count">–/10</div>
+    <div class="count" id="count">–/11</div>
   </div>
 
   <div class="dots" id="dots"></div>
-  <div class="cue" id="cue"><strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.</div>
+  <div class="cue" id="cue"><strong>Daily 10</strong> runs 10 minutes: postural maintenance, not training — nothing near failure, no recovery cost next to the Wed/Sat strength block. The theme is anterior-tilt correction. Hard rules: no pressing below parallel and nothing behind the neck (right AC joint); all pulling neutral or overhand, never underhand (bicep tendon rehab); no jumping or lateral bounding (right peroneal tendon). Each movement gets its own set-up countdown. Start lying on your back, knees up.</div>
 
   <div class="row">
     <button class="btn-primary" id="bMain">Start</button>
@@ -104,67 +102,122 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='02b0f0bf0e';
+const BUILDV='1b7b03fb24';
+// Daily 10 — postural maintenance. tdur = length of the GET SET UP gap BEFORE the
+// movement (TR_ALL builds); setup = authored transition script, spoken as
+// "Next: <name>. <setup>". Work 465s + gaps 135s = 600s exactly.
 const MOVES=[
-{n:"Seated breathing",pos:'chair',cue:"Sit tall, breathe wide into the ribs",dur:60,bil:false,cyc:4.0,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
- A:{p:[0,74,0],yaw:-18,tw:0,s:[6,2],hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
- B:{p:[0,73.4,0],yaw:-18,tw:0,s:[0,-6],hf:-5,ikL:{w:[-8,72.5,10]},ikR:{w:[8,72.5,10]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
+// Contralateral reach: right arm sweeps overhead while the left leg lengthens; the
+// mirror at halfway swaps the lead pair (punching-rotations precedent). Low back
+// stays glued to the floor: spine values are identical in every keyframe.
+{n:"Dead bug",pos:'supine',cue:"Ribs down, low back pressed into the floor",dur:45,bil:true,cyc:3.6,cam:62,
+ setup:"Lie on your back. Knees up over your hips, shins level, arms to the ceiling.",
+ A:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,aL:[180,-6,180,-5],aR:[180,6,180,5],
+    lL:[176,-7,88,-5],lR:[176,7,88,5]},
+ B:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,aL:[180,-6,180,-5],aR:[268,6,268,5],
+    lL:[97,-7,94,-5],lR:[176,7,88,5]}},
 
-{n:"Seated cat-cow",pos:'chair',cue:"Round on the exhale, arch on the inhale",dur:45,bil:false,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
- A:{p:[0,74,0],yaw:20,tw:0,s:[40,48],hf:26,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
- B:{p:[0,74,0],yaw:20,tw:0,s:[32,20],hf:-20,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
+// Hip extension, not lumbar extension: the torso is one straight slab (s0 == s1) and
+// the top position is the straight knee-hip-shoulder diagonal — no extra arch.
+{n:"Glute bridge",pos:'supine',cue:"Tuck first, drive through the heels, squeeze tall",dur:45,bil:false,cyc:3.2,cam:62,tdur:10,
+ setup:"Stay on your back. Feet flat on the floor, hip width, heels close to your hands.",
+ A:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,ikFL:[-5.5,93,22],ikFR:[5.5,93,22],
+    aL:[88,-8,88,-6],aR:[88,8,88,6]},
+ B:{p:[0,79.6,3],yaw:14,tw:0,s:[-110,-110],hf:8,ikFL:[-5.5,93,22],ikFR:[5.5,93,22],
+    aL:[88,-8,88,-6],aR:[88,8,88,6]}},
 
-{n:"Seated side reach",pos:'chair',cue:"Reach overhead, both sit bones stay down",dur:60,bil:true,cyc:3.4,belly:1,pin:"LR", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
- A:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],sl:-16,hf:0,ikL:{w:[-8,72.5,10]},ikR:{w:[4,16,2]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]},
- B:{p:[0,74,0],yaw:-18,tw:0,s:[4,2],sl:16,hf:0,ikL:{w:[-4,16,2]},ikR:{w:[8,72.5,10]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[88,8,2,6]}},
+// A tall -> M tuck (no forward travel) -> B small shift with the tuck held. The rear
+// thigh angle change in B offsets the pelvis travel so the planted knee stays put.
+{n:"Half-kneeling hip flexor stretch",pos:'kneeling',cue:"Tuck the tail first — then a small shift forward",dur:60,bil:true,cyc:4.6,cam:66,tdur:10,pin:"LR",
+ setup:"Come to half kneeling. One knee under your hip, other foot forward, shin vertical, hands on your hips.",
+ A:{p:[0,74.2,-2],yaw:24,tw:0,s:[6,6],hf:0,ikL:{w:[-7,72,1]},ikR:{w:[7,72,-5]},
+    lL:[-8,-8,-89,-6],ikFR:[6,93,17]},
+ M:{p:[0,74.7,-2],yaw:24,tw:0,s:[-6,-6],hf:-6,ikL:{w:[-7,72,1]},ikR:{w:[7,72,-5]},
+    lL:[-8,-8,-89,-6],ikFR:[6,93,17]},
+ B:{p:[0,74.7,1.5],yaw:24,tw:0,s:[-6,-6],hf:-6,ikL:{w:[-7,72,4.5]},ikR:{w:[7,72,-1.5]},
+    lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
 
-{n:"Seated figure-4",pos:'chair',cue:"Ankle across the knee, hinge forward",dur:60,bil:true,cyc:3.4,belly:1,pin:"L", prop:[{l:[[-8,76,-4],[8,76,-4]]},{l:[[-7,76,-4],[-7,93,-4]]},{l:[[7,76,-4],[7,93,-4]]}],
- A:{p:[0,74,0],yaw:-18,tw:0,s:[6,4],hf:0,ikL:{k:"knL"},ikR:{k:"ftR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[93,20,120,-88]},
- B:{p:[0,74,0],yaw:-18,tw:0,s:[34,40],hf:-8,ikL:{k:"knL"},ikR:{k:"ftR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[88,-8,2,-6],lR:[93,20,120,-88]}},
+// Hinge held constant; elbows drive up and back toward the hips. Neutral grip:
+// dumbbell handles run front-to-back. Arm world targets in both frames (blendable).
+{n:"Dumbbell bent-over row",pos:'standing',cue:"Elbows to the hips — no torso heave",dur:45,bil:false,cyc:2.6,cam:64,tdur:15,
+ prop:[{db:[{j:'haL',o:[0,0,-2.4]},{j:'haL',o:[0,0,2.4]},1.7]},
+       {db:[{j:'haR',o:[0,0,-2.4]},{j:'haR',o:[0,0,2.4]},1.7]}],
+ setup:"Stand up and grab your dumbbells. Soft knees, hinge your chest toward the floor, back flat.",
+ A:{p:[-4,60,-9],yaw:24,tw:0,s:[60,64],hf:-16,ikL:{w:[-2,73,12.5]},ikR:{w:[10.8,73,7]},
+    ikFL:[-5,93,-5],ikFR:[5,93,-8]},
+ B:{p:[-4,60,-9],yaw:24,tw:0,s:[60,64],hf:-16,ikL:{w:[-8,60,0]},ikR:{w:[5.7,60,-5.9]},
+    swAL:-100,swAR:80,ikFL:[-5,93,-5],ikFR:[5,93,-8]}},
 
-{n:"Supported butterfly",pos:'seated',cue:"Soles together in front, knees open to the sides",dur:60,bil:false,cyc:4.2,belly:1,
- A:{p:[0,86,0],yaw:-20,tw:0,s:[14,18],hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:16,swR:64},
- B:{p:[0,86,0],yaw:-20,tw:0,s:[18,24],hf:-4,ikL:{k:"knL"},ikR:{k:"knR"},
-    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-1.5,90,13],ikFR:[1.5,90,13],swL:0,swR:82}},
+// STRICT PARTIAL: shoulders never sink below the elbows (upper arm parallel is the
+// hard floor of the rep). Hands are fixed world points on the bench edge.
+{n:"Bench dips",pos:'bench',cue:"Stop at parallel — shoulders down and back",dur:40,bil:false,cyc:3.0,cam:66,tdur:15,
+ prop:[{l:[[-12,74,0.5],[12,74,0.5]]},{l:[[-12,74,-6.5],[12,74,-6.5]]},
+       {l:[[-12,74,0.5],[-12,74,-6.5]]},{l:[[12,74,0.5],[12,74,-6.5]]},
+       {l:[[-11,74,0.5],[-11,93,0.5]]},{l:[[11,74,0.5],[11,93,0.5]]},
+       {l:[[-11,74,-6.5],[-11,93,-6.5]]},{l:[[11,74,-6.5],[11,93,-6.5]]}],
+ setup:"Dumbbells down — move to the bench. Hands on the edge beside your hips, feet out in front.",
+ A:{p:[0,75.5,6],yaw:14,tw:0,s:[8,4],hf:2,ikL:{w:[-7.5,74,1]},ikR:{w:[7.5,74,1]},
+    ikFL:[-5.5,93,27],ikFR:[5.5,93,27]},
+ B:{p:[0,87.5,7],yaw:14,tw:0,s:[8,4],hf:2,ikL:{w:[-7.5,74,1]},ikR:{w:[7.5,74,1]},
+    swAL:-150,swAR:150,ikFL:[-5.5,93,27],ikFR:[5.5,93,27]}},
 
-{n:"Wide-knee child's pose",pos:'kneeling',cue:"Knees wide, belly rests between them",dur:60,bil:false,cyc:4.4,belly:1,cam:58,
- A:{p:[0,83.5,-9],yaw:22,tw:0,s:[112,90],hf:4,ikL:{w:[-8,92.5,33]},ikR:{w:[10,92.5,33]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[67,-22,-89,15],lR:[67,22,-89,-15]},
- B:{p:[0,84.5,-10.5],yaw:22,tw:0,s:[116,92],hf:2,ikL:{w:[-8,92.5,33]},ikR:{w:[10,92.5,33]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[67,-22,-89,15],lR:[67,22,-89,-15]}},
+// A=Y, M=T, B=W: the cycle sweeps Y->T->W->T->Y. Tiny floats — the work is the
+// scapular squeeze, not elevation. cam 72: the only view where the letters open.
+{n:"Prone Y-T-W raise",pos:'prone',cue:"Blades down and back — small floats, thumbs up",dur:45,bil:false,cyc:4.2,cam:72,tdur:15,
+ setup:"Down to the floor, face down. Forehead down, arms overhead in a Y, thumbs up.",
+ A:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-9.7,89.5,53.7]},ikR:{w:[37.1,89.5,38.5]},
+    lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
+ M:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-21.9,89.5,38.5]},ikR:{w:[38,89.5,19]},
+    swAL:100,swAR:-100,lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
+ B:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-8.5,89.5,35]},ikR:{w:[21,89.5,24]},
+    swAL:60,swAR:-120,lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]}},
 
-{n:"Hands-and-knees rocking",pos:'quadruped',cue:"Rock the hips gently, spine stays neutral",dur:60,bil:false,cyc:2.8,belly:1,
- A:{p:[-0.9,74,-2.22],yaw:22,tw:0,s:[78,78],hf:14,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[7.2,-6,-90,-5],lR:[7.2,6,-90,5]},
- B:{p:[0.9,74,2.22],yaw:22,tw:0,s:[85,85],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-7.2,-6,-90,-5],lR:[-7.2,6,-90,5]}},
+// Facing the wall, forearms glued to it: slide up only as far as ribs stay down.
+{n:"Wall slide",pos:'wall',cue:"Forearms glued to the wall, ribs stay down",dur:30,bil:false,cyc:3.4,cam:74,tdur:15,pin:"LR",
+ prop:[{l:[[0,14,13],[0,93,13]]}],
+ setup:"Stand facing the wall. Forearms on the wall at shoulder height, thumbs toward you.",
+ A:{p:[0,55.4,1],yaw:6,tw:0,s:[3,1],hf:0,ikL:{w:[-7,16.5,12]},ikR:{w:[7,16.5,12]},
+    swAL:-85,swAR:100,lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[0,55.4,1],yaw:6,tw:0,s:[3,1],hf:0,ikL:{w:[-6.5,6.5,12]},ikR:{w:[6.5,6.5,12]},
+    swAL:-85,swAR:100,lL:[-2,-6,2,-5],lR:[2,6,-2,5]}},
 
-{n:"Kneeling hip flexor stretch",pos:'kneeling',cue:"Tuck the pelvis, shift gently forward",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[16,64,10],[16,93,10]]},{l:[[11,64,10],[21,64,10]]}],
- A:{p:[0,75,-2],yaw:24,tw:0,s:[4,4],hf:0,ikL:{w:[-8,72,2]},ikR:{w:[14,66,10]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]},
- B:{p:[0,75.5,1],yaw:24,tw:0,s:[-6,-6],hf:-8,ikL:{w:[-8,72,4]},ikR:{w:[14,66,10]},
-    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-18,-8,-89,-6],ikFR:[6,93,17]}},
+// Static hold: the fight is grip + anti-shrug + anti-lean. Barely-visible sway.
+{n:"Farmer hold",pos:'standing',cue:"Ribs stacked over pelvis — don't let the weights win",dur:35,bil:false,cyc:4.6,cam:40,tdur:15,pin:"LR",
+ prop:[{db:[{j:'haL',o:[0,0,-2.4]},{j:'haL',o:[0,0,2.4]},1.9]},
+       {db:[{j:'haR',o:[0,0,-2.4]},{j:'haR',o:[0,0,2.4]},1.9]}],
+ setup:"Pick up your dumbbells. Stand tall, shoulders packed down and back.",
+ A:{p:[0,55.2,0],yaw:24,tw:0,s:[3,1],hf:0,ikL:{w:[-8.5,54.5,0.5]},ikR:{w:[8.5,54.5,-2]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[0,55.4,0],yaw:24,tw:0,s:[1,0],hf:0,ikL:{w:[-8.5,54,0.5]},ikR:{w:[8.5,54,-2]},
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]}},
 
-{n:"Standing calf stretch",pos:'wall',cue:"Back heel presses down, back leg straight",dur:60,bil:true,cyc:3.6,belly:1,pin:"LR", prop:[{l:[[0,33,33],[0,93,33]]}],
- A:{p:[0,58,4],yaw:24,tw:0,s:[14,10],hf:-4,ikL:{w:[-9,60,31]},ikR:{w:[9,60,31]},
-    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-6,93,-16],ikFR:[6,93,14]},
- B:{p:[0,58,5.5],yaw:24,tw:0,s:[16,12],hf:-4,ikL:{w:[-9,60,31]},ikR:{w:[9,60,31]},
-    aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-6,93,-16],ikFR:[6,93,14]}},
+// Same tuck logic as the half-kneel, standing: glute squeeze + posterior tilt IS the
+// stretch; the knee drifts back only after the tuck. Hand stays pinned to the ankle.
+// folded leg is the LEFT (near side at cam 66) so the heel-to-glute read isn't
+// hidden behind the torso; the halfway mirror shows the other side
+{n:"Standing quad + hip flexor stretch",pos:'standing',cue:"Heel to glute, tuck the tail — don't arch",dur:60,bil:true,cyc:4.4,cam:66,tdur:10,pin:"R",
+ setup:"Dumbbells down, stand tall. Grab your ankle behind you, knees together.",
+ A:{p:[0,55.4,0],yaw:18,tw:0,s:[4,2],hf:0,ikL:{k:'ftL'},aR:[10,16,8,12],
+    lR:[-2,6,2,5],lL:[-4,-6,-170,-3]},
+ B:{p:[0,55.6,-0.5],yaw:18,tw:0,s:[-4,-2],hf:-4,ikL:{k:'ftL'},aR:[10,16,8,12],
+    lR:[-2,6,2,5],lL:[-11,-6,-174,-3]}},
 
-{n:"Doorway chest opener",pos:'doorway',cue:"Forearm up on the frame, step gently through",dur:45,bil:true,cyc:3.8,belly:1,pin:"LR", prop:[{l:[[-19,25,2],[-19,93,2]]},{l:[[19,25,2],[19,93,2]]}],
- A:{p:[0,58,0],yaw:-16,tw:0,s:[3,3],hf:0,aL:[6,-10,8,-8],aR:[0,88,178,2],
-    ikFL:[-7,93,-2],ikFR:[7,93,6]},
- B:{p:[0,58,1.5],yaw:-16,tw:0,s:[3,3],hf:0,aL:[0,-88,178,-2],aR:[6,10,8,8],
-    ikFL:[-7,93,-2],ikFR:[7,93,6]}}
+// Segmental wave: cow (belly drops, gaze forward) <-> cat (dome up, chin drops).
+{n:"Cat-cow",pos:'quadruped',cue:"Move one vertebra at a time with the breath",dur:30,bil:false,cyc:3.8,cam:70,tdur:15,
+ setup:"Down to hands and knees. Hands under shoulders, knees under hips.",
+ A:{p:[0,74.5,0],yaw:20,tw:0,s:[92,64],hf:30,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    lL:[7,-6,-90,-5],lR:[7,6,-90,5]},
+ B:{p:[0,73.5,0],yaw:20,tw:0,s:[64,95],hf:-22,ikL:{w:[-7,93,25]},ikR:{w:[7,93,25]},
+    lL:[7,-6,-90,-5],lR:[7,6,-90,5]}},
+
+// The exhale reset: ribs settle down and in, pelvis neutral, breath into the low
+// back. br pairs the tone with the figure's breathing sway.
+{n:"Posture reset",pos:'standing',cue:"Exhale the ribs down — breathe into your low back",dur:30,bil:false,cyc:5.0,cam:40,tdur:15,br:true,pin:"LR",
+ setup:"Stand up one last time. Feet hip width, arms easy at your sides.",
+ A:{p:[0,55.4,0],yaw:16,tw:0,s:[7,3],hf:4,aL:[6,-8,4,-6],aR:[6,8,4,6],
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
+ B:{p:[0,55.6,0],yaw:16,tw:0,s:[1,0],hf:0,aL:[6,-8,4,-6],aR:[6,8,4,6],
+    lL:[-2,-6,2,-5],lR:[2,6,-2,5]}}
 ];
 
 // ================= 3D skeleton =================
@@ -264,19 +317,23 @@ function orbitPose(base,o,ph){
   return p;
 }
 
+
+// long-form coaching cues + demo search terms, keyed to the pose table above.
+// The anterior-tilt movements carry the WHY: short/overactive hip flexors (iliopsoas,
+// rectus femoris) + lumbar erectors vs long/inhibited glutes + deep abdominals.
 const EXTRA={
-"Seated breathing":["<strong>Form:</strong> Sit tall on a chair or birth ball, feet flat on the floor, hands resting on the thighs. Inhale through the nose and feel the ribs widen sideways — not the chest lifting. Long exhale. <strong>Why:</strong> the growing uterus crowds the diaphragm; sideways rib expansion keeps breathing efficient later on.","prenatal+diaphragmatic+breathing+rib+expansion"],
-"Seated cat-cow":["<strong>Form:</strong> Hands on knees. Round the spine and tuck the pelvis on the exhale, arch gently and open the chest on the inhale. Small and slow. <strong>Why:</strong> the belly pulls the pelvis into a forward tilt and compresses the low back — moving both directions relieves it.","seated+cat+cow+pregnancy+stretch"],
-"Seated side reach":["<strong>Form:</strong> Reach one arm overhead, lean gently to the opposite side, both sit bones stay down. Breathe into the stretched side. Switch at the halfway chime. <strong>Why:</strong> creates space between ribs and hips, one of the most compressed areas later in pregnancy.","seated+side+stretch+pregnancy+ribs"],
-"Seated figure-4":["<strong>Form:</strong> Ankle across the opposite knee, sit tall, hinge forward from the hips until the outer hip opens. Switch at the halfway chime. <strong>Why:</strong> relaxin loosens the pelvic ligaments and the piriformis tightens to compensate, which can irritate the sciatic nerve.","seated+figure+four+piriformis+stretch+pregnancy"],
-"Supported butterfly":["<strong>Form:</strong> Sit on a cushion so the hips are above the knees. Soles together, knees falling open. Let gravity do it — never push the knees down. <strong>Why:</strong> adductor flexibility affects how wide the pelvic outlet can open. Gentle beats aggressive; the ligaments are already softened.","supported+bound+angle+butterfly+pose+pregnancy"],
-"Wide-knee child's pose":["<strong>Form:</strong> Knees wide, big toes together, sit back toward the heels with the belly resting in the space between. Forearms or a cushion under the chest. <strong>Why:</strong> one of the best positions for letting the pelvic floor lengthen and release.","wide+knee+childs+pose+pregnancy+modification"],
-"Hands-and-knees rocking":["<strong>Form:</strong> Wrists under shoulders. Rock the hips slowly forward and back, then in gentle circles. Spine stays neutral — no deep arching. <strong>Why:</strong> takes the baby's weight off the spine and encourages an optimal anterior fetal position.","hands+and+knees+pelvic+rocking+pregnancy"],
-"Kneeling hip flexor stretch":["<strong>Form:</strong> Half-kneeling, cushion under the back knee, hand on a chair. Tuck the pelvis slightly, then shift gently forward. Switch at the halfway chime. <strong>Why:</strong> tight hip flexors tilt the pelvis forward and worsen back pain.","kneeling+hip+flexor+stretch+pregnancy+safe"],
-"Standing calf stretch":["<strong>Form:</strong> Hands on a wall, one foot back with the heel pressing down, back leg straight. Switch at the halfway chime. <strong>Why:</strong> calf cramps and swelling are among the most common second and third trimester complaints.","standing+calf+stretch+wall+pregnancy"],
-"Doorway chest opener":["<strong>Form:</strong> One forearm vertical on the doorframe, elbow at shoulder height, step gently through until the chest opens. Switch arms at the halfway chime. A mild stretch is plenty. <strong>Why:</strong> breast growth and the forward weight shift round the shoulders; opening the chest gives the lungs more room.","doorway+chest+stretch+pregnancy+posture"],
-"Left side-lying rest":["<strong>Form:</strong> Left side, pillow between the knees and one under the belly. Slow breathing. Nothing to do here. <strong>Why:</strong> left side-lying keeps pressure off the vena cava and maximises blood flow to the placenta — a good sleeping habit to build now.","left+side+lying+position+pregnancy+pillow+support"]};
-MOVES.forEach(m=>{m.long=EXTRA[m.n][0];m.q=EXTRA[m.n][1];});
+"Dead bug":["<strong>Form:</strong> Knees over hips, shins level, arms to the ceiling. Exhale, ribs down, low back pressed flat — then lower one arm overhead as the OPPOSITE leg reaches long, only as far as the back stays glued down. <strong>Why:</strong> anterior tilt means the deep abdominals are long and weak — this trains them to hold the pelvis while the limbs move. The exercise is the flat back, not the reach.","dead+bug+exercise+core+anti+extension"],
+"Glute bridge":["<strong>Form:</strong> Feet flat near the fingertips, gentle tuck first, then drive through the HEELS to a straight knee–hip–shoulder line. Squeeze at the top; don't arch higher. <strong>Why:</strong> the glutes are the inhibited half of anterior tilt — if they don't produce hip extension, the lumbar erectors will. The tuck keeps them switched off and the glutes on.","glute+bridge+proper+form+posterior+tilt"],
+"Half-kneeling hip flexor stretch":["<strong>Form:</strong> Front shin vertical. Squeeze the rear glute and tuck the tail FIRST — that alone is most of the stretch — then shift forward an inch or two. Feel it in the front of the rear hip, never the low back. <strong>Why:</strong> the iliopsoas and rectus femoris are the short, tight half of anterior tilt; they attach to the lumbar spine, so an arched back slackens the stretch and defeats it.","half+kneeling+hip+flexor+stretch+posterior+tilt"],
+"Dumbbell bent-over row":["<strong>Form:</strong> Hinge to ~45°, back flat, and hold that angle — no heaving. Drive the elbows up and back toward the hips, squeeze the blades, lower slow. <strong>Grip note:</strong> palms facing each other or facing back only — never underhand (distal bicep rehab). Pull with the elbows, not the hands.","dumbbell+bent+over+row+two+arm+form"],
+"Bench dips":["<strong>Form:</strong> Shoulders down and back before you bend. Elbows track straight back, body close to the bench, and STOP when the upper arms are parallel to the floor — treat parallel as the floor of every rep. <strong>Shoulder note:</strong> below parallel drives the humeral head forward into the separated right AC joint. If it pinches even at parallel, shorten the range further.","bench+dip+partial+range+shoulder+safe"],
+"Prone Y-T-W raise":["<strong>Form:</strong> Forehead down, blades drawn down away from the ears before each lift. Y overhead (lower traps) → T out to the sides (mid traps) → W elbows bent (rear delts + external rotators), thumbs up throughout. Tiny floats — the squeeze is the work, not the height. Zero load on the AC joint.","prone+y+t+w+raise+lower+trap"],
+"Wall slide":["<strong>Form:</strong> Ribs down, forearms glued to the wall, press lightly IN as you slide up — that press fires the serratus. Go only as high as the ribs stay down; an arched back is borrowed range, not shoulder motion.","wall+slide+serratus+scapular+upward+rotation"],
+"Farmer hold":["<strong>Form:</strong> Stand tall and motionless: ribs stacked over pelvis, shoulders packed down and back, crush grip, breathe behind the brace. The set ends when posture — not grip — starts to lose.","farmer+carry+static+hold+posture"],
+"Standing quad + hip flexor stretch":["<strong>Form:</strong> Knees together, squeeze the glute and tuck the pelvis — belt buckle to ribs — THEN let the knee drift slightly back. Never arch or lean back: that recreates the exact tilt pattern being corrected. <strong>Why:</strong> the tuck converts a plain quad stretch into a rectus femoris stretch, the two-joint muscle that tips the pelvis forward.","standing+quad+hip+flexor+stretch+pelvic+tilt"],
+"Cat-cow":["<strong>Form:</strong> Inhale into cow — tail tips up, belly drops, chest lifts, one vertebra at a time. Exhale into cat — tuck, round, push the floor away to dome the stiff mid-back. Let the wave travel; don't hinge it all at the low back.","cat+cow+segmental+spinal+mobility"],
+"Posture reset":["<strong>Form:</strong> One full audible exhale — feel the ribs come down and in and the pelvis settle neutral. Keep that stack and breathe quietly into the lower ribs and LOW BACK, 360°, exhale longer than the inhale. <strong>Why:</strong> this is the tilt correction in one drill — un-flared ribs over a neutral pelvis is the position everything else trained.","standing+posture+reset+rib+pelvis+stack+breathing"]};
+MOVES.forEach(m=>{m.long=EXTRA[m.n][0]; m.q=EXTRA[m.n][1];});
 
 // ---------- projection / drawing ----------
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -329,7 +386,7 @@ function project(v){const c=Math.cos(R(CAM)),s=Math.sin(R(CAM));
   return {x,y:v[1]*Math.cos(R(PITCH))+z*Math.sin(R(PITCH)),d:z};}
 const LIMBS=[['shL','elL'],['elL','haL'],['shR','elR'],['elR','haR'],
              ['hpL','knL'],['knL','ftL'],['hpR','knR'],['knR','ftR']];
-const INK='#7d3f53',LIMB_L='#cfa8b3',TORSO='#a8546b',BELLY='#a8546b',PROP='#b9a98b';
+const INK='#453a70',LIMB_L='#b0a6d4',TORSO='#6b5ca8',BELLY='#6b5ca8',PROP='#b9a98b';
 // A prop point may be a world [x,y,z], a joint name ('haL'), a joint plus a
 // body-frame offset ({j:'haR',o:[x,y,z]} — o is rotated by the pose yaw), or the
 // midpoint of two joints plus an offset ({m:['haL','haR'],o:[x,y,z]}). Joint-referenced
@@ -356,7 +413,7 @@ function propShapes(m,j,pose){
 // PROPFIT: include prop extent in the camera fit — needed when implements/furniture
 // define the frame (dumbbells, a bench, a wall). Off for the legacy apps so their
 // framing never shifts.
-const PROPFIT=false;
+const PROPFIT=true;
 function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
   for(let i=0;i<=24;i++){const pose=poseAt(m,i/24),jn=solve(pose);
     const pts=[];
@@ -471,7 +528,7 @@ const TRANS_DUR=8;
 // TR_ALL (build-time, Daily 10): a gap precedes EVERY movement, sized per movement
 // (m.tdur, default 10 — 15 where the setup change is bigger), voiced from the authored
 // m.setup script, and the figure holds the upcoming A keyframe instead of looping.
-const TR_ALL=false;
+const TR_ALL=true;
 const SEGS=[];
 MOVES.forEach((m,i)=>{
   if(TR_ALL){if(i>0)SEGS.push({trans:true,m,mi:i,dur:m.tdur||10});}
@@ -627,7 +684,7 @@ function finish(){
   $('badge').classList.remove('visible');
   document.querySelector('.wrap').classList.remove('state-trans');
   document.querySelector('.wrap').classList.add('state-done');
-  $('cue').innerHTML="<strong>Done.</strong> Stretch goals: met. Butterflies earned. Sip some water.";
+  $('cue').innerHTML="<strong>Done.</strong> Bugs dead, bridges built, posture reset. Carry yourself accordingly.";
   $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
   cDone();setTimeout(()=>say('Movement complete.'),600);
 }
@@ -653,8 +710,8 @@ $('bReset').onclick=()=>{
   $('bMain').style.display='';$('bMain').textContent='Start';
   $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
   $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
-  $('count').textContent='\u2013/10';
-  $('cue').innerHTML="<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.";
+  $('count').textContent='\u2013/11';
+  $('cue').innerHTML="<strong>Daily 10</strong> runs 10 minutes: postural maintenance, not training — nothing near failure, no recovery cost next to the Wed/Sat strength block. The theme is anterior-tilt correction. Hard rules: no pressing below parallel and nothing behind the neck (right AC joint); all pulling neutral or overhand, never underhand (bicep tendon rehab); no jumping or lateral bounding (right peroneal tendon). Each movement gets its own set-up countdown. Start lying on your back, knees up.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
 
