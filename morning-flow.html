@@ -84,11 +84,11 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <div class="barrow">
     <div class="tm" id="tm">0:00</div>
     <div class="track"><div class="fill" id="fill"></div></div>
-    <div class="count" id="count">–/10</div>
+    <div class="count" id="count">–/13</div>
   </div>
 
   <div class="dots" id="dots"></div>
-  <div class="cue" id="cue"><strong>Morning Flow</strong> runs about 8 minutes. Every movement is continuous and rhythmic — nothing is held. Each one does double duty: it feels like a workout and targets a specific weak point.</div>
+  <div class="cue" id="cue"><strong>Morning Flow</strong> runs about 13½ minutes: eight standing movements, continuous and rhythmic, then a five-movement ground finish. Each movement gets its own set-up countdown. Every one does double duty: it feels like a workout and targets a specific weak point.</div>
 
   <div class="row">
     <button class="btn-primary" id="bMain">Start</button>
@@ -102,30 +102,38 @@ button{border:none;border-radius:50px;font-family:inherit;cursor:pointer;transit
   <a class="vid" id="vid" href="#" target="_blank" rel="noopener">Watch a video demo →</a>
 </div>
 <script>
-const BUILDV='f1d67e4bb5';
+const BUILDV='bb24bdade7';
+// Morning Flow — 13 movements: eight standing (continuous and rhythmic), then a
+// five-movement ground finish moved in from the retired Morning Movement app
+// (2026-08-26; poses verbatim). TR_ALL build: tdur = length of the GET SET UP gap
+// BEFORE the movement (default 10, 15 for position changes, 5 for the explicit
+// get-on-the-ground gap before Folded cat-cows); setup = authored transition script,
+// spoken as "Next: <name>. <setup>". Work 680s + gaps 135s = 815s.
+// Retired from Flow (see src/d_retired.js): Rotations with shoulder slaps,
+// Lateral weight shifts.
 const MOVES=[
 {n:"Bouncing in place",pos:'standing',cue:"Light bounces, everything loose",dur:50,bil:false,cyc:1.0,
+ setup:"Stand easy, feet under your hips, arms loose.",
  A:{p:[0,57,0],yaw:22,tw:0,s:[4,4],hf:0,aL:[8,-11,14,-9],aR:[8,11,14,9],ikFL:[-5,93,1],ikFR:[5,93,1]},
  B:{p:[0,61,0],yaw:22,tw:0,s:[5,5],hf:0,aL:[16,-12,26,-10],aR:[16,12,26,10],ikFL:[-5,93,1],ikFR:[5,93,1]}},
 
-{n:"Rotations with shoulder slaps",pos:'standing',cue:"Twist from the waist — slap the shoulder, tap the low back",dur:50,bil:false,cyc:1.8,
- A:{p:[0,58,0],yaw:-6,tw:-44,s:[4,4],hf:-12,ikR:{w:[-7.7,32,-1.3]},ikL:{w:[6,65,-7]},ikFL:[-6,93,1],ikFR:[6,93,1]},
- M:{p:[0,58,0],yaw:-6,tw:0,s:[4,4],hf:0,ikL:{w:[-29,29,8]},ikR:{w:[29,29,8]},ikFL:[-6,93,1],ikFR:[6,93,1]},
- B:{p:[0,58,0],yaw:-6,tw:44,s:[4,4],hf:12,ikL:{w:[7.8,32,0.3]},ikR:{w:[-6,65,-7]},ikFL:[-6,93,1],ikFR:[6,93,1]}},
-
 {n:"Arm sweeps with knee dip",pos:'standing',cue:"Arms sweep, knees dip in rhythm",dur:50,bil:false,cyc:2.0,
+ setup:"Stay standing, feet under your hips, arms hanging.",
  A:{p:[0,58,0],yaw:24,tw:0,s:[4,4],hf:-6,aL:[62,-10,72,-8],aR:[58,10,68,8],ikFL:[-5,93,1],ikFR:[5,93,1]},
  B:{p:[0,70,-3],yaw:24,tw:0,s:[16,12],hf:8,aL:[-46,-10,-54,-8],aR:[-50,10,-58,8],ikFL:[-5,93,1],ikFR:[5,93,1]}},
 
 {n:"Punching rotations",pos:'standing',cue:"Stand tall, knees soft — punch out, push the shoulder blade forward",dur:50,bil:false,cyc:1.6,
+ setup:"Feet wider than your shoulders, knees soft, fists at your ribs.",
  A:{p:[0,61,0],yaw:-16,tw:26,s:[4,4],hf:22,aL:[80,-64,86,-70],aR:[86,20,90,6],ikFL:[-12,93,1],ikFR:[12,93,1],swL:-10,swR:28},
  B:{p:[0,61,0],yaw:-16,tw:-26,s:[4,4],hf:-22,aL:[86,-20,90,-6],aR:[80,64,86,70],ikFL:[-12,93,1],ikFR:[12,93,1],swL:-10,swR:28}},
 
 {n:"Dynamic lateral reaches",pos:'standing',cue:"Reach long overhead, lean to the far side",dur:50,bil:false,cyc:2.2,pin:'LR',
+ setup:"Feet wide, one hand on your hip, the other arm ready to reach.",
  A:{p:[0,60,0],yaw:-18,tw:0,sl:-16,s:[4,6],hf:-4,ikR:{w:[-8,12,2]},ikL:{w:[-11,64,3]},ikFL:[-12,93,1],ikFR:[12,93,1]},
  B:{p:[0,60,0],yaw:-18,tw:0,sl:16,s:[4,6],hf:-4,ikL:{w:[8,12,2]},ikR:{w:[11,64,3]},ikFL:[-12,93,1],ikFR:[12,93,1]}},
 
 {n:"Cross-body knee drives",pos:'standing',cue:"Knee up, opposite elbow to meet it",dur:50,bil:false,cyc:1.4,
+ setup:"Feet under your hips, stand tall, elbows up.",
  A:{p:[0,58,0],yaw:0,tw:14,s:[6,8],hf:12,aL:[-26,-12,-42,-8],aR:[26,-22,58,-30],
     lL:[100,20,-38,6],swL:25,ikFR:[6,93,1]},
  M:{p:[0,55.8,0],yaw:0,tw:0,s:[4,5],hf:0,aL:[8,-9,10,-7],aR:[8,9,10,7],
@@ -134,10 +142,12 @@ const MOVES=[
     ikFL:[-6,93,1],lR:[100,-20,-38,-6],swR:-25}},
 
 {n:"Chest opener swings",pos:'standing',cue:"Swing wide open, then cross in front",dur:50,bil:false,cyc:1.8,
+ setup:"Stand tall, arms out at shoulder height.",
  A:{p:[0,58,0],yaw:-14,tw:0,s:[3,3],hf:-6,aL:[80,-78,84,-84],aR:[80,78,84,84],ikFL:[-7,93,1],ikFR:[7,93,1]},
  B:{p:[0,58,0],yaw:-14,tw:0,s:[6,6],hf:6,aL:[86,26,88,44],aR:[86,-26,88,-44],ikFL:[-7,93,1],ikFR:[7,93,1]}},
 
 {n:"Hip circles",pos:'standing',cue:"Hands on hips, big slow circles",dur:60,bil:true,cyc:2.6,
+ setup:"Hands on your hips, feet planted.",
  orb:{hips:true,rx:9,rz:8,ry:2},
  A:{p:[0,60,0],yaw:20,tw:0,s:[4,4],hf:0,ikL:{k:"hpL"},ikR:{k:"hpR"},
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-8,93,1],ikFR:[8,93,1]},
@@ -145,14 +155,46 @@ const MOVES=[
     aL:[0,0,0,0],aR:[0,0,0,0],ikFL:[-8,93,1],ikFR:[8,93,1]}},
 
 {n:"Bent rotation sweeps",pos:'standing',cue:"Hinged forward, sweep the arms floor to sky",dur:50,bil:false,cyc:2.0,
+ setup:"Hinge forward halfway, arms hanging loose.",
  A:{p:[0,62,-4],yaw:6,tw:40,s:[54,58],hf:26,aL:[2,-4,2,-3],aR:[176,8,174,6],ikFL:[-7,93,1],ikFR:[7,93,1]},
  B:{p:[0,62,-4],yaw:6,tw:-40,s:[54,58],hf:-26,aL:[176,16,174,14],aR:[2,-17,2,-15],ikFL:[-7,93,1],ikFR:[7,93,1]}},
 
-{n:"Lateral weight shifts",pos:'standing',cue:"Sink into one hip, press the outside edge of that foot",dur:50,bil:false,cyc:2.2,
- A:{p:[-7,66,0],yaw:-18,tw:0,s:[4,-10],hf:-12,aL:[74,-52,80,-64],aR:[64,30,70,20],
-    ikFL:[-14,93,1],ikFR:[14,93,1]},
- B:{p:[7,66,0],yaw:-18,tw:0,s:[4,10],hf:12,aL:[64,-30,70,-20],aR:[74,52,80,64],
-    ikFL:[-14,93,1],ikFR:[14,93,1]}}
+// ---- ground block (poses moved verbatim from data2.js, 2026-08-26) ----
+// Explicit 5s "get on the ground" gap opens the block (Will's authored transition).
+{n:"Folded cat-cows",pos:'standing',cue:"Hands on bent knees, round then arch the spine",dur:30,bil:false,cyc:3.4,pin:"LR",tdur:5,
+ setup:"Time to get on the ground. Fold down, hands on your bent knees.",
+ A:{p:[0,64,0],yaw:22,tw:0,s:[74,86],hf:28,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[40,-6,-40,-5],lR:[40,6,-40,5]},
+ B:{p:[0,64,0],yaw:22,tw:0,s:[72,70],hf:-26,ikL:{k:"knL"},ikR:{k:"knR"},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[40,-6,-40,-5],lR:[40,6,-40,5]}},
+
+{n:"Cobra press-ups",pos:'prone',cue:"Press the chest up, hips stay down",dur:60,bil:false,cyc:3.2,tdur:15,
+ setup:"Lie face down, hands under your shoulders, elbows in.",
+ A:{p:[0,90.5,4],yaw:18,tw:0,s:[74,66],hf:10,ikL:{w:[-9,93,20]},ikR:{w:[9,93,20]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-92,-6,-88,-5],lR:[-96,6,-92,5]},
+ B:{p:[0,90.5,4],yaw:18,tw:0,s:[46,24],hf:-22,ikL:{w:[-9,93,20]},ikR:{w:[9,93,20]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-92,-6,-88,-5],lR:[-96,6,-92,5]}},
+
+{n:"Pedaling down dog",pos:'downdog',cue:"Alternate pressing each heel down",dur:60,bil:false,cyc:2.2,tdur:15,
+ setup:"Tuck your toes and press up and back into down dog, hips high.",
+ A:{p:[0,56,-2],yaw:20,tw:0,s:[136,136],hf:20,ikL:{w:[-9,93,34]},ikR:{w:[9,93,34]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-24,-6,-24,-5],lR:[-20,6,-40,5]},
+ B:{p:[0,56,-2],yaw:20,tw:0,s:[136,136],hf:20,ikL:{w:[-9,93,34]},ikR:{w:[9,93,34]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-20,-6,-40,-5],lR:[-24,6,-24,5]}},
+
+{n:"Thread the needle",pos:'quadruped',cue:"Reach up, then slide the arm under",dur:60,bil:true,cyc:3.6,pin:"LR",tdur:15,
+ setup:"Drop your knees and come to hands and knees, wrists under shoulders.",
+ A:{p:[0,74,-2],yaw:16,tw:52,s:[-74,-74],hf:-18,ikL:{w:[-9,93,-14]},
+    aL:[0,0,0,0],aR:[-58,58,-68,54],lL:[0,-6,90,-5],lR:[4,6,94,5]},
+ B:{p:[0,76,-2],yaw:16,tw:-58,s:[-78,-86],hf:26,ikL:{w:[-9,93,-14]},
+    aL:[0,0,0,0],aR:[72,-74,62,-70],lL:[0,-6,90,-5],lR:[4,6,94,5]}},
+
+{n:"90/90 with a fold",pos:'seated',cue:"Z-sit: front shin across, back shin behind — fold forward",dur:60,bil:true,cyc:3.4,cam:58,tdur:15,
+ setup:"Sit into a Z: front shin across in front, back shin behind you.",
+ A:{p:[0,90,0],yaw:-8,tw:0,s:[6,4],hf:0,ikL:{w:[-14,92,-6]},ikR:{w:[10,92,6]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lR:[88,12,6,-86],lL:[57,-76,-90,-6]},
+ B:{p:[0,90,0],yaw:-8,tw:0,s:[42,48],hf:-8,ikL:{w:[-4,92,16]},ikR:{w:[12,92,18]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lR:[88,12,6,-86],lL:[57,-76,-90,-6]}}
 ];
 
 // ================= 3D skeleton =================
@@ -254,7 +296,6 @@ function orbitPose(base,o,ph){
 
 const EXTRA={
 "Bouncing in place":["<strong>Form:</strong> Light, quick bounces on the balls of the feet. Knees soft, shoulders relaxed, arms loose. Let everything jiggle. <strong>Ankle note:</strong> if the right peroneal tendon objects, swap this for heel-to-toe rocks with the feet never leaving the floor.","qi+gong+bouncing+shaking+warmup"],
-"Rotations with shoulder slaps":["<strong>Form:</strong> Rotate the upper body side to side, arms completely loose. At each end of the twist the front hand folds up and slaps the opposite shoulder while the back hand wraps behind and taps the opposite low back. Drive from the waist, not the arms. <strong>Targets:</strong> T4–T8 rotation, where your chronic mid-back pain lives.","qi+gong+twisting+body+slapping+shoulders"],
 "Arm sweeps with knee dip":["<strong>Form:</strong> Both arms sweep forward and up, then back behind you as the knees dip. Continuous and pendulum-like — arms and knees move together. <strong>Targets:</strong> dynamic hip hinge, glutes and hamstrings, chest opening on the forward sweep.","qi+gong+arm+swings+front+back+knee+bend"],
 "Punching rotations":["<strong>Form:</strong> Stand tall, feet a bit wider than the shoulders, knees soft. Rotate from the waist and punch slowly, pushing the shoulder blade forward at the end of each punch","qi+gong+punching+rotation+exercise"],
 "Dynamic lateral reaches":["<strong>Form:</strong> Feet wide, one hand resting on the hip. Reach the other arm straight up and over the top as you bend sideways — a standing crescent, hip to fingertips. Alternate sides in one continuous arc. <strong>Targets:</strong> the lateral fascial line connecting IT band, obliques and lats. Addresses your right-side asymmetry.","dynamic+lateral+reach+side+bend+flow"],
@@ -262,7 +303,11 @@ const EXTRA={
 "Chest opener swings":["<strong>Form:</strong> Arms swing wide open, then cross in front. Alternate which arm crosses on top. <strong>Targets:</strong> opening fires rhomboids and lower trap; closing fires serratus. Both sides of your mid-back equation, in a range that's safe for the right AC joint.","dynamic+chest+opener+arm+swings+exercise"],
 "Hip circles":["<strong>Form:</strong> Hands on hips, feet planted. Push the hips forward, to the side, back and around. Half the time each direction. Make the circles big. <strong>Targets:</strong> hip capsule in every plane, IT band fascial connections, hip flexors.","standing+hip+circles+mobility+exercise"],
 "Bent rotation sweeps":["<strong>Form:</strong> Hinge forward about 45° and rotate side to side, sweeping the arms until they stack into one vertical line — bottom hand pointing at the floor, top hand at the sky. Hips stay facing forward — rotation comes from the spine. <strong>Targets:</strong> thoracic rotation under a gravity load, more effective than the upright version.","bent+over+spinal+rotation+windmill+qi+gong"],
-"Lateral weight shifts":["<strong>Form:</strong> Wide stance, shift fully into one hip and sink. Press through the <em>outside</em> edge of the planted foot. Arms sweep across in the direction of travel. <strong>Targets:</strong> pressing the outside edge is active eversion — dynamic peroneal work, plus glute medius loading. Zero impact.","standing+lateral+weight+shift+exercise+hip"]};
+"Folded cat-cows":["<strong>Form:</strong> Knees bent, hands resting on them. Round the spine on the exhale, arch and open the chest on the inhale. <strong>Training link:</strong> targets T4–T8 extension — where your chronic mid-back pain lives.","standing+folded+cat+cow+spinal+mobility"],
+"Cobra press-ups":["<strong>Form:</strong> Face down, hands under shoulders. Press the chest up, hips stay on the floor. Lower with control. <strong>Shoulder note:</strong> elbows tucked close to the ribs — flaring them loads the right AC joint.","cobra+press+up+mckenzie+extension"],
+"Pedaling down dog":["<strong>Form:</strong> Alternate pressing one heel toward the floor while the other knee bends. Slow and rhythmic. <strong>Ankle note:</strong> gentle calf and Achilles work with no peroneal load — keep the foot tracking straight, not rolling outward.","pedaling+downward+dog+calf+stretch"],
+"Thread the needle":["<strong>Form:</strong> On hands and knees. Reach one arm to the ceiling, then slide it under the opposite armpit and let the shoulder rest toward the floor. Switch at the halfway chime. <strong>Training link:</strong> thoracic rotation plus scapular mobility — your mid-back and right shoulder IR limitation.","thread+the+needle+thoracic+rotation+stretch"],
+"90/90 with a fold":["<strong>Form:</strong> Z-sit: front leg's outer thigh and shin flat on the floor, back leg's inner thigh down with the shin pointing straight behind you. Sit tall, then hinge forward over the front shin without rounding","90+90+hip+stretch+with+forward+fold"]};
 MOVES.forEach(m=>{m.long=EXTRA[m.n][0];m.q=EXTRA[m.n][1];});
 
 // ---------- projection / drawing ----------
@@ -344,7 +389,7 @@ function propShapes(m,j,pose){
 // PROPFIT: include prop extent in the camera fit — needed when implements/furniture
 // define the frame (dumbbells, a bench, a wall). Off for the legacy apps so their
 // framing never shifts.
-const PROPFIT=false;
+const PROPFIT=true;
 function fitOf(m){CAM=m.cam||40;let a=1e9,b=-1e9,c=1e9,d=-1e9;
   for(let i=0;i<=24;i++){const pose=poseAt(m,i/24),jn=solve(pose);
     const pts=[];
@@ -475,7 +520,7 @@ const TRANS_DUR=8;
 // TR_ALL (build-time, Daily 10): a gap precedes EVERY movement, sized per movement
 // (m.tdur, default 10 — 15 where the setup change is bigger), voiced from the authored
 // m.setup script, and the figure holds the upcoming A keyframe instead of looping.
-const TR_ALL=false;
+const TR_ALL=true;
 const SEGS=[];
 MOVES.forEach((m,i)=>{
   if(TR_ALL){if(i>0)SEGS.push({trans:true,m,mi:i,dur:m.tdur||10});}
@@ -631,7 +676,7 @@ function finish(){
   $('badge').classList.remove('visible');
   document.querySelector('.wrap').classList.remove('state-trans');
   document.querySelector('.wrap').classList.add('state-done');
-  $('cue').innerHTML="<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, posterior chain warm, calves primed. Go get it.";
+  $('cue').innerHTML="<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, needle threaded, cobra charmed. Go get it.";
   $('bMain').style.display='none';$('tm').textContent='\u2713';$('fill').style.width='100%';
   cDone();setTimeout(()=>say('Movement complete.'),600);
 }
@@ -657,8 +702,8 @@ $('bReset').onclick=()=>{
   $('bMain').style.display='';$('bMain').textContent='Start';
   $('mNum').textContent='READY';$('mName').textContent='Tap Start to begin';$('mTarget').textContent='';
   $('badge').classList.remove('visible');$('fill').style.width='0%';$('tm').textContent='0:00';
-  $('count').textContent='\u2013/10';
-  $('cue').innerHTML="<strong>Morning Flow</strong> runs about 8 minutes. Every movement is continuous and rhythmic — nothing is held. Each one does double duty: it feels like a workout and targets a specific weak point.";
+  $('count').textContent='\u2013/13';
+  $('cue').innerHTML="<strong>Morning Flow</strong> runs about 13½ minutes: eight standing movements, continuous and rhythmic, then a five-movement ground finish. Each movement gets its own set-up countdown. Every one does double duty: it feels like a workout and targets a specific weak point.";
   MOVES.forEach((_,i)=>$('d'+i).className='dot');
 };
 

@@ -1,3 +1,11 @@
+// ARCHIVED — Morning Movement app retired 2026-08-26; this file is NOT built.
+// Kept intact as the wholesale record of that app. Redistribution of its movements:
+//   → Morning Flow (d_flow.js): Folded cat-cows, Cobra press-ups, Pedaling down dog,
+//     Thread the needle, 90/90 with a fold
+//   → Daily 13 (d_daily.js): Deep squats, Reverse lunges, Plank hold
+//   → src/d_retired.js (available for future versions): Parallel squats, Knee circles,
+//     Hip hinges, Prone Y raises, Tuck + untuck
+// Cue text lives in src/mm_extra.js (archived alongside).
 const MOVES=[
 {n:"Deep squats",pos:'standing',cue:"Sink until you're almost sitting on your heels",dur:30,bil:false,cyc:2.8,pin:"LR",
  A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},

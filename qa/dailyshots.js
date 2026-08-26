@@ -1,4 +1,4 @@
-// Daily 10 visual QA: one screenshot per movement mid-animation, plus a transition
+// Daily 13 visual QA: one screenshot per movement mid-animation, plus a transition
 // segment (static preview + authored setup text + state-trans styling). Numeric
 // invariants live in qa/daily.js — these images are the mandatory LOOK step.
 const fs=require('fs'),path=require('path');
@@ -13,18 +13,18 @@ const OUT=path.join(__dirname,'screenshots');
   const page=await ctx.newPage();
   let fail=false;
   const check=(name,ok)=>{console.log(`${name.padEnd(58)} ${ok?'ok':'FAIL'}`);if(!ok)fail=true;};
-  await page.goto(`http://127.0.0.1:${srv.port}/daily-10.html`);
+  await page.goto(`http://127.0.0.1:${srv.port}/daily-13.html`);
   const n=await page.evaluate(()=>MOVES.length);
   for(let i=0;i<n;i++){
     await page.evaluate(i=>{started=true;go(segOfMove(i));},i);
     await page.waitForTimeout(900);   // mid-animation
     const name=await page.evaluate(i=>MOVES[i].n,i);
     const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
-    await page.screenshot({path:path.join(OUT,`daily-10-m${String(i+1).padStart(2,'0')}-${slug}.png`),fullPage:true});
+    await page.screenshot({path:path.join(OUT,`daily-13-m${String(i+1).padStart(2,'0')}-${slug}.png`),fullPage:true});
     const svg=await page.innerHTML('#layer');
     check(`m${i+1} ${name}: figure drawn`,svg.includes('<line')&&svg.includes('<circle'));
   }
-  // transition segment: gap before movement 4 (side plank) — authored script + static hold
+  // transition segment: gap before movement 4 (glute bridge) — authored script + static hold
   await page.evaluate(()=>{started=true;go(SEGS.findIndex(s=>s.trans&&s.mi===3));});
   await page.waitForTimeout(400);
   const num=await page.textContent('#mNum');
@@ -38,7 +38,7 @@ const OUT=path.join(__dirname,'screenshots');
   await page.waitForTimeout(500);
   const f2=await page.innerHTML('#layer');
   check('gap figure holds the A keyframe (static preview)',f1===f2);
-  await page.screenshot({path:path.join(OUT,'daily-10-transition.png'),fullPage:true});
+  await page.screenshot({path:path.join(OUT,'daily-13-transition.png'),fullPage:true});
   // and a work segment must animate
   await page.evaluate(()=>{started=true;go(segOfMove(3));});
   await page.waitForTimeout(300);

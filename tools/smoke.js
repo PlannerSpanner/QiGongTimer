@@ -54,7 +54,7 @@ function run(app){
   console.log(`${app.padEnd(20)} top-level ok | figure drawn: ${!!drawn} (${feet} lines) | ground placed: ${!!ground}`);
   if(!drawn||!ground) process.exitCode=1;
 }
-for(const app of ['morning-flow','morning-movement','prenatal-stretch','prenatal-movement','daily-10']){
+for(const app of ['morning-flow','prenatal-stretch','prenatal-movement','daily-13']){
   try{run(app);}catch(e){console.log(app,'RUNTIME ERROR:',e.message);process.exitCode=1;}
 }
 // strength.html has no timer/buttons: execute top-level, run frames, click a tab

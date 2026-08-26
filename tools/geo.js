@@ -1,7 +1,7 @@
 // geometry invariants: limb lengths ±0.2, toe len 6.4, no joint through floor (y>95.5),
 // foot drift ≤1.8 for movements outside the allowed moving set (see CLAUDE.md gauntlet).
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
-const APPS=['morning-flow','morning-movement','prenatal-stretch','prenatal-movement','daily-10'];
+const APPS=['morning-flow','prenatal-stretch','prenatal-movement','daily-13'];
 // movements where a foot is SUPPOSED to travel (kept in sync with drift.js)
 const MOVING=new Set([
  'Reverse lunges','Cross-body knee drives','Pedaling down dog',

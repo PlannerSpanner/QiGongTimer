@@ -1,9 +1,9 @@
-// Daily 10 form invariants, checked against the BUILT page (research-anchored; see
+// Daily 13 form invariants, checked against the BUILT page (research-anchored; see
 // docs/movement-reference.md): dips never below parallel, dead bug lumbar flat,
-// glute bridge extends at the hip not the lumbar spine, half-kneel tucks BEFORE it
-// shifts, row torso never heaves, session lands on exactly 600s including gaps.
+// glute bridge extends at the hip not the lumbar spine, row torso never heaves,
+// held dumbbells in front of the torso, session lands on exactly 715s including gaps.
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
-const h=fs.readFileSync(path.join(ROOT,'daily-10.html'),'utf8');
+const h=fs.readFileSync(path.join(ROOT,'daily-13.html'),'utf8');
 const js=h.split('<script>')[1].split('</script>')[0];
 const core=js.slice(0,js.indexOf('const layer=document.getElementById'));
 const {MOVES,solve,poseAt,figMarkup,fitOf,TORSO,PROP}=
@@ -88,18 +88,18 @@ const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]);
 // are all joint-attached, so in the emitted markup (paint order) the first
 // PROP-colored element must come after the torso polygon — behind-the-body dumbbells
 // were a real bug (fixed 2026-08-12); this is the hard regression guard.
-for(const name of ['Dumbbell bent-over row','Farmer hold']){
+for(const name of ['Dumbbell bent-over row','Dumbbell farmer hold']){
  const m=get(name),fit=fitOf(m);let worst=1;
  for(const ph of PH){const mk=figMarkup(m,fit,ph);
    const t=mk.indexOf(`fill="${TORSO}"`),p=mk.indexOf(PROP);
    if(t<0||p<0||p<t)worst=0;}
  check(`${name.toLowerCase()}: dumbbells never behind the torso`,worst===1);}
 
-// timing: work + authored gaps == 600s exactly; every movement past the first has
-// an authored setup script
+// timing: work + authored gaps == 715s exactly (555 + 160); every movement past the
+// first has an authored setup script
 {const work=MOVES.reduce((a,m)=>a+m.dur,0);
  const gaps=MOVES.slice(1).reduce((a,m)=>a+(m.tdur||10),0);
- check(`session is 10:00 exactly (${work}s work + ${gaps}s gaps)`,work+gaps===600);
+ check(`session is 11:55 exactly (${work}s work + ${gaps}s gaps)`,work+gaps===715);
  check('every movement has an authored setup script',MOVES.every(m=>typeof m.setup==='string'&&m.setup.length>10));}
 
 console.log(fail?'DAILY FAIL':'DAILY PASS');

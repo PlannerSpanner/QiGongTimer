@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
-const APPS={'morning-flow':'d_flow.js','morning-movement':null,'prenatal-stretch':'d_stretch.js','prenatal-movement':'d_birth.js','daily-10':'d_daily.js'};
+const APPS={'morning-flow':'d_flow.js','prenatal-stretch':'d_stretch.js','prenatal-movement':'d_birth.js','daily-13':'d_daily.js'};
 // movements where a foot is SUPPOSED to travel
 const MOVING={
  'Reverse lunges':'steps back','Cross-body knee drives':'knee lifts','Pedaling down dog':'heels alternate',

@@ -1,7 +1,12 @@
 import hashlib, json, os, re
 
-MM = open(os.path.join(OUT, 'morning-movement.html'), encoding='utf-8').read()
-HEAD = MM.split('<script>')[0]
+# Page template head: frozen snapshot of the retired Morning Movement build (the
+# original template donor, app retired 2026-08-26). Amber baseline values; build()
+# re-targets title/subtitle/intro/count per app below. Before 2026-08-26 this was
+# read from the ALREADY-BUILT morning-movement.html — the source of the stale-stamp
+# trap documented in CLAUDE.md; the regex replaces below still guard against baked
+# values drifting inside this snapshot.
+HEAD = open('app_head.html', encoding='utf-8').read()
 TPL  = open('app_tpl.js', encoding='utf-8').read()
 ENG  = open('eng2.js', encoding='utf-8').read()
 
@@ -21,11 +26,10 @@ def build(out, data_file, extra, title, sub, icon, theme, colors, intro, done_ms
     head = head.replace('<div class="sub">Mobility · Control · Stability</div>',
                         f'<div class="sub">{sub}</div>')
     head = re.sub(r'<div class="cue" id="cue">.*?</div>\n', f'<div class="cue" id="cue">{intro}</div>\n', head, flags=re.S)
-    # regex (not a literal-value replace): HEAD is read from the already-built
-    # morning-movement.html on disk (see top of file), so whatever count is currently
-    # baked into it must be matched dynamically, not against a hardcoded old value —
-    # otherwise every app's badge silently keeps a stale count once the template's own
-    # baked value drifts from the hardcoded literal.
+    # regex (not a literal-value replace): whatever count is baked into the
+    # app_head.html snapshot must be matched dynamically, not against a hardcoded
+    # old value — otherwise every app's badge silently keeps a stale count if the
+    # snapshot's baked value ever drifts from the hardcoded literal.
     head = re.sub(r'<div class="count" id="count">–/\d+</div>',
                   '<div class="count" id="count">–/%d</div>' % colors['n'], head)
     # banner CSS must be injected BEFORE the color swaps: the swap tables rewrite

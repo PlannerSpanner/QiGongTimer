@@ -1,4 +1,7 @@
 
+// ARCHIVED — Morning Movement app retired 2026-08-26; this file is NOT built.
+// Kept intact alongside src/data2.js. Entries for redistributed movements were
+// copied into x_flow.js / x_daily.js; the rest are mirrored in src/d_retired.js.
 // long-form coaching cues + demo search terms, keyed to the pose table above
 const EXTRA={
 "Deep squats":["<strong>Form:</strong> Feet shoulder-width, heels down. Hips go back first, then straight down until you are nearly sitting on your heels — torso and shins stay parallel to each other, ankles folding to about 65° at the bottom","deep+bodyweight+squat+mobility+drill"],

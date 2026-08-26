@@ -3,7 +3,7 @@
 Rebuilt 2026-08-02. The original research notes behind the pose data were lost with the
 sandbox that built the apps; this document reconstructs them as the **single text source of
 truth** for placement, position, sequence, direction, and anatomical form for every movement
-in the four apps. When a pose or cue is edited, check it against this file first, then run
+in the apps (three timers + the strength reference). When a pose or cue is edited, check it against this file first, then run
 the QA gauntlet. When this file and the app data disagree, resolve the disagreement
 deliberately and update both.
 
@@ -59,9 +59,22 @@ movements needed direction-change *wording* (fixed 2026-08-02); nothing else is 
 
 ---
 
-# Morning Flow — 10 movements, all standing, continuous and rhythmic
+# Morning Flow — 13 movements: standing flow → ground finish (TR_ALL)
 
-Nothing is held. Every movement doubles as warmup plus targeted rehab.
+Eight standing movements, continuous and rhythmic — nothing held — then a
+five-movement ground block moved in verbatim from the retired Morning Movement app
+(2026-08-26). Every movement doubles as warmup plus targeted rehab.
+
+**Transitions (TR_ALL build):** every movement is preceded by an authored GET SET UP
+gap (`tdur` 10s in the standing block, 15s for the floor position changes, and an
+explicit **5s "get on the ground" gap before Folded cat-cows** — Will's authored
+block transition). The voice reads "Next: <name>. <setup script>"; the figure holds
+the upcoming A keyframe statically, dimmed, with a tan countdown; a 520 Hz 3-2-1
+triple tick ends the gap. Work 680s + gaps 135s = **815s (13:35)**; launcher label
+14 min.
+
+Retired from Flow (see "Retired — available for future versions"): Rotations with
+shoulder slaps, Lateral weight shifts.
 
 ## 1. Bouncing in place — 50s, ~1s cycle
 - **Setup:** feet hip-width, knees soft, arms hanging loose.
@@ -72,16 +85,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
   Fallback: heel-to-toe rocks, feet never leaving the floor.
 - **Figure:** small vertical oscillation, feet under hips, no horizontal foot travel.
 
-## 2. Rotations with shoulder slaps — 50s, 1.8s cycle, alternating
-- **Setup:** feet shoulder-width, knees soft.
-- **Execution:** rotate the trunk side to side from the waist; arms completely limp so they
-  wrap and slap the shoulders/back at each end.
-- **Anchors:** rotation biased to the thoracic spine (T4–T8); pelvis rotates a fraction of
-  the shoulders; heels stay down.
-- **Faults:** swinging the arms actively; whole-body spin with no spinal rotation.
-- **Figure:** visible trunk twist with loose trailing arms; feet planted.
-
-## 3. Arm sweeps with knee dip — 50s, 2s cycle, symmetric
+## 2. Arm sweeps with knee dip — 50s, 2s cycle, symmetric
 - **Setup:** feet hip-width.
 - **Execution:** both arms sweep forward/up as the knees straighten, then swing down and
   behind as the knees dip — one pendulum, arms and knees phase-locked.
@@ -90,7 +94,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** arms and knees out of phase; squatting instead of dipping.
 - **Figure:** synchronized arm arc and knee bend; heels planted.
 
-## 4. Punching rotations — 50s, 1.6s cycle, unilateral (switch)
+## 3. Punching rotations — 50s, 1.6s cycle, unilateral (switch)
 - **Setup:** wide horse stance — feet well outside shoulders, toes slightly out, knees bent
   and pressing outward, pelvis neutral, constant depth.
 - **Execution:** rotate from the waist and punch slowly across the body; at the end of each
@@ -101,7 +105,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
   protraction.
 - **Figure:** wide low stance held constant; one arm extending with trunk rotation.
 
-## 5. Dynamic lateral reaches — 50s, 2.2s cycle, unilateral (switch)
+## 4. Dynamic lateral reaches — 50s, 2.2s cycle, unilateral (switch)
 - **Setup:** feet wide, both planted.
 - **Execution:** reach one arm overhead and lean to the opposite side — long line from hip
   to fingertips; return and repeat, same side until the switch.
@@ -110,7 +114,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** hip swaying out instead of trunk bending; trailing heel lifting.
 - **Figure:** clear side-bend with overhead arm, pelvis relatively level, feet planted.
 
-## 6. Cross-body knee drives — 50s, 1.4s cycle, unilateral (switch)
+## 5. Cross-body knee drives — 50s, 1.4s cycle, unilateral (switch)
 - **Setup:** standing tall.
 - **Execution:** drive one knee up and across as the opposite elbow comes down and across to
   meet it; arms pump; stay tall through the standing side.
@@ -120,7 +124,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Figure:** one knee lifted high with opposite-side trunk rotation; standing foot planted
   (foot travel on the driving leg is expected and allowed in QA).
 
-## 7. Chest opener swings — 50s, 1.8s cycle, alternating
+## 6. Chest opener swings — 50s, 1.8s cycle, alternating
 - **Setup:** feet shoulder-width, arms at shoulder height.
 - **Execution:** swing both arms wide open (horizontal abduction), then cross in front,
   alternating which arm crosses on top each rep.
@@ -129,7 +133,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** ballistic fling at end range; arms drifting down to waist height.
 - **Figure:** horizontal arm swings, torso upright, feet planted.
 
-## 8. Hip circles — 50s, 2.6s cycle, orbital (direction change)
+## 7. Hip circles — 60s, 2.6s cycle, orbital (direction change)
 - **Setup:** hands on hips, feet planted hip-to-shoulder width, knees soft.
 - **Execution:** push the hips forward → side → back → around in the biggest smooth circle
   available; half the time each direction, reversing at the halfway chime.
@@ -139,7 +143,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Figure:** pelvis translating around a circle while feet stay pinned; mirrored (reversed)
   after halfway.
 
-## 9. Bent rotation sweeps — 50s, 2s cycle, alternating
+## 8. Bent rotation sweeps — 50s, 2s cycle, alternating
 - **Setup:** hinge forward about 45°, spine long, arms hanging.
 - **Execution:** rotate the trunk side to side under gravity; the loose arms wrap around the
   body at each end.
@@ -148,77 +152,17 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** standing up mid-set; lumbar rotation/hip swivel; actively swinging arms.
 - **Figure:** hinged torso with rotation, arms trailing; feet planted.
 
-## 10. Lateral weight shifts — 50s, 2.2s cycle, unilateral (switch)
-- **Setup:** wide stance, toes forward.
-- **Execution:** shift fully into one hip and sink; press deliberately through the **outside
-  edge** of the loaded foot (active eversion — dynamic peroneal training, zero impact);
-  arms sweep across in the direction of travel.
-- **Anchors:** loaded knee tracks over the foot; pelvis stays fairly level; the outside-edge
-  press is the entire point — cue it every rep.
-- **Faults:** knee collapsing inward; torso pitching forward; passive foot.
-- **Figure:** clear weight shift toward one leg with the body sinking over it (foot travel
-  allowed in QA).
-
----
-
-# Morning Movement — 13 movements: standing mobility → floor → core, no impact. 8s setup gaps are auto-inserted between position changes (pos tags).
-
-## 1. Deep squats — 30s, 2.8s cycle, symmetric, feet pinned
-- **Setup:** feet shoulder-width, toes slightly out, heels down.
-- **Execution:** hips go **back first**, then straight down until nearly sitting on the
-  heels; drive up through the whole foot.
-- **Anchors (research-anchored, do not drift):** torso and shins stay **parallel to each
-  other** throughout; ankle folds from ~90° to ~**65°** at the bottom; heels never lift;
-  knees track over the second toe.
-- **Faults:** heels rising; chest dropping faster than the shins incline; bottoming out into
-  a rounded back.
-- **Figure:** tibia–torso parallelism visible at every depth; feet planted (pin LR); deep
-  bottom position near the heels.
-
-## 2. Parallel squats — 30s, 2.4s cycle, symmetric, feet pinned
-- Same pattern as deep squats, but **stop at thighs parallel**; chest carries prouder
-  (more vertical) than the deep squat; same knee tracking and planted heels.
-- **Figure:** obviously shallower bottom than movement 1, prouder chest angle.
-
-## 3. Knee circles — 30s, 3.2s cycle, orbital (direction change), feet pinned
-- **Setup:** feet together-ish and planted, knees bent, hands resting on the knees.
-- **Execution:** circle the knees one direction; reverse at the halfway chime.
-- **Anchors:** weight even across both feet the whole orbit; circle size tuned for
-  **projected on-screen knee motion** (the swivel cones are asymmetric left/right — never
-  mirror a swivel by sign-flip; re-fit numerically); shrink the circle if the right ankle
-  complains.
-- **Faults:** heels peeling; hips doing the circle instead of knees.
-- **Figure:** knees orbiting about the hip→ankle axis, feet and pelvis quiet.
-
-## 4. Reverse lunges — 30s, 3.2s cycle, unilateral (switch), front foot pinned
-- **Setup:** standing tall.
-- **Execution:** step back about two feet, landing on the ball of the back foot; lower;
-  drive back up through the front heel to standing.
-- **Anchors (research-anchored):** **front shin stays vertical** — knee stacked over ankle;
-  both knees near 90° at the bottom; **back knee hovers 1–2 inches** off the floor, never
-  touches; torso upright.
-- **Faults:** front knee traveling over the toes; back knee slamming down; short choppy step.
-- **Figure:** rear foot stepping back and returning (travel expected in QA); front shin
-  vertical at depth; back-knee hover visible.
-
-## 5. Hip hinges — 30s, 2.8s cycle, symmetric, feet pinned
-- **Setup:** feet hip-width, soft knees.
-- **Execution:** push the hips straight **back** (not down); chest travels forward; return
-  by driving the hips through.
-- **Anchors:** spine long neutral; shins near vertical throughout; hands trace the thigh
-  (bar path); this grooves the narrow-sumo deadlift pattern.
-- **Faults:** squatting (knees forward, hips dropping); rounding; hyperextending at the top.
-- **Figure:** hips translating backward with a flat inclined torso, shins vertical.
-
-## 6. Folded cat-cows — 30s, 3.4s cycle, symmetric, feet pinned
-- **Setup:** knees bent, hands resting on the knees, weight through the arms.
+## 9. Folded cat-cows — 30s, 3.4s cycle, symmetric, feet pinned — 5s "get on the ground" gap before
+- **Setup:** knees bent, hands resting on the knees, weight through the arms. Entered via
+  the explicit 5s authored gap ("Time to get on the ground. Fold down, hands on your bent
+  knees.") — the doorway into the ground block.
 - **Execution:** exhale — round the whole spine toward the ceiling; inhale — arch and open
   the chest.
 - **Anchors:** emphasis on **T4–T8 extension** on the arch; move segmentally, slow.
 - **Faults:** hinging only at the low back; elbows locking the movement out.
 - **Figure:** alternating spinal round/arch while hands stay on knees, feet planted.
 
-## 7. Cobra press-ups — 60s, 3.2s cycle, symmetric (McKenzie extension)
+## 10. Cobra press-ups — 60s, 3.2s cycle, symmetric (McKenzie extension)
 - **Setup:** face down, hands under the shoulders, legs relaxed.
 - **Execution:** press the chest up and forward, hips staying on the floor; lower with
   control.
@@ -227,22 +171,7 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** hips lifting (turning it into up-dog); shoulders shrugging to the ears.
 - **Figure:** chest arcing up while pelvis and legs stay grounded.
 
-## 8. Prone Y raises — 30s, 3.0s cycle, symmetric
-- **Setup:** face down (straight after cobra — no position change), arms overhead at
-  ~30–45° out from the midline, thumbs up.
-- **Execution:** draw the shoulder blades down and back and float the arms an inch or
-  two off the floor; lower with control. Chest may barely graze up; neck neutral,
-  gaze down.
-- **Anchors (research-anchored):** lift comes from the **lower traps**, not low-back
-  extension; **no shrugging** — shoulders stay away from the ears; thumbs-up
-  rotation throughout. Friendly to the right AC joint — trains the lower-trap side
-  of that balance.
-- **Faults:** shrugging into the ears; cranking the neck up; ballistic swinging;
-  arching the low back to fake height.
-- **Figure:** prone with Y-angled arms visibly floating and lowering; pelvis and legs
-  quiet throughout.
-
-## 9. Pedaling down dog — 60s, 2.2s cycle, alternating
+## 11. Pedaling down dog — 60s, 2.2s cycle, alternating
 - **Setup:** inverted V — hands and feet down, hips high.
 - **Execution:** alternately press one heel toward the floor while the other knee bends;
   slow and rhythmic.
@@ -250,27 +179,6 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
   floor away; gentle calf/Achilles load only.
 - **Faults:** bouncing the heel; rolling the pedaling foot outward; sagging shoulders.
 - **Figure:** high-hip V with alternating heel drop (small foot travel expected in QA).
-
-## 10. Tuck + untuck — 60s, 3.6s cycle, symmetric, feet pinned
-- **Setup:** supine, knees bent, feet flat, arms relaxed.
-- **Execution:** flatten the low back into the floor (posterior tilt), then let it arch
-  gently away (anterior tilt). Only the pelvis moves.
-- **Anchors:** ribs and everything above them stay quiet on the floor; small, controlled,
-  breath-paced.
-- **Faults:** glute squeeze doing the work; lifting the hips; moving the ribcage.
-- **Figure:** subtle pelvic roll with the back on the floor, feet planted.
-
-## 11. 90/90 with a fold — 60s, 3.4s cycle, unilateral (switch)
-- **Setup (research-anchored — this is a Z-sit):** front leg at 90° with its **outer** thigh
-  and shin flat on the floor; back leg at 90° with its **inner** thigh down and the shin
-  pointing straight behind; sit tall on both sit bones as much as the hips allow.
-- **Execution:** hinge the chest forward over the front shin, spine long; return.
-- **Anchors:** the fold comes from the hips, not spinal rounding; back-leg shin stays at
-  90° behind, not tucked; front hip in external rotation, back hip internal.
-- **Faults:** collapsing onto one hip and rounding to fake depth; the back leg drifting
-  into a side-sit.
-- **Figure:** unmistakable Z-sit geometry (not a cross-legged sit), then a flat-back hinge
-  over the front shin.
 
 ## 12. Thread the needle — 60s, 3.6s cycle, unilateral (switch), knees pinned
 - **Setup:** quadruped — wrists under shoulders, knees under hips.
@@ -282,14 +190,17 @@ Nothing is held. Every movement doubles as warmup plus targeted rehab.
 - **Faults:** hips swinging sideways; collapsing onto the head instead of the shoulder.
 - **Figure:** quadruped base fixed while one arm sweeps from ceiling-reach to threaded-under.
 
-## 13. Plank hold — 60s, 4s cycle (micro-adjust breathing rhythm), symmetric
-- **Setup:** forearm plank — elbows under shoulders (kinder to the right AC joint than
-  straight-arm).
-- **Execution:** hold one straight line, breathing steadily.
-- **Anchors:** ear–shoulder–hip–ankle in line; glutes squeezed, ribs down, and **push the
-  floor away** to fire serratus (same cue as the landmine press).
-- **Faults:** hips sagging or piking; head dropping; breath holding.
-- **Figure:** rigid straight line from head to heels on forearms; no visible drift.
+## 13. 90/90 with a fold — 60s, 3.4s cycle, unilateral (switch)
+- **Setup (research-anchored — this is a Z-sit):** front leg at 90° with its **outer** thigh
+  and shin flat on the floor; back leg at 90° with its **inner** thigh down and the shin
+  pointing straight behind; sit tall on both sit bones as much as the hips allow.
+- **Execution:** hinge the chest forward over the front shin, spine long; return.
+- **Anchors:** the fold comes from the hips, not spinal rounding; back-leg shin stays at
+  90° behind, not tucked; front hip in external rotation, back hip internal.
+- **Faults:** collapsing onto one hip and rounding to fake depth; the back leg drifting
+  into a side-sit.
+- **Figure:** unmistakable Z-sit geometry (not a cross-legged sit), then a flat-back hinge
+  over the front shin.
 
 ---
 
@@ -663,13 +574,16 @@ grip loads the distal bicep tendon at the radial tuberosity (in rehab).
 
 ---
 
-# Daily 10 — 11 movements, ~10 min including authored setup gaps
+# Daily 13 — 13 movements, ~12 min (11:55) including authored setup gaps
 
-Daily postural maintenance alongside the Wed/Sat strength block: zero meaningful
-recovery cost, nothing near failure. Primary goal is anterior pelvic tilt correction
-(lower crossed syndrome): SHORT/overactive iliopsoas, rectus femoris, TFL + lumbar
-erectors vs LONG/inhibited glute max/med + deep abdominals (TVA, obliques). Every
-"ribs down / tuck / flat back" cue is counter-programming of that pattern.
+Renamed from Daily 10 on 2026-08-26 (daily-10.html lives on as a redirect stub for
+old bookmarks). Daily postural maintenance alongside the Wed/Sat strength block: zero
+meaningful recovery cost, nothing near failure. Primary goal is anterior pelvic tilt
+correction (lower crossed syndrome): SHORT/overactive iliopsoas, rectus femoris, TFL
++ lumbar erectors vs LONG/inhibited glute max/med + deep abdominals (TVA, obliques).
+Every "ribs down / tuck / flat back" cue is counter-programming of that pattern.
+Deep squats, Reverse lunges and Plank hold moved in verbatim from the retired
+Morning Movement app.
 
 **Hard constraints (do not edit away):**
 - Right AC joint separation: no pressing below parallel, no wide-grip pressing,
@@ -678,15 +592,43 @@ erectors vs LONG/inhibited glute max/med + deep abdominals (TVA, obliques). Ever
 - Right peroneal tendon: no jumping, no lateral bounding.
 
 **Transitions (TR_ALL build):** every movement is preceded by an authored GET SET UP
-gap (`tdur` 10s, 15s where the change is bigger: to/from floor, dumbbells, bench,
-wall). The voice reads "Next: <name>. <setup script>" naming equipment and starting
-position; the figure holds the upcoming A keyframe statically, dimmed, with a tan
-countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the single
-380 Hz tick). Work 465s + gaps 135s = 600s exactly.
+gap. Position flow is standing (1-2) → floor (3-9) → standing/bench (10-13); the two
+block changes (into Dead bug, into the Row) and the bigger reconfigurations carry
+`tdur` 15s, small floor rolls and same-position changes 10s. The voice reads
+"Next: <name>. <setup script>" naming equipment and starting position; the figure
+holds the upcoming A keyframe statically, dimmed, with a tan countdown; a 520 Hz
+3-2-1 triple tick ends the gap (work segments keep the single 380 Hz tick).
+Work 555s + gaps 160s = **715s (11:55)**; launcher label 12 min.
 
-## 1. Dead bug — 45s, 3.6s cycle, bilateral (mirror swaps the lead pair)
+Retired: Wall slide (see "Retired — available for future versions").
+
+## 1. Deep squats — 30s, 2.8s cycle, symmetric, feet pinned
+- **Setup:** feet shoulder-width, toes slightly out, heels down. Session starts here,
+  standing — no gap before the first movement.
+- **Execution:** hips go **back first**, then straight down until nearly sitting on the
+  heels; drive up through the whole foot.
+- **Anchors (research-anchored, do not drift):** torso and shins stay **parallel to each
+  other** throughout; ankle folds from ~90° to ~**65°** at the bottom; heels never lift;
+  knees track over the second toe.
+- **Faults:** heels rising; chest dropping faster than the shins incline; bottoming out into
+  a rounded back.
+- **Figure:** tibia–torso parallelism visible at every depth; feet planted (pin LR); deep
+  bottom position near the heels.
+
+## 2. Reverse lunges — 30s, 3.2s cycle, unilateral (switch), front foot pinned
+- **Setup:** standing tall.
+- **Execution:** step back about two feet, landing on the ball of the back foot; lower;
+  drive back up through the front heel to standing.
+- **Anchors (research-anchored):** **front shin stays vertical** — knee stacked over ankle;
+  both knees near 90° at the bottom; **back knee hovers 1–2 inches** off the floor, never
+  touches; torso upright.
+- **Faults:** front knee traveling over the toes; back knee slamming down; short choppy step.
+- **Figure:** rear foot stepping back and returning (travel expected in QA); front shin
+  vertical at depth; back-knee hover visible.
+
+## 3. Dead bug — 45s, 3.6s cycle, bilateral (mirror swaps the lead pair)
 - **Setup:** supine, hips and knees 90/90 (tabletop), arms to the ceiling. Exhale,
-  ribs down, low back pressed flat.
+  ribs down, low back pressed flat. Entered via the 15s standing→floor block gap.
 - **Execution:** one arm lowers overhead while the OPPOSITE leg reaches long and
   hovers; return; the halfway mirror swaps the pair (alternating in reality —
   punching-rotations precedent).
@@ -696,7 +638,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** low back arching as the leg extends; rib flare; same-side limbs.
 - **Figure:** supine, contralateral arm sweep + leg reach, torso line never moves.
 
-## 2. Glute bridge — 45s, 3.2s cycle
+## 4. Glute bridge — 45s, 3.2s cycle
 - **Setup:** supine, knees bent, feet flat hip-width (z 22), arms at sides on floor.
 - **Execution:** posterior tilt first, drive through heels, hips to a straight
   knee–hip–shoulder line; lower with control.
@@ -706,7 +648,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** lumbar hyperextension for extra height; driving through toes.
 - **Figure:** hips rise to a visible straight diagonal; shoulders never leave floor.
 
-## 3. Side-lying clamshell — 60s, 2.6s cycle, bilateral
+## 5. Side-lying clamshell — 60s, 2.6s cycle, bilateral
 - **Setup:** side-lying, hips stacked, knees bent, heels glued together, head on the
   lower arm. Pose ported from the Birth Prep clamshell (proven read).
 - **Execution:** only the top knee opens — swR 6→48, a swivel about the hip→ankle
@@ -720,22 +662,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Figure:** stacked side-lying, top knee hinging open like a shell, heels touching
   at all times.
 
-## 4. Side plank — 40s, 4.2s cycle, bilateral
-- **Setup:** on the right forearm, elbow under the shoulder, feet stacked, top arm
-  along the body — strength Workout B's fitted pose reused verbatim, with A/B
-  swapped so the GET SET UP preview holds the straight line, not the sag.
-- **Execution:** A = one straight head-to-heels line; B drops ONLY the pelvis (spine
-  s flattens 86/88 → 80/81 so the supported shoulder stays fixed — the body pivots
-  at the planted forearm). Daily dose is deliberately submaximal next to strength
-  B's 2×30s.
-- **Anchors:** top-frame neck–pelvis–feet line >168°; the sag drops the pelvis >1.2
-  while the planted hand target never moves (identical in both frames). qa/daily.js
-  asserts all three.
-- **Faults:** elbow drifting ahead of the shoulder; hips piking up instead of
-  lifting to neutral; breath holding.
-- **Figure:** forearm flat under the shoulder, feet stacked, visible line ↔ sag.
-
-## 5. Bird dog — 50s, 4.0s cycle, bilateral (mirror swaps the pair), cam 70
+## 6. Bird dog — 50s, 4.0s cycle, bilateral (mirror swaps the pair), cam 70
 - **Setup:** quadruped on cat-cow's proven base — hands ik-pinned at [±7,93,25],
   knees under hips — but the spine is one NEUTRAL slab (s 88/88, both frames).
 - **Execution:** right arm reaches forward to shoulder height while the LEFT leg
@@ -751,31 +678,7 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Figure:** table position with one arm and the opposite leg extending into a
   long horizontal line.
 
-## 6. Dumbbell bent-over row — 45s, 2.6s cycle
-- **Setup:** hinge ~45–60° (RDL-pattern base), soft knees, feet planted via explicit
-  ikF (NOT pin — pinning from an already-hinged A frame drove the feet through the
-  floor); neutral-grip dumbbells (db props joint-attached at both hands, handles
-  front-back).
-- **Execution:** elbows drive up and back toward the hips, hands to the lower ribs;
-  full hang at bottom. Arm world targets in BOTH frames (a joint-key or single-sided
-  target can't blend); swAL −100 / swAR 80 at the top (asymmetric — never mirrored).
-- **Anchors:** chest height constant through the pull (qa/daily.js: sway <1.5);
-  elbows above hands at the top; grip never supinated (cue text).
-- **Faults:** torso heave; pulling with hands; flared elbows.
-- **Figure:** held hinge, dumbbells rising to the ribs, elbows leading up-back.
-
-## 7. Bench dips (STRICT PARTIAL) — 40s, 3.0s cycle
-- **Setup:** hands fixed on the bench edge beside the hips ([±7.5,74,1], constant in
-  both frames), feet out front on the floor, torso upright. Bench drawn as a real
-  box (two edges + four legs) — a single edge line collapses side-on.
-- **Execution:** elbows bend straight back (swAL −150 / swAR 150) lowering the hips;
-  HARD STOP with upper arms parallel to the floor; press back up.
-- **Anchors:** at EVERY phase shoulder y ≤ elbow y (never below parallel — the AC
-  rule; qa/daily.js sweeps 25 phases, margin ~2); elbows point back (el z < sh z).
-- **Faults:** sinking below parallel; flaring elbows; shoulders rolling forward.
-- **Figure:** seated dip beside a recognizable bench, shallow controlled range.
-
-## 8. Prone Y-T-W raise — 45s, 4.2s cycle, cam 72
+## 7. Prone Y-T-W raise — 45s, 4.2s cycle, cam 72
 - **Setup:** prone (Y-raise base), forehead down, arms overhead in a Y, thumbs up.
 - **Execution:** A=Y → M=T → B=W, so the cycle sweeps Y→T→W→T→Y. Hands hover at
   y 89.5 (blades-down floats). T swivels swAL 100/swAR −100, W swAL 60/swAR −120
@@ -787,7 +690,153 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
 - **Faults:** shrugging; arching the low back to fake height; big lifts.
 - **Figure:** prone, arms sweeping between long overhead Y and bent-elbow W.
 
-## 9. Wall slide — 30s, 3.4s cycle, cam 74
+## 8. Side plank — 40s, 4.2s cycle, bilateral
+- **Setup:** on the right forearm, elbow under the shoulder, feet stacked, top arm
+  along the body — strength Workout B's fitted pose reused verbatim, with A/B
+  swapped so the GET SET UP preview holds the straight line, not the sag.
+- **Execution:** A = one straight head-to-heels line; B drops ONLY the pelvis (spine
+  s flattens 86/88 → 80/81 so the supported shoulder stays fixed — the body pivots
+  at the planted forearm). Daily dose is deliberately submaximal next to strength
+  B's 2×30s.
+- **Anchors:** top-frame neck–pelvis–feet line >168°; the sag drops the pelvis >1.2
+  while the planted hand target never moves (identical in both frames). qa/daily.js
+  asserts all three.
+- **Faults:** elbow drifting ahead of the shoulder; hips piking up instead of
+  lifting to neutral; breath holding.
+- **Figure:** forearm flat under the shoulder, feet stacked, visible line ↔ sag.
+
+## 9. Plank hold — 60s, 4s cycle (micro-adjust breathing rhythm), symmetric
+- **Setup:** forearm plank — elbows under shoulders (kinder to the right AC joint than
+  straight-arm).
+- **Execution:** hold one straight line, breathing steadily.
+- **Anchors:** ear–shoulder–hip–ankle in line; glutes squeezed, ribs down, and **push the
+  floor away** to fire serratus (same cue as the landmine press).
+- **Faults:** hips sagging or piking; head dropping; breath holding.
+- **Figure:** rigid straight line from head to heels; no visible drift.
+
+## 10. Dumbbell bent-over row — 45s, 2.6s cycle
+- **Setup:** hinge ~45–60° (RDL-pattern base), soft knees, feet planted via explicit
+  ikF (NOT pin — pinning from an already-hinged A frame drove the feet through the
+  floor); neutral-grip dumbbells (db props joint-attached at both hands, handles
+  front-back). Entered via the 15s floor→standing + dumbbells block gap.
+- **Execution:** elbows drive up and back toward the hips, hands to the lower ribs;
+  full hang at bottom. Arm world targets in BOTH frames (a joint-key or single-sided
+  target can't blend); swAL −100 / swAR 80 at the top (asymmetric — never mirrored).
+- **Anchors:** chest height constant through the pull (qa/daily.js: sway <1.5);
+  elbows above hands at the top; grip never supinated (cue text).
+- **Faults:** torso heave; pulling with hands; flared elbows.
+- **Figure:** held hinge, dumbbells rising to the ribs, elbows leading up-back.
+
+## 11. Bench dips (STRICT PARTIAL) — 40s, 3.0s cycle
+- **Setup:** hands fixed on the bench edge beside the hips ([±7.5,74,1], constant in
+  both frames), feet out front on the floor, torso upright. Bench drawn as a real
+  box (two edges + four legs) — a single edge line collapses side-on.
+- **Execution:** elbows bend straight back (swAL −150 / swAR 150) lowering the hips;
+  HARD STOP with upper arms parallel to the floor; press back up.
+- **Anchors:** at EVERY phase shoulder y ≤ elbow y (never below parallel — the AC
+  rule; qa/daily.js sweeps 25 phases, margin ~2); elbows point back (el z < sh z).
+- **Faults:** sinking below parallel; flaring elbows; shoulders rolling forward.
+- **Figure:** seated dip beside a recognizable bench, shallow controlled range.
+
+## 12. Dumbbell farmer hold — 35s, 4.6s cycle
+- **Setup:** standing tall, a dumbbell in each hand at the sides (db props, r 1.9),
+  hands [±8.5,54.5] — arm length exactly reaches thigh height, no lower. Renamed
+  from "Farmer hold" 2026-08-26.
+- **Execution:** static hold; barely-visible sway/breath (A≈B) — the fight is grip,
+  anti-shrug, anti-lean.
+- **Anchors:** ribs stacked over pelvis; shoulders packed; motionless read.
+- **Faults:** shrugging; leaning back (rib flare); side lean.
+- **Figure:** tall stand, dumbbells hanging at the sides.
+
+## 13. Standing posture reset — 30s, 5.0s cycle, br (breath tones)
+- **Setup:** standing tall, feet hip-width, arms easy at the sides (dumbbells set
+  down in the gap). Renamed from "Posture reset" 2026-08-26.
+- **Execution:** exhale — ribs settle down and in (s 7/3 → 1/0, hf 4→0), pelvis
+  neutral; quiet 360° breaths into the lower ribs and low back, exhale longer.
+  Breath-tempo tones pair with the sway (br flag).
+- **Anchors:** the read is subtle un-flaring, not a bow; tallness constant.
+- **Faults:** "standing straight" via rib flare + lumbar arch; rigid over-tucking.
+- **Figure:** tall profile, gentle breathing sway, slight rib-stack settle.
+
+---
+
+# Retired — available for future versions
+
+Retired 2026-08-26 with the Flow-13 / Daily-13 restructure. Nothing was deleted:
+pose data, props and cue text live verbatim in `src/d_retired.js` (excluded from
+the build), and the retired Morning Movement app is additionally archived wholesale
+as `src/data2.js` + `src/mm_extra.js`. To revive a movement, follow the recipe at
+the top of `src/d_retired.js`.
+
+## Rotations with shoulder slaps (was Morning Flow 2) — 50s, 1.8s cycle, alternating
+- **Setup:** feet shoulder-width, knees soft.
+- **Execution:** rotate the trunk side to side from the waist; arms completely limp so they
+  wrap and slap the shoulders/back at each end.
+- **Anchors:** rotation biased to the thoracic spine (T4–T8); pelvis rotates a fraction of
+  the shoulders; heels stay down.
+- **Faults:** swinging the arms actively; whole-body spin with no spinal rotation.
+- **Figure:** visible trunk twist with loose trailing arms; feet planted.
+
+## Lateral weight shifts (was Morning Flow 10) — 50s, 2.2s cycle, unilateral (switch)
+- **Setup:** wide stance, toes forward.
+- **Execution:** shift fully into one hip and sink; press deliberately through the **outside
+  edge** of the loaded foot (active eversion — dynamic peroneal training, zero impact);
+  arms sweep across in the direction of travel.
+- **Anchors:** loaded knee tracks over the foot; pelvis stays fairly level; the outside-edge
+  press is the entire point — cue it every rep.
+- **Faults:** knee collapsing inward; torso pitching forward; passive foot.
+- **Figure:** clear weight shift toward one leg with the body sinking over it (foot travel
+  allowed in QA).
+
+## Parallel squats (was Morning Movement 2) — 30s, 2.4s cycle, symmetric, feet pinned
+- Same pattern as deep squats, but **stop at thighs parallel**; chest carries prouder
+  (more vertical) than the deep squat; same knee tracking and planted heels.
+- **Figure:** obviously shallower bottom than deep squats, prouder chest angle.
+
+## Knee circles (was Morning Movement 3) — 30s, 3.2s cycle, orbital (direction change), feet pinned
+- **Setup:** feet together-ish and planted, knees bent, hands resting on the knees.
+- **Execution:** circle the knees one direction; reverse at the halfway chime.
+- **Anchors:** weight even across both feet the whole orbit; circle size tuned for
+  **projected on-screen knee motion** (the swivel cones are asymmetric left/right — never
+  mirror a swivel by sign-flip; re-fit numerically); shrink the circle if the right ankle
+  complains.
+- **Faults:** heels peeling; hips doing the circle instead of knees.
+- **Figure:** knees orbiting about the hip→ankle axis, feet and pelvis quiet.
+
+## Hip hinges (was Morning Movement 5) — 30s, 2.8s cycle, symmetric, feet pinned
+- **Setup:** feet hip-width, soft knees.
+- **Execution:** push the hips straight **back** (not down); chest travels forward; return
+  by driving the hips through.
+- **Anchors:** spine long neutral; shins near vertical throughout; hands trace the thigh
+  (bar path); this grooves the narrow-sumo deadlift pattern.
+- **Faults:** squatting (knees forward, hips dropping); rounding; hyperextending at the top.
+- **Figure:** hips translating backward with a flat inclined torso, shins vertical.
+
+## Prone Y raises (was Morning Movement 8) — 30s, 3.0s cycle, symmetric
+- Superseded in Daily 13 by Prone Y-T-W raise, which shares the same base and camera.
+- **Setup:** face down, arms overhead at ~30–45° out from the midline, thumbs up.
+- **Execution:** draw the shoulder blades down and back and float the arms an inch or
+  two off the floor; lower with control. Chest may barely graze up; neck neutral,
+  gaze down.
+- **Anchors (research-anchored):** lift comes from the **lower traps**, not low-back
+  extension; **no shrugging** — shoulders stay away from the ears; thumbs-up
+  rotation throughout. Friendly to the right AC joint — trains the lower-trap side
+  of that balance.
+- **Faults:** shrugging into the ears; cranking the neck up; ballistic swinging;
+  arching the low back to fake height.
+- **Figure:** prone with Y-angled arms visibly floating and lowering; pelvis and legs
+  quiet throughout.
+
+## Tuck + untuck (was Morning Movement 10) — 60s, 3.6s cycle, symmetric, feet pinned
+- **Setup:** supine, knees bent, feet flat, arms relaxed.
+- **Execution:** flatten the low back into the floor (posterior tilt), then let it arch
+  gently away (anterior tilt). Only the pelvis moves.
+- **Anchors:** ribs and everything above them stay quiet on the floor; small, controlled,
+  breath-paced.
+- **Faults:** glute squeeze doing the work; lifting the hips; moving the ribcage.
+- **Figure:** subtle pelvic roll with the back on the floor, feet planted.
+
+## Wall slide (was Daily 10 9) — 30s, 3.4s cycle, cam 74
 - **Setup:** facing the wall (vertical prop line at z 13), standing close (pelvis
   z 1 — any farther and the elbows can't reach the wall: shoulder-to-wall gap must
   stay under upper-arm length), forearms on the wall, elbows ~shoulder height.
@@ -797,21 +846,3 @@ countdown; a 520 Hz 3-2-1 triple tick ends the gap (work segments keep the singl
   (spine constant); only as high as the ribs allow.
 - **Faults:** rib flare/lumbar arch for extra height; forearms peeling off.
 - **Figure:** profile at the wall line, forearms tracking up-down the wall.
-
-## 10. Farmer hold — 35s, 4.6s cycle
-- **Setup:** standing tall, a dumbbell in each hand at the sides (db props, r 1.9),
-  hands [±8.5,54.5] — arm length exactly reaches thigh height, no lower.
-- **Execution:** static hold; barely-visible sway/breath (A≈B) — the fight is grip,
-  anti-shrug, anti-lean.
-- **Anchors:** ribs stacked over pelvis; shoulders packed; motionless read.
-- **Faults:** shrugging; leaning back (rib flare); side lean.
-- **Figure:** tall stand, dumbbells hanging at the sides.
-
-## 11. Posture reset — 30s, 5.0s cycle, br (breath tones)
-- **Setup:** standing tall, feet hip-width, arms easy at the sides.
-- **Execution:** exhale — ribs settle down and in (s 7/3 → 1/0, hf 4→0), pelvis
-  neutral; quiet 360° breaths into the lower ribs and low back, exhale longer.
-  Breath-tempo tones pair with the sway (br flag).
-- **Anchors:** the read is subtle un-flaring, not a bow; tallness constant.
-- **Faults:** "standing straight" via rib flare + lumbar arch; rigid over-tucking.
-- **Figure:** tall profile, gentle breathing sway, slight rib-stack settle.

@@ -6,9 +6,9 @@ CELL=120; SS=3; S=CELL*SS
 try: font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
 except: font=ImageFont.load_default()
 
-BG={'morning-flow':(238,246,248),'morning-movement':(253,247,233),
+BG={'morning-flow':(238,246,248),
     'prenatal-stretch':(253,244,241),'prenatal-movement':(253,247,233),
-    'daily-10':(244,242,251)}
+    'daily-13':(244,242,251)}
 
 def hexc(s): s=s.lstrip('#'); return tuple(int(s[i:i+2],16) for i in (0,2,4))
 

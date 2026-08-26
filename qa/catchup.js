@@ -6,7 +6,7 @@
 const {chromium}=require('playwright');
 const {serve}=require('./serve');
 const APPS=process.argv.slice(2).length?process.argv.slice(2)
-  :['morning-flow','morning-movement','prenatal-stretch','prenatal-movement','daily-10'];
+  :['morning-flow','prenatal-stretch','prenatal-movement','daily-13'];
 const RUN_MS=5000, GAP_MS=65000, TICK_MS=400;   // run 5s, "background" 65s, one tick after return
 (async()=>{
   const srv=await serve();

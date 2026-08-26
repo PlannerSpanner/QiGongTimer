@@ -1,7 +1,7 @@
 // capture the exact SVG each app draws, per movement, per frame
 const fs=require('fs'),path=require('path');const ROOT=path.join(__dirname,'..');
 const out={};
-for(const app of ['morning-flow','morning-movement','prenatal-stretch','prenatal-movement','daily-10']){
+for(const app of ['morning-flow','prenatal-stretch','prenatal-movement','daily-13']){
   const h=fs.readFileSync(path.join(ROOT,`${app}.html`),'utf8');
   const js=h.split('<script>')[1].split('</script>')[0];
   const core=js.slice(0, js.indexOf("const $=id=>document.getElementById(id);"));

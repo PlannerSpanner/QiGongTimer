@@ -1,7 +1,7 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.dirname(os.getcwd())  # repo root — built HTML lives there for GitHub Pages
 exec(open('build.py', encoding='utf-8').read())
-BLUE=dict(n=10,accent='#2e7d94',
+BLUE=dict(n=13,accent='#2e7d94',
  fig=[('#6d4f1c','#245e70'),('#c2a473','#93b8c4'),('#7d5a1e','#2e7d94')],css=[
  ('#fdf7e9 0%,#fdf0dc 45%,#f4f3e3 100%','#eef6f8 0%,#e6f0f5 45%,#eaf2ee 100%'),
  ('#a5762a','#2e7d94'),('#a4947a','#8aa2ab'),('#bd8629','#3f96ae'),('#7d5a1e','#245e70'),
@@ -27,8 +27,7 @@ ROSE=dict(n=10,accent='#a8546b',
  ('#6d4f1c','#7d3f53'),('#c2a473','#cfa8b3'),('#7d5a1e','#a8546b'),('#caac79','#dcbcc4')])
 A11=dict(n=12,accent='#a5762a',warnText='#8d5326',warnBg='rgba(214,140,70,0.12)',
  warnBorder='rgba(214,140,70,0.32)',warnStrong='#7a441c',css=[])
-A12=dict(n=13,accent='#a5762a',css=[])
-VIOLET=dict(n=11,accent='#6b5ca8',
+VIOLET=dict(n=13,accent='#6b5ca8',
  fig=[('#6d4f1c','#453a70'),('#c2a473','#b0a6d4'),('#7d5a1e','#6b5ca8')],css=[
  ('#fdf7e9 0%,#fdf0dc 45%,#f4f3e3 100%','#f4f2fb 0%,#ece9f8 45%,#efeef6 100%'),
  ('#a5762a','#6b5ca8'),('#a4947a','#948aa8'),('#bd8629','#7d6bbd'),('#7d5a1e','#4a3f78'),
@@ -44,12 +43,11 @@ BAN=("<strong>Listen to your body.</strong> Ease off anything that feels sharp o
      "or bear down.")
 build(os.path.join(OUT,'morning-flow.html'),'d_flow.js',open('x_flow.js',encoding='utf-8').read(),
  'Morning Flow','Dynamic Qi Gong · Targeted Rehab','icon-app.png','#eef6f8',BLUE,
- '<strong>Morning Flow</strong> runs about 8 minutes. Every movement is continuous and rhythmic — nothing is held. Each one does double duty: it feels like a workout and targets a specific weak point.',
- '<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, posterior chain warm, calves primed. Go get it.')
-build(os.path.join(OUT,'morning-movement.html'),'data2.js',open('mm_extra.js',encoding='utf-8').read(),
- 'Morning Movement','Mobility · Control · Stability','icon-app.png','#fdf7e9',A12,
- '<strong>Morning Movement</strong> runs about 10 minutes: standing mobility, then floor work, then core. Short setup pauses appear before position changes. Two-sided movements chime at the halfway point. No impact — safe for the right peroneal tendon.',
- '<strong>Done.</strong> Needle threaded, cobra charmed, plank held. Prone to greatness.')
+ '<strong>Morning Flow</strong> runs about 13½ minutes: eight standing movements, continuous and rhythmic, then a five-movement ground finish. Each movement gets its own set-up countdown. Every one does double duty: it feels like a workout and targets a specific weak point.',
+ '<strong>Done.</strong> Thoracic spine mobilised, serratus fired, hips open, needle threaded, cobra charmed. Go get it.',trall=True)
+# Morning Movement retired 2026-08-26: movements redistributed to Morning Flow and
+# Daily 13; leftovers archived in src/d_retired.js (data2.js/mm_extra.js kept intact).
+# The page template head that app once donated is frozen as src/app_head.html.
 build(os.path.join(OUT,'prenatal-stretch.html'),'d_stretch.js',open('x_stretch.js',encoding='utf-8').read(),
  'Prenatal Stretch','Gentle · Stretch & Release','icon-app.png','#fdf4f1',ROSE,
  '<strong>Prenatal Stretch</strong> runs about 10 minutes. Every position is seated, hands-and-knees, or standing with support — no lying flat on the back, no inversions, no balance challenges. Breathe continuously throughout.',
@@ -58,10 +56,37 @@ build(os.path.join(OUT,'prenatal-movement.html'),'d_birth.js',open('x_birth.js',
  'Birth Prep','Pelvic mobility · Floor release','icon-app.png','#fdf7e9',A11,
  '<strong>The idea:</strong> for perineal tearing, the ability to <em>relax and lengthen</em> the pelvic floor matters more than strength. This trains release and coordination, plus the hip and adductor mobility that lets the pelvic outlet open.',
  '<strong>Done.</strong> Clamshells opened, hips rocked and rolled. You’re on the ball.',banner=BAN,x2=True)
-build(os.path.join(OUT,'daily-10.html'),'d_daily.js',open('x_daily.js',encoding='utf-8').read(),
- 'Daily 10','Posture · Pull · Reset','icon-app.png','#f4f2fb',VIOLET,
- '<strong>Daily 10</strong> runs 10 minutes: postural maintenance, not training — nothing near failure, no recovery cost next to the Wed/Sat strength block. The theme is anterior-tilt correction. Hard rules: no pressing below parallel and nothing behind the neck (right AC joint); all pulling neutral or overhand, never underhand (bicep tendon rehab); no jumping or lateral bounding (right peroneal tendon). Each movement gets its own set-up countdown. Start lying on your back, knees up.',
- '<strong>Done.</strong> Bugs dead, bridges built, posture reset. Carry yourself accordingly.',trall=True)
+build(os.path.join(OUT,'daily-13.html'),'d_daily.js',open('x_daily.js',encoding='utf-8').read(),
+ 'Daily 13','Posture · Pull · Reset','icon-app.png','#f4f2fb',VIOLET,
+ '<strong>Daily 13</strong> runs about 12 minutes: postural maintenance, not training — nothing near failure, no recovery cost next to the Wed/Sat strength block. The theme is anterior-tilt correction. Hard rules: no pressing below parallel and nothing behind the neck (right AC joint); all pulling neutral or overhand, never underhand (bicep tendon rehab); no jumping or lateral bounding (right peroneal tendon). Each movement gets its own set-up countdown. Start standing, feet shoulder width.',
+ '<strong>Done.</strong> Squats sunk, bugs dead, bridges built, posture reset. Carry yourself accordingly.',trall=True)
+# daily-10.html lives on as a redirect stub (the app was renamed Daily 13): old
+# home-screen bookmarks land here, the freshCheck in any cached copy still finds a
+# BUILDV stamp (regex needs [0-9a-f]+), reloads once, and gets bounced to daily-13.
+_rd = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Movement">
+<link rel="apple-touch-icon" href="icon-app.png">
+<meta name="theme-color" content="#f4f2fb">
+<title>Daily 13</title>
+<meta http-equiv="refresh" content="0;url=daily-13.html">
+</head>
+<body>
+<script>
+const BUILDV='%s';
+location.replace('daily-13.html');
+</script>
+<p style="font-family:sans-serif;padding:24px"><a href="daily-13.html">Daily 10 is now Daily 13 &#8594;</a></p>
+</body>
+</html>
+"""
+import hashlib as _hl
+_rv = _hl.sha1((_rd % '').encode('utf-8')).hexdigest()[:10]
+open(os.path.join(OUT,'daily-10.html'),'w',encoding='utf-8',newline='\n').write(_rd % _rv)
 # strength.html — scrollable two-workout strength reference. Separate template
 # (wk_head.html + wk_tpl.js): no timer, no audio; same engine, same BUILDV scheme.
 import hashlib, re as _re

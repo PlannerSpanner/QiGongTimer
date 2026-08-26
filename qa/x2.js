@@ -42,7 +42,7 @@ const {serve}=require('./serve');
   check(`gap not doubled (@ ${tmc})`, Math.abs(mmss(tmc)-(cur.end-elapsed))<=2);
   // control: no toggle on apps without the flag
   const p2=await browser.newPage();
-  await p2.goto(`http://127.0.0.1:${srv.port}/morning-movement.html`);
+  await p2.goto(`http://127.0.0.1:${srv.port}/morning-flow.html`);
   check('no toggle on other apps', await p2.locator('#x2b').count()===0);
   await browser.close(); srv.close();
   console.log(fail?'X2 FAIL':'X2 PASS');

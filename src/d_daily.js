@@ -1,11 +1,27 @@
-// Daily 10 — postural maintenance. tdur = length of the GET SET UP gap BEFORE the
-// movement (TR_ALL builds); setup = authored transition script, spoken as
-// "Next: <name>. <setup>". Work 465s + gaps 135s = 600s exactly.
+// Daily 13 — postural maintenance (renamed from Daily 10, 2026-08-26). tdur = length
+// of the GET SET UP gap BEFORE the movement (TR_ALL builds); setup = authored
+// transition script, spoken as "Next: <name>. <setup>". Position flow: standing (1-2)
+// → floor (3-9) → standing/bench (10-13); the two block changes carry 15s gaps.
+// Work 555s + gaps 160s = 715s. Deep squats, Reverse lunges and Plank hold moved in
+// verbatim from the retired Morning Movement app (data2.js); Wall slide retired to
+// src/d_retired.js.
 const MOVES=[
+{n:"Deep squats",pos:'standing',cue:"Sink until you're almost sitting on your heels",dur:30,bil:false,cyc:2.8,pin:"LR",
+ setup:"Stand tall, feet shoulder width, toes a little out.",
+ A:{p:[0,55.2,0],yaw:22,tw:0,s:[3,3],aL:[4,-10,4,-8],aR:[-2,10,-2,8],lL:[-3,-5,3,-4],lR:[3,5,-3,4]},
+ B:{p:[0,78,-12],yaw:22,tw:0,s:[26,20],hf:-6,ikL:{w:[-9,68,12]},ikR:{w:[9,68,12]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[0,0,0,0],lR:[0,0,0,0]}},
+
+{n:"Reverse lunges",pos:'standing',cue:"Step back, front shin stays vertical",dur:30,bil:true,cyc:3.2,pin:"R",tdur:10,
+ setup:"Stay standing, feet under your hips. You'll step back one leg at a time.",
+ A:{p:[0,55.2,0],yaw:24,tw:0,s:[2,2],aL:[-6,-10,-6,-8],aR:[6,10,6,8],lL:[-4,-6,4,-5],lR:[4,6,-4,5]},
+ M:{p:[0,63,-8],yaw:24,tw:0,s:[5,3],aL:[-2,-10,-2,-8],aR:[2,10,2,8],lL:[8,-6,-70,-5],lR:[4,6,-4,5]},
+ B:{p:[0,72,-18],yaw:24,tw:0,s:[8,6],aL:[2,-10,4,-8],aR:[-2,10,-4,8],lL:[-12,-6,-94,-5],lR:[4,6,-4,5]}},
+
 // Contralateral reach: right arm sweeps overhead while the left leg lengthens; the
 // mirror at halfway swaps the lead pair (punching-rotations precedent). Low back
 // stays glued to the floor: spine values are identical in every keyframe.
-{n:"Dead bug",pos:'supine',cue:"Ribs down, low back pressed into the floor",dur:45,bil:true,cyc:3.6,cam:62,
+{n:"Dead bug",pos:'supine',cue:"Ribs down, low back pressed into the floor",dur:45,bil:true,cyc:3.6,cam:62,tdur:15,
  setup:"Lie on your back. Knees up over your hips, shins level, arms to the ceiling.",
  A:{p:[0,89.5,3],yaw:14,tw:0,s:[-84,-90],hf:-4,aL:[180,-6,180,-5],aR:[180,6,180,5],
     lL:[176,-7,88,-5],lR:[176,7,88,5]},
@@ -31,16 +47,6 @@ const MOVES=[
  B:{p:[0,80,0],yaw:70,tw:0,s:[76,80],hf:12,aL:[70,-16,82,-12],aR:[64,16,78,12],
     lL:[58,-8,-84,-6],ikFR:[0.63,91.95,-10.02],swR:48}},
 
-// Full side plank (strength B's fitted pose): A is the straight head-to-heels line,
-// B drops ONLY the pelvis — spine s flattens so the supported shoulder stays fixed
-// and the body pivots at the planted forearm. Hand target and feet identical in both.
-{n:"Side plank",pos:'sidelying',cue:"One straight line — push the floor away, hips high",dur:40,bil:true,cyc:4.2,cam:40,tdur:10,
- setup:"Stay on your side. Prop up on your forearm, elbow under your shoulder, feet stacked.",
- A:{p:[0,83.6,0],yaw:70,tw:0,s:[86,88],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
-    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]},
- B:{p:[0,85.5,0],yaw:70,tw:0,s:[80,81],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
-    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]}},
-
 // Contralateral reach on all fours (cat-cow's quadruped base): right arm and LEFT leg
 // extend to horizontal while the planted hand and kneeling leg never move; the mirror
 // at halfway swaps the pair (dead-bug precedent). Spine is one neutral slab in both
@@ -51,6 +57,34 @@ const MOVES=[
     lL:[7,-6,-90,-5],lR:[7,6,-90,5]},
  B:{p:[0,74.5,0],yaw:20,tw:0,s:[88,88],hf:8,ikL:{w:[-7,93,25]},ikR:{w:[24,73.5,46]},
     lL:[-88,-8,-88,-6],lR:[7,6,-90,5]}},
+
+// A=Y, M=T, B=W: the cycle sweeps Y->T->W->T->Y. Tiny floats — the work is the
+// scapular squeeze, not elevation. cam 72: the only view where the letters open.
+{n:"Prone Y-T-W raise",pos:'prone',cue:"Blades down and back — small floats, thumbs up",dur:45,bil:false,cyc:4.2,cam:72,tdur:15,
+ setup:"Down to the floor, face down. Forehead down, arms overhead in a Y, thumbs up.",
+ A:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-9.7,89.5,53.7]},ikR:{w:[37.1,89.5,38.5]},
+    lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
+ M:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-21.9,89.5,38.5]},ikR:{w:[38,89.5,19]},
+    swAL:100,swAR:-100,lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
+ B:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-8.5,89.5,35]},ikR:{w:[21,89.5,24]},
+    swAL:60,swAR:-120,lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]}},
+
+// Full side plank (strength B's fitted pose): A is the straight head-to-heels line,
+// B drops ONLY the pelvis — spine s flattens so the supported shoulder stays fixed
+// and the body pivots at the planted forearm. Hand target and feet identical in both.
+{n:"Side plank",pos:'sidelying',cue:"One straight line — push the floor away, hips high",dur:40,bil:true,cyc:4.2,cam:40,tdur:10,
+ setup:"Roll onto your side. Prop up on your forearm, elbow under your shoulder, feet stacked.",
+ A:{p:[0,83.6,0],yaw:70,tw:0,s:[86,88],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]},
+ B:{p:[0,85.5,0],yaw:70,tw:0,s:[80,81],hf:6,ikR:{w:[28.6,92,-12.7]},swAR:150,aL:[-90,0,-90,0],
+    ikFL:[-34.5,91.3,-7.5],ikFR:[-33.5,91.9,-9.5]}},
+
+{n:"Plank hold",pos:'quadruped',pin:"LR",cue:"One straight line, push the floor away",dur:60,bil:false,cyc:4.0,tdur:15,
+ setup:"Turn over into a plank — elbows or hands under your shoulders, one straight line.",
+ A:{p:[0,84,0],yaw:24,tw:0,s:[80,80],hf:18,ikL:{w:[-7,93,32]},ikR:{w:[7,93,32]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-80,-6,-88,-5],lR:[-80,6,-88,5]},
+ B:{p:[0,82,0],yaw:24,tw:0,s:[80,80],hf:18,ikL:{w:[-7,93,32]},ikR:{w:[7,93,32]},
+    aL:[0,0,0,0],aR:[0,0,0,0],lL:[-80,-6,-88,-5],lR:[-80,6,-88,5]}},
 
 // Hinge held constant; elbows drive up and back toward the hips. Neutral grip:
 // dumbbell handles run front-to-back. Arm world targets in both frames (blendable).
@@ -76,28 +110,8 @@ const MOVES=[
  B:{p:[0,87.5,7],yaw:14,tw:0,s:[8,4],hf:2,ikL:{w:[-7.5,74,1]},ikR:{w:[7.5,74,1]},
     swAL:-150,swAR:150,ikFL:[-5.5,93,27],ikFR:[5.5,93,27]}},
 
-// A=Y, M=T, B=W: the cycle sweeps Y->T->W->T->Y. Tiny floats — the work is the
-// scapular squeeze, not elevation. cam 72: the only view where the letters open.
-{n:"Prone Y-T-W raise",pos:'prone',cue:"Blades down and back — small floats, thumbs up",dur:45,bil:false,cyc:4.2,cam:72,tdur:15,
- setup:"Down to the floor, face down. Forehead down, arms overhead in a Y, thumbs up.",
- A:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-9.7,89.5,53.7]},ikR:{w:[37.1,89.5,38.5]},
-    lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
- M:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-21.9,89.5,38.5]},ikR:{w:[38,89.5,19]},
-    swAL:100,swAR:-100,lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]},
- B:{p:[0,90.5,4],yaw:18,tw:0,s:[91,90],hf:19,ikL:{w:[-8.5,89.5,35]},ikR:{w:[21,89.5,24]},
-    swAL:60,swAR:-120,lL:[-90,-6,-90,-5],lR:[-92,6,-88,5]}},
-
-// Facing the wall, forearms glued to it: slide up only as far as ribs stay down.
-{n:"Wall slide",pos:'wall',cue:"Forearms glued to the wall, ribs stay down",dur:30,bil:false,cyc:3.4,cam:74,tdur:15,pin:"LR",
- prop:[{l:[[0,14,13],[0,93,13]]}],
- setup:"Stand facing the wall. Forearms on the wall at shoulder height, thumbs toward you.",
- A:{p:[0,55.4,1],yaw:6,tw:0,s:[3,1],hf:0,ikL:{w:[-7,16.5,12]},ikR:{w:[7,16.5,12]},
-    swAL:-85,swAR:100,lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
- B:{p:[0,55.4,1],yaw:6,tw:0,s:[3,1],hf:0,ikL:{w:[-6.5,6.5,12]},ikR:{w:[6.5,6.5,12]},
-    swAL:-85,swAR:100,lL:[-2,-6,2,-5],lR:[2,6,-2,5]}},
-
 // Static hold: the fight is grip + anti-shrug + anti-lean. Barely-visible sway.
-{n:"Farmer hold",pos:'standing',cue:"Ribs stacked over pelvis — don't let the weights win",dur:35,bil:false,cyc:4.6,cam:40,tdur:15,pin:"LR",
+{n:"Dumbbell farmer hold",pos:'standing',cue:"Ribs stacked over pelvis — don't let the weights win",dur:35,bil:false,cyc:4.6,cam:40,tdur:15,pin:"LR",
  prop:[{db:[{j:'haL',o:[0,0,-2.4]},{j:'haL',o:[0,0,2.4]},1.9]},
        {db:[{j:'haR',o:[0,0,-2.4]},{j:'haR',o:[0,0,2.4]},1.9]}],
  setup:"Pick up your dumbbells. Stand tall, shoulders packed down and back.",
@@ -108,8 +122,8 @@ const MOVES=[
 
 // The exhale reset: ribs settle down and in, pelvis neutral, breath into the low
 // back. br pairs the tone with the figure's breathing sway.
-{n:"Posture reset",pos:'standing',cue:"Exhale the ribs down — breathe into your low back",dur:30,bil:false,cyc:5.0,cam:40,tdur:15,br:true,pin:"LR",
- setup:"Stand up one last time. Feet hip width, arms easy at your sides.",
+{n:"Standing posture reset",pos:'standing',cue:"Exhale the ribs down — breathe into your low back",dur:30,bil:false,cyc:5.0,cam:40,tdur:15,br:true,pin:"LR",
+ setup:"Set the dumbbells down. Stand tall, feet hip width, arms easy at your sides.",
  A:{p:[0,55.4,0],yaw:16,tw:0,s:[7,3],hf:4,aL:[6,-8,4,-6],aR:[6,8,4,6],
     lL:[-2,-6,2,-5],lR:[2,6,-2,5]},
  B:{p:[0,55.6,0],yaw:16,tw:0,s:[1,0],hf:0,aL:[6,-8,4,-6],aR:[6,8,4,6],

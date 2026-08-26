@@ -5,17 +5,25 @@ deployed to GitHub Pages at https://plannerspanner.github.io/MovementApp/
 (repo `PlannerSpanner/MovementApp` — username lowercase in URL, repo capitalized).
 Built for iPhone Safari (wake lock + Add to Home Screen require Safari, not Chrome).
 
-Apps: `morning-flow` (qi gong warmup), `morning-movement` (mobility/strength),
+Apps: `morning-flow` (Morning Flow — 13-move qi gong warmup: 8 standing + 5-move ground
+finish, TR_ALL authored transitions incl. an explicit 5s "get on the ground" gap, 815s),
 `prenatal-stretch` (Prenatal Stretch, 10 moves), `prenatal-movement` (Birth Prep, 11 moves),
-`daily-10` (Daily 10 — 11-move postural maintenance timer, violet theme, dumbbells/bench/
-wall props, authored per-movement transitions via TR_ALL, exactly 600s),
+`daily-13` (Daily 13 — 13-move postural maintenance timer, violet theme, dumbbells/bench
+props, authored per-movement transitions via TR_ALL, exactly 715s; renamed from Daily 10
+2026-08-26 — `daily-10.html` is a BUILDV-stamped redirect stub for old bookmarks, written
+by rebuild.py),
 `strength` (two-workout gym REFERENCE — no timer/audio; scrollable cards, tabs A/B +
 set checks persisted in localStorage, own template `wk_head.html`+`wk_tpl.js`, green theme).
 Also `hip-activation.html` — older layout, no figures, timer already timestamp-patched. Leave unless asked.
+Morning Movement RETIRED 2026-08-26: its movements were redistributed (5 → Flow's ground
+block, 3 → Daily 13); the rest are archived — NOTHING deleted — in `src/d_retired.js`
+(+ `data2.js`/`mm_extra.js` kept intact) and documented in docs/movement-reference.md
+under "Retired — available for future versions".
 
 ## Build
 
-    python3 src/rebuild.py     # stamps all four apps from src/ into the output dir
+    python3 src/rebuild.py     # stamps all four timer apps + strength + the daily-10
+                               # redirect stub from src/ into the output dir
 
 Everything is inlined: engine + template + data + cues → one self-contained HTML per app.
 Edit sources, never the built HTML. `rebuild.py` holds per-app themes (hex swap tables),
@@ -40,7 +48,7 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
   - Arms have optional IK swivels `swAL`/`swAR` (same semantics as leg swL/swR,
     undefined = legacy behavior). Both wk_tpl.js AND app_tpl.js blend them now. Like the
     legs, the cones are asymmetric: fit each side numerically (row uses swAR 80 with
-    swAL untouched; chest row −100/+80; daily-10 wall slide −85/+100, dips ±150).
+    swAL untouched; chest row −100/+80; wall slide (retired) −85/+100, dips ±150).
 - `app_tpl.js` — shared app body: renderer, timers, audio. Key facts:
   - Timer is wall-clock anchored (`segEnd`); survives backgrounding, catches up on return.
   - The timer walks `SEGS`, derived from MOVES at load: an 8s `{trans:true}` "GET SET UP"
@@ -57,7 +65,8 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     `{db:[P,P,r]}` dumbbell — joint-referenced props re-resolve every frame. Rendering
     is a pure `figMarkup` (above the `const layer=` slice line, so qa/geo/lint can eval
     it); `drawFig` is a thin DOM writer over it.
-  - Build-time consts (flipped together by build.py's `trall=True`, daily-10 only):
+  - Build-time consts (flipped together by build.py's `trall=True` — daily-13 AND
+    morning-flow since 2026-08-26):
     `TR_ALL` — a GET SET UP gap precedes EVERY movement (dur `m.tdur||10`), voiced
     "Next: <name>. <m.setup>", figure holds the upcoming A keyframe statically, wrap gets
     `.state-trans` (tan countdown, dimmed figure), gaps end with a 520 Hz 3-2-1 triple tick
@@ -76,8 +85,12 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
     props (held implements) join the sort floored just in front of the torso quad, so a
     dumbbell can never vanish behind the body (fixed 2026-08-12; qa/daily.js + qa/wk.js
     hard invariants, same rule in wk_tpl.js).
-- `data2.js` / `d_flow.js` / `d_stretch.js` / `d_birth.js` / `d_daily.js` — pose data per app.
-- `mm_extra.js` / `x_*.js` — expandable cue text per movement (keys = movement names).
+- `d_flow.js` / `d_stretch.js` / `d_birth.js` / `d_daily.js` — pose data per app.
+- `x_*.js` — expandable cue text per movement (keys = movement names; a missing key is a
+  runtime TypeError — smoke.js catches it).
+- `app_head.html` — frozen page-template head (was bootstrapped from the built
+  morning-movement.html until that app retired). `d_retired.js` — retired-movement
+  archive, NOT built. `data2.js` + `mm_extra.js` — archived Morning Movement app, NOT built.
 - `wk_head.html` + `wk_tpl.js` + `d_wka.js`/`d_wkb.js` — the strength reference app.
   wk_tpl's pure section (everything above the `// ---- DOM ----` marker) is what
   qa/wk.js evals — keep computation above that line. Its prop system extends the
@@ -91,13 +104,15 @@ intros, and movement counts. Adjust its output path for this repo (was /mnt/user
 
 ## Non-negotiable QA gauntlet (run before every commit)
 
-    npm run gauntlet   # smoke + lint + geo + wk (strength invariants) + daily (Daily 10
+    npm run gauntlet   # smoke + lint + geo + wk (strength invariants) + daily (Daily 13
                        # form invariants: dips parallel stop, dead-bug flat back, bridge
                        # line, clamshell heels welded, side-plank line, bird-dog flat
-                       # back, held dumbbells in front of torso, 600s) + Playwright:
+                       # back, held dumbbells in front of torso, 715s) + Playwright:
                        # shots (incl. index),
-                       # wkshots (strength cards + set checks), dailyshots (every Daily 10
-                       # movement + transition), catchup, trans (incl. TR_ALL block),
+                       # wkshots (strength cards + set checks), dailyshots (every Daily 13
+                       # movement + transition), flowshots (every Morning Flow movement +
+                       # the 5s ground transition), catchup, trans (legacy gaps on
+                       # prenatal-stretch + TR_ALL blocks for flow/daily-13),
                        # breath tones, 2x toggle, auto-update freshness
     node tools/dump.js && python3 tools/strips.py   # fallback PIL contact sheets (needs Pillow)
     python3 tools/ascii.py <app> "<movement>" 0,3    # text-mode pose render
@@ -119,10 +134,11 @@ Hard-won lessons encoded in these tools:
   screen (learned fitting Prone Y raises: a wide Y reads as a shallow fork; the camera that
   shows the full Y loses the prone read). Pick per-movement `cam` for what must READ, not
   for anatomical truth — Y raises use cam:72 side-on; don't relitigate.
-- build.py reads its page template from the ALREADY-BUILT morning-movement.html, so any
-  literal-string replace of a stamped value goes silently stale the moment the baked value
-  changes (the count badges + reset counts were wrong for months this way). New stamped
-  values must use regex replaces (`–/\d+` style). Bonus trap: app_tpl.js contains the
+- build.py used to read its page template from the ALREADY-BUILT morning-movement.html
+  (frozen to src/app_head.html when that app retired, 2026-08-26), so any literal-string
+  replace of a stamped value goes silently stale the moment the baked value changes (the
+  count badges + reset counts were wrong for months this way). New stamped values must
+  still use regex replaces (`–/\d+` style). Bonus trap: app_tpl.js contains the
   6-char escape text `–`, not an en-dash — Python string literals decode, JS source
   doesn't. Messages embed via json.dumps(..., ensure_ascii=False) so typographic chars
   (’ —) land as literal UTF-8 — keep it that way.
